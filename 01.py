@@ -3,10 +3,7 @@ import pandas as pd
 import json
 import hashlib
 import datetime
-import re
-import io
 from pathlib import Path
-from urllib.parse import urljoin, urlparse
 
 # ── 1. 頁面配置 ─────────────────────────────────────
 st.set_page_config(
@@ -18,157 +15,171 @@ st.set_page_config(
 # ── 2. 核心樣式 (CSS) ──────────────────────────────────
 st.markdown("""
 <style>
-/* 側邊欄樣式 */
+/* 側邊欄：專業深色主題 */
 [data-testid="stSidebar"] { background: #0f172a; border-right: 1px solid #1e3a5f; }
 [data-testid="stSidebar"] * { color: #94a3b8 !important; }
 [data-testid="stSidebar"] h3 { 
     color: #e2e8f0 !important; font-size: 11px !important; 
     text-transform: uppercase; letter-spacing: .12em; 
-    margin: 14px 0 6px !important; border-bottom: 1px solid #1e3a5f;
+    margin: 18px 0 8px !important; border-bottom: 1px solid #1e3a5f;
+    padding-bottom: 4px;
 }
 
-/* 文件卡片設計 */
+/* 文件卡片 */
 .doc-card {
     background: #ffffff; border: 1px solid #e2e8f0;
-    border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
-    transition: all .2s ease; cursor: pointer;
+    border-radius: 8px; padding: 16px; margin-bottom: 12px;
+    transition: all 0.2s ease-in-out; cursor: pointer;
 }
-.doc-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: #3b82f6; }
-.doc-card-title { font-size: 15px; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+.doc-card:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); 
+    border-color: #3b82f6; 
+}
+.doc-card-title { font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 8px; }
 
-/* 標籤 */
-.tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
-.tag-fl { background: #eff6ff; color: #2563eb; }
-.tag-sc { background: #f0fdf4; color: #16a34a; }
+/* 標籤設計 */
+.tag { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; }
+.tag-fl { background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
+.tag-sc { background: #f0fdf4; color: #16a34a; border: 1px solid #dcfce7; }
 .tag-cat { background: #f1f5f9; color: #475569; }
+
+/* 統計條 */
+.stat-bar { display: flex; gap: 15px; margin-bottom: 25px; }
+.stat-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 20px; }
+.stat-item b { color: #0f172a; font-size: 20px; display: block; line-height: 1; }
+.stat-item span { font-size: 12px; color: #64748b; }
 </style>
 """, unsafe_allow_html=True)
 
-# ── 3. 資料庫初始化 ──────────────────────────────────
+# ── 3. 資料庫管理 ────────────────────────────────────
 DB_PATH = Path("doc_db.json")
-PENDING_PATH = Path("pending_db.json")
 
-def init_db():
+def load_db():
     if not DB_PATH.exists():
-        DB_PATH.write_text(json.dumps([
-            {"id":"seed1","brand":"Formlabs","device":"Form 4","category":"User Manual","title":"Form 4 快速入門指南","url":"https://support.formlabs.com","date":"2024-01-01"},
-            {"id":"seed2","brand":"Scanology","device":"SIMSCAN30","category":"Datasheet","title":"SIMSCAN 30 技術規格手冊","url":"https://www.3d-scantech.com","date":"2024-02-15"}
-        ], ensure_ascii=False))
-    if not PENDING_PATH.exists():
-        PENDING_PATH.write_text("[]")
+        # 初始化預設資料
+        seed = [
+            {"id":"fl001","brand":"Formlabs","device":"Form 4","category":"User Manual","title":"Form 4 操作手冊 (ZH)","url":"https://support.formlabs.com","date":"2024-04-01"},
+            {"id":"sc001","brand":"Scanology","device":"SIMSCAN30","category":"Datasheet","title":"SIMSCAN 30 完整規格表","url":"https://www.3d-scantech.com","date":"2024-03-15"}
+        ]
+        DB_PATH.write_text(json.dumps(seed, ensure_ascii=False), encoding="utf-8")
+    return json.loads(DB_PATH.read_text(encoding="utf-8"))
 
-init_db()
+def save_db(data):
+    DB_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 if "docs" not in st.session_state:
-    st.session_state.docs = json.loads(DB_PATH.read_text(encoding="utf-8"))
-if "pending" not in st.session_state:
-    st.session_state.pending = json.loads(PENDING_PATH.read_text(encoding="utf-8"))
+    st.session_state.docs = load_db()
 
-def save_all():
-    DB_PATH.write_text(json.dumps(st.session_state.docs, ensure_ascii=False, indent=2), encoding="utf-8")
-    PENDING_PATH.write_text(json.dumps(st.session_state.pending, ensure_ascii=False, indent=2), encoding="utf-8")
-
-# ── 4. 側邊欄：多層級篩選選單 (Faceted Navigation) ──────────
+# ── 4. 側邊欄：多層級篩選 (Faceted Navigation) ──────────
 with st.sidebar:
+    st.image("https://formlabs.com/favicon.ico", width=30)
     st.title("SOLIDWIZARD")
-    st.subheader("文件篩選系統")
     
+    # 關鍵字搜尋
+    st.markdown("### 🔍 快速檢索")
+    q = st.text_input("搜尋標題、型號...", label_visibility="collapsed")
+
     # 第一層：品牌
-    st.markdown("### 品牌 (Brand)")
+    st.markdown("### 1. 品牌 (Brand)")
     sel_brands = []
-    if st.checkbox("Formlabs", value=True): sel_brands.append("Formlabs")
-    if st.checkbox("Scanology", value=True): sel_brands.append("Scanology")
+    c1, c2 = st.columns(2)
+    if c1.checkbox("Formlabs", value=True): sel_brands.append("Formlabs")
+    if c2.checkbox("Scanology", value=True): sel_brands.append("Scanology")
     
-    # 第二層：設備類型 (連動第一層)
-    st.markdown("### 設備型號 (Device)")
-    dev_map = {
+    # 第二層：設備類型 (隨品牌連動)
+    st.markdown("### 2. 設備型號 (Device)")
+    dev_dict = {
         "Formlabs": ["Form 4", "Form 4L", "Fuse 1"],
         "Scanology": ["SIMSCAN30", "KSCANX"]
     }
-    selectable_devs = []
+    
+    available_devices = []
     for b in sel_brands:
-        selectable_devs.extend(dev_map[b])
+        available_devices.extend(dev_dict[b])
     
     sel_devices = []
-    for d in selectable_devs:
-        if st.checkbox(d, value=True):
+    for d in available_devices:
+        if st.checkbox(d, value=True, key=f"dev_{d}"):
             sel_devices.append(d)
             
-    # 第三層：文件分類
-    st.markdown("### 內容分類 (Category)")
-    cats = ["Datasheet", "White Paper", "Application Note", "User Manual", "Case Study", "教學文件", "比較分析", "材料"]
+    # 第三層：內容分類
+    st.markdown("### 3. 文件分類 (Category)")
+    all_cats = ["Datasheet", "White Paper", "Application Note", "User Manual", "Case Study", "教學文件", "比較分析", "材料"]
     sel_cats = []
-    for c in cats:
-        if st.checkbox(c, value=True):
-            sel_cats.append(c)
+    for cat in all_cats:
+        if st.checkbox(cat, value=True, key=f"cat_{cat}"):
+            sel_cats.append(cat)
 
     st.divider()
-    # 後台手動更新觸發器
-    if st.button("🕷️ 掃描來源網站更新"):
-        # 模擬爬蟲發現新文件
-        new_id = hashlib.md5(str(datetime.datetime.now()).encode()).hexdigest()[:6]
-        mock_item = {
-            "id": new_id,
-            "brand": "Formlabs",
-            "device": "Form 4L",
-            "category": "White Paper",
-            "title": f"新發現：SLA 精度驗證白皮書 ({datetime.date.today()})",
-            "url": "https://formlabs.com/white-paper",
-            "date": str(datetime.date.today())
-        }
-        st.session_state.pending.append(mock_item)
-        save_all()
-        st.success("掃描完成，請至待審區確認。")
-
-# ── 5. 主畫面邏輯 ─────────────────────────────────────
-tab_main, tab_admin = st.tabs(["📂 文件檢索庫", "⚙️ 後台審核更新"])
-
-with tab_main:
-    # 搜尋框
-    q = st.text_input("🔍 輸入關鍵字搜尋文件...", placeholder="例如：操作手冊、Fuse 1...")
     
-    # 篩選邏輯
-    filtered = [d for d in st.session_state.docs if 
-                d["brand"] in sel_brands and 
-                d["device"] in sel_devices and 
-                d["category"] in sel_cats]
-    
-    if q:
-        filtered = [d for d in filtered if q.lower() in d["title"].lower() or q.lower() in d["device"].lower()]
+    # 後台更新按鈕 (取消審核機制，直接加入)
+    if st.button("🔄 執行網站抓取更新", use_container_width=True):
+        with st.spinner("正在掃描來源網站..."):
+            # 模擬爬蟲邏輯：在此處對接實際抓取代碼
+            new_id = hashlib.md5(str(datetime.datetime.now()).encode()).hexdigest()[:8]
+            new_entry = {
+                "id": new_id,
+                "brand": "Formlabs",
+                "device": "Form 4",
+                "category": "Application Note",
+                "title": f"自動偵測：新應用案例 - {datetime.date.today()}",
+                "url": "https://formlabs.com",
+                "date": str(datetime.date.today())
+            }
+            
+            # 檢查是否重複 (以 URL 或標題判斷)
+            existing_titles = [d["title"] for d in st.session_state.docs]
+            if new_entry["title"] not in existing_titles:
+                st.session_state.docs.insert(0, new_entry) # 插在最前面
+                save_db(st.session_state.docs)
+                st.success(f"已自動更新：{new_entry['title']}")
+                st.rerun()
+            else:
+                st.info("目前無新文件需要更新。")
 
-    # 顯示統計
-    st.caption(f"找到 {len(filtered)} 份符合條件的文件")
-    
-    # 渲染卡片
+# ── 5. 主畫面顯示 ─────────────────────────────────────
+st.title("📚 技術文件資料中心")
+
+# 統計數據顯示
+filtered = [d for d in st.session_state.docs if 
+            d["brand"] in sel_brands and 
+            d["device"] in sel_devices and 
+            d["category"] in sel_cats]
+
+if q:
+    filtered = [d for d in filtered if q.lower() in d["title"].lower() or q.lower() in d["device"].lower()]
+
+st.markdown(f"""
+<div class="stat-bar">
+    <div class="stat-item"><b>{len(filtered)}</b><span>符合條件</span></div>
+    <div class="stat-item"><b>{len(st.session_state.docs)}</b><span>總庫存量</span></div>
+    <div class="stat-item"><b>{datetime.date.today().strftime('%Y/%m/%d')}</b><span>最後同步</span></div>
+</div>
+""", unsafe_allow_html=True)
+
+# 文件列表渲染
+if not filtered:
+    st.info("目前的篩選條件下沒有找到文件。")
+else:
     for doc in filtered:
-        tag_color = "tag-fl" if doc["brand"] == "Formlabs" else "tag-sc"
+        tag_cls = "tag-fl" if doc["brand"] == "Formlabs" else "tag-sc"
         st.markdown(f"""
         <div class="doc-card" onclick="window.open('{doc['url']}', '_blank')">
-            <div class="doc-card-title">{doc['title']}</div>
-            <div style="display: flex; gap: 8px;">
-                <span class="tag {tag_color}">{doc['brand']}</span>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div class="doc-card-title">{doc['title']}</div>
+                <span style="font-size: 11px; color: #94a3b8;">{doc['date']}</span>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 5px;">
+                <span class="tag {tag_cls}">{doc['brand']}</span>
                 <span class="tag tag-cat">{doc['device']}</span>
                 <span class="tag tag-cat">{doc['category']}</span>
-                <span style="font-size: 11px; color: #94a3b8; margin-left: auto;">{doc['date']}</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-with tab_admin:
-    st.subheader("待審核更新項目")
-    if not st.session_state.pending:
-        st.write("目前沒有待處理的更新。")
-    else:
-        for i, p in enumerate(st.session_state.pending):
-            with st.expander(f"🆕 新文件: {p['title']}", expanded=True):
-                col1, col2, col3 = st.columns([4, 1, 1])
-                col1.write(f"品牌: {p['brand']} | 分類: {p['category']} | 日期: {p['date']}")
-                if col2.button("✅ 批准加入", key=f"acc_{i}"):
-                    st.session_state.docs.append(p)
-                    st.session_state.pending.pop(i)
-                    save_all()
-                    st.rerun()
-                if col3.button("❌ 略過", key=f"ign_{i}"):
-                    st.session_state.pending.pop(i)
-                    save_all()
-                    st.rerun()
+        # 為了保持介面整潔，移除按鈕放在卡片下方
+        if st.button("🗑️ 移除", key=f"del_{doc['id']}"):
+            st.session_state.docs = [d for d in st.session_state.docs if d["id"] != doc["id"]]
+            save_db(st.session_state.docs)
+            st.rerun()
