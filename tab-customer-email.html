@@ -238,7 +238,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
         <div class="ai-loading" style="margin-top:10px"><div class="ai-spin"></div>正在讀取網頁並擷取聯絡資料，請稍候…</div>
       </div>
       <div class="url-note" style="margin-top:10px">
-        💡 透過 <strong>Jina AI</strong> 免費讀取網頁，再由 <strong>Gemini</strong> 自動擷取聯絡人、公司、Email、電話。需先在「⚙️ 設定」填入 Gemini API Key。
+        💡 透過 <strong>Cloudflare Worker</strong> 免費抓取網頁，再由 <strong>Gemini</strong> 自動擷取聯絡人、公司、Email、電話。需先在「⚙️ 設定」填入 Gemini API Key。
       </div>
     </div>
 
@@ -358,6 +358,20 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
         <div class="sf-row" style="grid-column:1/-1">
           <div class="sf-label">Gemini API Key</div>
           <input class="sf-input" id="cfg-apikey" type="password" placeholder="AIzaSy-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 爬蟲 API 設定 -->
+    <div class="settings-box">
+      <h3>🕷️ 爬蟲 API 設定（Cloudflare Worker）</h3>
+      <div style="margin-bottom:10px;padding:10px 14px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.25);border-radius:8px;font-size:12px;color:var(--ac);line-height:1.7">
+        ✅ 已設定預設爬蟲 API，所有人開啟此網頁都可直接自動擷取，無需任何安裝。
+      </div>
+      <div class="settings-grid">
+        <div class="sf-row" style="grid-column:1/-1">
+          <div class="sf-label">爬蟲 API 網址</div>
+          <input class="sf-input" id="cfg-crawler-url" placeholder="https://sales.barry00000000.workers.dev" />
         </div>
       </div>
     </div>
@@ -528,10 +542,13 @@ async function crawlUrl(){
   document.getElementById('crawlBtn').disabled = true;
   try{
     // Step 1: Jina AI 讀取網頁原始文字
-    const jinaRes = await fetch('https://r.jina.ai/'+url, {headers:{'Accept':'text/plain','X-No-Cache':'true'}});
-    if(!jinaRes.ok) throw new Error('Jina 讀取失敗（'+jinaRes.status+'），請確認網址是否公開可存取');
-    const pageText = await jinaRes.text();
-    const snippet = pageText.slice(0,4000);
+    const crawlerUrl = (cfg.crawlerUrl||'https://sales.barry00000000.workers.dev').replace(/\/$/, '');
+    const apiRes = await fetch(crawlerUrl+'?url='+encodeURIComponent(url));
+    if(!apiRes.ok) throw new Error('爬蟲 API 回傳錯誤（'+apiRes.status+'）');
+    const apiData = await apiRes.json();
+    if(apiData.error) throw new Error('爬蟲失敗：'+apiData.error);
+    const snippet = (apiData.text||'').slice(0,4000);
+    if(!snippet) throw new Error('網頁內容為空，可能被擋或需要登入');
     // Step 2: Gemini 分析擷取
     const prompt = `以下是一個公司網頁的文字內容，請從中找出所有可能的聯絡人資訊（姓名、公司、Email、電話）。
 
@@ -816,6 +833,7 @@ function clearCompose(){
 // ══ SETTINGS ══
 function loadSettingsUI(){
   document.getElementById('cfg-apikey').value        = cfg.apikey||'';
+  document.getElementById('cfg-crawler-url').value   = cfg.crawlerUrl||'https://sales.barry00000000.workers.dev';
   document.getElementById('cfg-sender-name').value   = cfg.senderName||'';
   document.getElementById('cfg-sender-title').value  = cfg.senderTitle||'';
   document.getElementById('cfg-company').value       = cfg.company||'';
@@ -826,6 +844,7 @@ function loadSettingsUI(){
 }
 function saveSettings(){
   cfg.apikey      = document.getElementById('cfg-apikey').value.trim();
+  cfg.crawlerUrl  = document.getElementById('cfg-crawler-url').value.trim() || 'https://sales.barry00000000.workers.dev';
   cfg.senderName  = document.getElementById('cfg-sender-name').value.trim();
   cfg.senderTitle = document.getElementById('cfg-sender-title').value.trim();
   cfg.company     = document.getElementById('cfg-company').value.trim();
