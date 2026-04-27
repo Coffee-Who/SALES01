@@ -226,17 +226,19 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
   ════════════════════════════════ -->
   <div class="cpanel on" id="cp-contacts">
 
-    <!-- URL 輸入區（爬蟲預留）-->
+    <!-- URL 輸入區 (Jina AI + Gemini) -->
     <div class="url-input-wrap">
-      <h3>🌐 新增客戶（輸入網址）</h3>
+      <h3>🌐 新增客戶（輸入網址自動擷取）</h3>
       <div class="url-row">
-        <input class="url-inp" id="urlInp" type="url" placeholder="https://www.example.com（爬蟲功能開發中）" />
+        <input class="url-inp" id="urlInp" type="url" placeholder="https://www.客戶公司網站.com" />
+        <button class="btn p" id="crawlBtn" onclick="crawlUrl()">🔍 自動擷取</button>
         <button class="btn" onclick="openManualAdd()">＋ 手動新增</button>
-        <button class="btn p" id="crawlBtn" onclick="crawlUrl()" disabled>🔍 自動擷取</button>
       </div>
-      <div class="url-note">
-        ⚠️ 自動擷取功能（爬蟲）尚在開發中，目前請使用「手動新增」輸入客戶資料。<br>
-        爬蟲 API 接好後，只需解除 crawlBtn disabled 並接上後端即可啟用。
+      <div id="crawl-loading" style="display:none">
+        <div class="ai-loading" style="margin-top:10px"><div class="ai-spin"></div>正在讀取網頁並擷取聯絡資料，請稍候…</div>
+      </div>
+      <div class="url-note" style="margin-top:10px">
+        💡 透過 <strong>Jina AI</strong> 免費讀取網頁，再由 <strong>Gemini</strong> 自動擷取聯絡人、公司、Email、電話。需先在「⚙️ 設定」填入 Gemini API Key。
       </div>
     </div>
 
@@ -515,12 +517,57 @@ function confirmAddCustomer(){
   toast(`✅ 已新增：${name}`, 'ok');
 }
 
-// ══ CRAWL (預留接口) ══
-function crawlUrl(){
-  // TODO: 爬蟲 API 接好後在此實作
-  // const url = document.getElementById('urlInp').value.trim();
-  // fetch('/api/crawl', { method:'POST', body: JSON.stringify({url}) }) ...
-  toast('🔧 爬蟲功能開發中，請使用手動新增');
+// ══ CRAWL：Jina AI + Gemini ══
+async function crawlUrl(){
+  const url = document.getElementById('urlInp').value.trim();
+  if(!url){ toast('⚠️ 請輸入網址'); return; }
+  if(!url.startsWith('http')){ toast('⚠️ 請輸入完整網址（含 https://）'); return; }
+  const apiKey = cfg.apikey || '';
+  if(!apiKey){ toast('⚠️ 請先在「設定」填入 Gemini API Key'); swCP('settings', document.querySelector('.ctab:nth-child(4)')); return; }
+  document.getElementById('crawl-loading').style.display='block';
+  document.getElementById('crawlBtn').disabled = true;
+  try{
+    // Step 1: Jina AI 讀取網頁原始文字
+    const jinaRes = await fetch('https://r.jina.ai/'+url, {headers:{'Accept':'text/plain','X-No-Cache':'true'}});
+    if(!jinaRes.ok) throw new Error('Jina 讀取失敗（'+jinaRes.status+'），請確認網址是否公開可存取');
+    const pageText = await jinaRes.text();
+    const snippet = pageText.slice(0,4000);
+    // Step 2: Gemini 分析擷取
+    const prompt = `以下是一個公司網頁的文字內容，請從中找出所有可能的聯絡人資訊（姓名、公司、Email、電話）。
+
+網頁文字：
+${snippet}
+
+請只輸出 JSON 陣列，格式如下，欄位找不到請填空字串：
+[{"name":"聯絡人姓名","company":"公司名稱","email":"email","phone":"電話"}]
+
+如果完全找不到聯絡人，回傳 []`;
+    const gemRes = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+apiKey,
+      {method:'POST',headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.1,maxOutputTokens:1024}})}
+    );
+    const gemData = await gemRes.json();
+    if(gemData.error) throw new Error('Gemini 錯誤：'+gemData.error.message);
+    let raw = gemData.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+    raw = raw.replace(/```json|```/g,'').trim();
+    const contacts = JSON.parse(raw);
+    if(!Array.isArray(contacts)||!contacts.length){ toast('⚠️ 此網頁未找到聯絡資料，請改用手動新增'); return; }
+    let added = 0;
+    contacts.forEach(ct=>{
+      if(!ct.name && !ct.email) return;
+      customers.unshift({id:Date.now()+Math.random(),name:ct.name||'（未知聯絡人）',company:ct.company||'',email:ct.email||'',phone:ct.phone||'',url:url,status:'unsent',createdAt:new Date().toLocaleDateString('zh-TW')});
+      added++;
+    });
+    save(); renderContacts(); renderSelectList(); updateChips();
+    document.getElementById('urlInp').value='';
+    toast('✅ 已擷取 '+added+' 筆聯絡資料','ok');
+  }catch(err){
+    toast('❌ '+err.message,'err'); console.error(err);
+  }finally{
+    document.getElementById('crawl-loading').style.display='none';
+    document.getElementById('crawlBtn').disabled=false;
+  }
 }
 
 // ══ RENDER CONTACTS ══
