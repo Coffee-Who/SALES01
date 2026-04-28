@@ -691,11 +691,16 @@ ${snippet}
 // ══ RENDER CONTACTS ══
 function renderContacts(){
   const grid=document.getElementById('cust-grid');
-  const empty=document.getElementById('empty-contacts');
   const n=selectedIds.size;
   document.getElementById('sel-count-label').textContent=n?`已選 ${n} 筆`:'';
-  if(!customers.length){grid.innerHTML='';grid.appendChild(empty);empty.style.display='block';return;}
-  empty.style.display='none';
+  if(!customers.length){
+    grid.innerHTML=`<div class="empty-state" id="empty-contacts" style="grid-column:1/-1">
+      <div class="ei">📋</div><div class="et">尚無客戶名單</div>
+      <div class="es">輸入網址自動擷取，或點「手動新增」</div>
+    </div>`;
+    return;
+  }
+  grid.innerHTML='';
   grid.innerHTML=customers.map(c=>{
     const chk=selectedIds.has(c.id);
     return`<div class="cust-card${chk?' checked':''}" id="cc-${c.id}">
