@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>客戶開發 · 實威國際</title>
-<!-- Gemini API version -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,700&display=swap" rel="stylesheet">
 <style>
 :root{--bg0:#000;--bg1:#0d1117;--bg2:#161b22;--bg3:#21262d;--bd:#21262d;--bd2:#30363d;--t1:#e6edf3;--t2:#8b949e;--t3:#484f58;--ac:#2563EB;--ac2:#1d4ed8;--abg:#0d1433;--red:#f85149;--grn:#3fb950;--ylw:#d29922;--sh:0 2px 12px rgba(0,0,0,.4)}
@@ -11,8 +10,6 @@ body.lm{--bg0:#f4f5f8;--bg1:#fff;--bg2:#f6f8fa;--bg3:#e1e4e8;--bd:#d0d7de;--bd2:
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:var(--bg0);min-height:100vh}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
-
-/* ── Topbar ── */
 #topbar{background:var(--bg1);border-bottom:1px solid var(--bd);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100}
 .logo{font-size:15px;font-weight:700;display:flex;align-items:center;gap:9px}
 .logo-box{width:28px;height:28px;background:var(--ac);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px}
@@ -20,14 +17,9 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .tr{display:flex;align-items:center;gap:8px}
 .tbtn{background:var(--bg2);border:1px solid var(--bd);padding:5px 12px;border-radius:20px;cursor:pointer;font-size:13px;color:var(--t2);font-family:inherit;transition:.15s}.tbtn:hover{color:var(--t1)}
 .vbg{font-size:10px;color:var(--t3);background:var(--bg2);border:1px solid var(--bd);padding:3px 8px;border-radius:4px}
-
-/* ── Navtab ── */
 #navtab{background:var(--bg1);border-bottom:1px solid var(--bd);display:flex;padding:0 16px;overflow-x:auto;position:sticky;top:52px;z-index:99}
 .ntab{padding:12px 16px;font-size:13px;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;display:flex;align-items:center;gap:5px;white-space:nowrap;transition:color .15s;user-select:none;font-weight:500}
 .ntab:hover{color:var(--t1)}.ntab.on{color:var(--t1);border-bottom-color:var(--ac)}
-.sbg{font-size:9px;background:var(--bg3);color:var(--t2);padding:1px 5px;border-radius:3px}
-
-/* ── Title ── */
 .stitle{text-align:center;padding:24px 22px 18px;border-bottom:1px solid var(--bd)}
 .stitle h2{font-size:clamp(20px,4vw,32px);font-weight:900;letter-spacing:-.5px}
 .stitle h2 em{font-style:normal;color:var(--ac)}
@@ -36,101 +28,110 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .chip{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;background:var(--bg2);border:1px solid var(--bd2);font-size:12px;color:var(--t2)}
 .dot-g{width:7px;height:7px;border-radius:50%;background:var(--grn);animation:pulse 1.6s infinite;display:inline-block}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-
-/* ── Content ── */
 .sp{padding:0 22px 60px;max-width:1200px;margin:0 auto}
-
-/* ── Category Tabs ── */
-.ctabs{display:flex;justify-content:center;gap:8px;overflow-x:auto;padding:18px 0 16px;-webkit-overflow-scrolling:touch}
+.ctabs{display:flex;justify-content:center;gap:8px;overflow-x:auto;padding:18px 0 16px}
 .ctab{padding:7px 20px;border-radius:20px;border:1px solid var(--bd2);background:transparent;color:var(--t2);font-size:13px;font-family:inherit;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s}
 .ctab:hover{border-color:var(--ac);color:var(--ac)}.ctab.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 .cpanel{display:none}.cpanel.on{display:block}
-
-/* ── Buttons ── */
 .btn{font-family:inherit;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .btn:hover{background:var(--bg3)}.btn.p{background:var(--ac);color:#fff;border-color:var(--ac)}.btn.p:hover{background:var(--ac2)}
 .btn.g{background:rgba(63,185,80,.15);color:var(--grn);border-color:var(--grn)}.btn.g:hover{background:rgba(63,185,80,.25)}
 .btn.w{background:rgba(210,153,34,.15);color:var(--ylw);border-color:var(--ylw)}
 .btn.d{background:rgba(248,81,73,.15);color:var(--red);border-color:var(--red)}.btn.d:hover{background:rgba(248,81,73,.25)}
-.btn.sm{font-size:11px;padding:4px 10px}
-.btn:disabled{opacity:.4;cursor:not-allowed}
-
-/* ── Panel 1: 名單管理 ── */
+.btn.sm{font-size:11px;padding:4px 10px}.btn:disabled{opacity:.4;cursor:not-allowed}
+/* URL */
 .url-input-wrap{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:20px}
-.url-input-wrap h3{font-size:14px;font-weight:700;margin-bottom:12px;color:var(--t1)}
-.url-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.url-input-wrap h3{font-size:14px;font-weight:700;margin-bottom:14px}
+.url-modes{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.url-mode-btn{padding:5px 14px;border-radius:20px;border:1px solid var(--bd2);background:transparent;color:var(--t2);font-size:12px;font-family:inherit;font-weight:600;cursor:pointer;transition:.15s}
+.url-mode-btn.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.url-panel{display:none}.url-panel.on{display:block}
+.url-row{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}
 .url-inp{flex:1;min-width:240px;padding:9px 14px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:13px;font-family:inherit;outline:none;transition:.15s}
 .url-inp:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
 .url-inp::placeholder{color:var(--t3)}
-
-/* Stats row */
+.url-textarea{width:100%;min-height:90px;resize:vertical;padding:9px 14px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:12px;font-family:inherit;outline:none;line-height:1.6}
+.url-textarea:focus{border-color:var(--ac)}
+.url-note{padding:9px 14px;background:rgba(210,153,34,.08);border:1px solid rgba(210,153,34,.2);border-radius:8px;font-size:12px;color:var(--ylw);line-height:1.7}
+.url-note-blue{padding:9px 14px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);border-radius:8px;font-size:12px;color:var(--ac);line-height:1.7}
+.autopager-row{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:var(--t2)}
+.autopager-row input[type=checkbox]{width:14px;height:14px;accent-color:var(--ac);cursor:pointer}
+.autopager-row select{padding:3px 8px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:12px;font-family:inherit;outline:none}
+.batch-progress{margin-top:10px;display:none}
+.batch-bar-wrap{background:var(--bg3);border-radius:4px;height:6px;margin:6px 0}
+.batch-bar{background:var(--ac);height:6px;border-radius:4px;width:0%;transition:width .3s}
+/* Stats */
 .srow{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
 .sc{background:var(--bg1);border:1px solid var(--bd);border-radius:10px;padding:12px 18px;display:flex;align-items:center;gap:12px;min-width:110px}
 .sc .si{font-size:22px}.sc .sn{font-size:22px;font-weight:900;line-height:1}
 .sc .sl{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
 .sc.total .sn{color:var(--ac)}.sc.sent .sn{color:var(--grn)}.sc.pending .sn{color:var(--ylw)}
-
-/* Customer grid */
+.list-toolbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.list-toolbar-r{margin-left:auto;display:flex;gap:8px}
+/* Cards */
 .cust-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:4px}
 .cust-card{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden;transition:.15s}
 .cust-card:hover{border-color:var(--bd2);box-shadow:var(--sh)}
+.cust-card.checked{border-color:var(--ac);box-shadow:0 0 0 2px rgba(37,99,235,.2)}
 .cust-card-head{padding:14px 16px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.cust-name{font-size:14px;font-weight:700;color:var(--t1)}
-.cust-company{font-size:11px;color:var(--t2);margin-top:2px}
-.status-badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.cust-name{font-size:14px;font-weight:700}.cust-company{font-size:11px;color:var(--t2);margin-top:2px}
+.status-badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap}
 .status-badge.unsent{background:rgba(139,148,158,.15);color:var(--t2);border:1px solid var(--bd2)}
 .status-badge.sent{background:rgba(63,185,80,.15);color:var(--grn);border:1px solid rgba(63,185,80,.3)}
-.status-badge.pending{background:rgba(210,153,34,.15);color:var(--ylw);border:1px solid rgba(210,153,34,.3)}
 .cust-fields{padding:0 16px 10px;display:flex;flex-direction:column;gap:5px}
 .cust-field{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t2)}
 .cust-field span:first-child{width:14px;text-align:center;flex-shrink:0}
 .cust-field .val{color:var(--t1);font-size:12px}
-.cust-field input{flex:1;background:transparent;border:none;border-bottom:1px solid var(--bd);color:var(--t1);font-size:12px;font-family:inherit;padding:2px 4px;outline:none;transition:.15s}
-.cust-field input:focus{border-color:var(--ac)}
 .cust-actions{padding:10px 16px 14px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--bd)}
-.src-url{padding:4px 16px 10px;font-size:10px;color:var(--t3);word-break:break-all}
-
-/* Empty state */
+.src-url{padding:4px 16px 8px;font-size:10px;color:var(--t3);word-break:break-all}
+.card-check{width:16px;height:16px;border-radius:4px;border:2px solid var(--bd2);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.15s}
+.card-check.on{background:var(--ac);border-color:var(--ac)}.card-check.on::after{content:'✓';font-size:10px;color:#fff}
 .empty-state{text-align:center;padding:60px 20px;color:var(--t3)}
 .empty-state .ei{font-size:48px;margin-bottom:12px}
 .empty-state .et{font-size:15px;font-weight:600;color:var(--t2);margin-bottom:4px}
 .empty-state .es{font-size:13px}
-
-/* ── Panel 2: Email 發送 ── */
-.email-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:20px;align-items:start}
+/* Email panel */
+.email-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:20px;align-items:start}
 @media(max-width:768px){.email-layout{grid-template-columns:1fr}}
 .email-left{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
-.email-left-head{padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.email-left-head{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .email-left-head h3{font-size:13px;font-weight:700}
-.cust-select-list{max-height:420px;overflow-y:auto}
-.cust-select-item{padding:12px 16px;border-bottom:1px solid var(--bd);cursor:pointer;transition:.1s;display:flex;align-items:center;gap:10px}
+.cust-select-list{max-height:360px;overflow-y:auto}
+.cust-select-item{padding:10px 16px;border-bottom:1px solid var(--bd);cursor:pointer;transition:.1s;display:flex;align-items:center;gap:10px}
 .cust-select-item:hover{background:var(--bg2)}.cust-select-item.sel{background:var(--abg);border-left:3px solid var(--ac)}
 .cust-select-item .cn{font-size:13px;font-weight:600}.cust-select-item .ce{font-size:11px;color:var(--t2);margin-top:1px}
-.cust-avatar{width:32px;height:32px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
-
+.cust-avatar{width:30px;height:30px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.sel-check{width:14px;height:14px;border-radius:3px;border:2px solid var(--bd2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.15s}
+.sel-check.on{background:var(--ac);border-color:var(--ac)}.sel-check.on::after{content:'✓';font-size:9px;color:#fff}
 .email-right{display:flex;flex-direction:column;gap:16px}
 .email-compose{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
-.email-compose-head{padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.email-compose-head{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .email-compose-head h3{font-size:13px;font-weight:700}
 .email-form{padding:16px;display:flex;flex-direction:column;gap:12px}
 .ef-row{display:flex;flex-direction:column;gap:4px}
 .ef-label{font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
-.ef-input{padding:9px 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:13px;font-family:inherit;outline:none;transition:.15s;resize:none}
+.ef-input{padding:9px 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:13px;font-family:inherit;outline:none;transition:.15s}
 .ef-input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
 .ef-input::placeholder{color:var(--t3)}
-.ef-input[readonly]{opacity:.7;cursor:default}
-.ef-textarea{min-height:220px;line-height:1.7}
+.ef-select{padding:8px 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:13px;font-family:inherit;outline:none}
+.ef-select:focus{border-color:var(--ac)}
 .email-actions{padding:0 16px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .ai-badge{font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(37,99,235,.15);color:var(--ac);border:1px solid rgba(37,99,235,.3);font-weight:600}
-
-/* AI loading */
-.ai-loading{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);padding:8px 0}
+.ai-loading{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);padding:6px 0}
 .ai-spin{width:14px;height:14px;border:2px solid var(--bd2);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* Settings panel */
+/* Rich editor */
+.editor-toolbar{display:flex;gap:4px;padding:8px 12px;background:var(--bg2);border:1px solid var(--bd2);border-radius:8px 8px 0 0;flex-wrap:wrap;align-items:center}
+.et-btn{background:var(--bg3);border:1px solid var(--bd2);color:var(--t1);font-size:12px;padding:3px 8px;border-radius:4px;cursor:pointer;font-family:inherit;transition:.1s}
+.et-btn:hover{background:var(--bd2)}.et-btn.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.et-sep{width:1px;height:18px;background:var(--bd2);margin:0 2px}
+.et-color{width:22px;height:22px;border-radius:4px;border:1px solid var(--bd2);cursor:pointer;padding:1px}
+.editor-body{min-height:200px;padding:12px;border:1px solid var(--bd2);border-top:none;border-radius:0 0 8px 8px;background:var(--bg2);color:var(--t1);font-size:13px;line-height:1.7;outline:none;overflow-y:auto}
+.editor-body:focus{border-color:var(--ac)}
+.editor-body img{max-width:100%;border-radius:4px;margin:4px 0}
+/* Settings */
 .settings-box{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:20px}
-.settings-box h3{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.settings-box h3{font-size:13px;font-weight:700;margin-bottom:12px}
 .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:600px){.settings-grid{grid-template-columns:1fr}}
 .sf-row{display:flex;flex-direction:column;gap:4px}
@@ -138,73 +139,62 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .sf-input{padding:8px 12px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:13px;font-family:inherit;outline:none}
 .sf-input:focus{border-color:var(--ac)}
 .sf-input::placeholder{color:var(--t3)}
-
-/* Panel 3: 發送紀錄 */
+/* Template list */
+.tpl-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.tpl-item{background:var(--bg2);border:1px solid var(--bd2);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tpl-item.sel{border-color:var(--ac);background:var(--abg)}
+.tpl-name{font-size:13px;font-weight:600;color:var(--t1)}
+.tpl-sub{font-size:11px;color:var(--t2);margin-top:2px}
+.tpl-actions{display:flex;gap:6px;flex-shrink:0}
+/* Template editor modal */
+.tpl-editor-body{padding:20px;display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow-y:auto}
+.tpl-img-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tpl-img-preview{max-width:100%;max-height:120px;border-radius:6px;border:1px solid var(--bd2);margin-top:6px;display:none}
+/* Log */
 .log-table-wrap{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
 .log-head{padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
 .log-head h3{font-size:13px;font-weight:700}
 .log-table{width:100%;border-collapse:collapse}
-.log-table th{padding:10px 14px;font-size:11px;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;text-align:left;border-bottom:1px solid var(--bd);background:var(--bg2)}
+.log-table th{padding:10px 14px;font-size:11px;color:var(--t2);text-transform:uppercase;text-align:left;border-bottom:1px solid var(--bd);background:var(--bg2)}
 .log-table td{padding:12px 14px;font-size:12px;border-bottom:1px solid var(--bd)}
 .log-table tr:last-child td{border-bottom:none}
 .log-table tr:hover td{background:var(--bg2)}
 .lt-name{font-weight:600;color:var(--t1)}.lt-email{color:var(--t2)}.lt-time{color:var(--t3)}
-
 /* Toast */
 #toasts{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:7px;z-index:9999}
-.toast{padding:9px 16px;border-radius:8px;font-size:12px;background:var(--bg3);border:1px solid var(--bd2);animation:tin .2s ease;max-width:280px}
+.toast{padding:9px 16px;border-radius:8px;font-size:12px;background:var(--bg3);border:1px solid var(--bd2);animation:tin .2s ease;max-width:300px}
 .toast.ok{background:#0d2a14;border-color:var(--grn);color:var(--grn)}.toast.err{background:#2d0000;border-color:var(--red);color:var(--red)}
 @keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
 /* Modal */
-.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-ov.open{display:flex}
-.modal{background:var(--bg1);border:1px solid var(--bd2);border-radius:16px;width:100%;max-width:480px;overflow:hidden}
-.modal-head{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.modal{background:var(--bg1);border:1px solid var(--bd2);border-radius:16px;width:100%;max-width:560px;overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
+.modal-head{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .modal-head h3{font-size:15px;font-weight:700}
-.modal-x{background:none;border:none;color:var(--t2);font-size:18px;cursor:pointer;line-height:1}
-.modal-body{padding:20px;display:flex;flex-direction:column;gap:12px}
+.modal-x{background:none;border:none;color:var(--t2);font-size:18px;cursor:pointer}
+.modal-body{padding:20px;display:flex;flex-direction:column;gap:12px;overflow-y:auto}
 .mf-row{display:flex;flex-direction:column;gap:4px}
 .mf-label{font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 .mf-input{padding:9px 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:13px;font-family:inherit;outline:none}
 .mf-input:focus{border-color:var(--ac)}
-.modal-foot{padding:14px 20px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end}
-
-/* URL placeholder note */
-.url-note{margin-top:10px;padding:10px 14px;background:rgba(210,153,34,.08);border:1px solid rgba(210,153,34,.2);border-radius:8px;font-size:12px;color:var(--ylw);display:flex;align-items:flex-start;gap:7px}
-
-.product-desc{background:var(--bg2);border:1px solid var(--bd);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:0}
-.product-desc strong{color:var(--t1)}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
 </style>
 </head>
 <body>
 <div id="toasts"></div>
-
-<!-- ── Topbar ── -->
 <div id="topbar">
-  <div class="logo">
-    <div class="logo-box">📧</div>實威國際
-    <div class="logo-sep"></div>
-    <span class="logo-sub">客戶開發系統</span>
-  </div>
-  <div class="tr">
-    <button class="tbtn" onclick="toggleTheme()" id="themeBtn">🌙 暗色</button>
-    <span class="vbg">v1.0</span>
-  </div>
+  <div class="logo"><div class="logo-box">📧</div>實威國際<div class="logo-sep"></div><span class="logo-sub">客戶開發系統</span></div>
+  <div class="tr"><button class="tbtn" onclick="toggleTheme()" id="themeBtn">🌙 暗色</button><span class="vbg">v3.0</span></div>
 </div>
-
-<!-- ── Navtab ── -->
 <div id="navtab">
   <div class="ntab" onclick="location.href='tab-home.html'">🏠 首頁</div>
   <div class="ntab" onclick="location.href='tab-daily.html'">📰 每日焦點</div>
   <div class="ntab" onclick="location.href='tab-sample.html'">📦 3D列印</div>
   <div class="ntab on">📧 客戶開發</div>
 </div>
-
-<!-- ── Title ── -->
 <div class="stitle">
   <h2>客戶開發<em> Email 系統</em></h2>
-  <p>輸入客戶網址蒐集聯絡資料，Groq AI 自動生成個人化 Email，一鍵 Outlook 發送</p>
+  <p>自動擷取客戶資料・AI 生成 Email・HTML 範本・一鍵 Outlook 發送</p>
   <div class="stitle-meta">
     <div class="chip">👥 名單 <b id="chip-total">0</b></div>
     <div class="chip">✅ 已發送 <b id="chip-sent">0</b></div>
@@ -213,7 +203,6 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 </div>
 
 <div class="sp">
-  <!-- ── Category Tabs ── -->
   <div class="ctabs">
     <button class="ctab on" onclick="swCP('contacts',this)">👥 名單管理</button>
     <button class="ctab" onclick="swCP('send',this)">✉️ Email 發送</button>
@@ -221,199 +210,212 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
     <button class="ctab" onclick="swCP('settings',this)">⚙️ 設定</button>
   </div>
 
-  <!-- ════════════════════════════════
-       Panel 1: 名單管理
-  ════════════════════════════════ -->
+  <!-- ══ P1: 名單管理 ══ -->
   <div class="cpanel on" id="cp-contacts">
-
-    <!-- URL 輸入區 (Jina AI + Gemini) -->
     <div class="url-input-wrap">
-      <h3>🌐 新增客戶（輸入網址自動擷取）</h3>
-      <div class="url-row">
-        <input class="url-inp" id="urlInp" type="url" placeholder="https://www.客戶公司網站.com" />
-        <button class="btn p" id="crawlBtn" onclick="crawlUrl()">🔍 自動擷取</button>
-        <button class="btn" onclick="openManualAdd()">＋ 手動新增</button>
+      <h3>🌐 新增客戶</h3>
+      <div class="url-modes">
+        <button class="url-mode-btn on" onclick="swMode('single',this)">🔗 單一網址</button>
+        <button class="url-mode-btn" onclick="swMode('batch',this)">📋 批次網址</button>
+        <button class="url-mode-btn" onclick="openManualAdd()">＋ 手動新增</button>
       </div>
-      <div id="crawl-loading" style="display:none">
-        <div class="ai-loading" style="margin-top:10px"><div class="ai-spin"></div>正在讀取網頁並擷取聯絡資料，請稍候…</div>
+      <!-- 單一 -->
+      <div class="url-panel on" id="url-single">
+        <div class="url-row">
+          <input class="url-inp" id="urlInp" type="url" placeholder="https://www.客戶公司網站.com/contact" />
+          <button class="btn p" id="crawlBtn" onclick="crawlSingle()">🔍 自動擷取</button>
+        </div>
+        <div class="autopager-row">
+          <input type="checkbox" id="autopager" />
+          <label for="autopager">自動偵測並抓取後續分頁，最多</label>
+          <select id="maxPages">
+            <option value="5">5 頁</option><option value="10" selected>10 頁</option>
+            <option value="20">20 頁</option><option value="50">50 頁</option>
+          </select>
+        </div>
+        <div class="url-note" style="margin-top:10px">
+          💡 輸入單一網址自動擷取聯絡資料。勾選「自動偵測分頁」可連續抓多頁（適合會員名單等網站）。<br>
+          ⚠️ 僅限公開網頁，需先在「⚙️ 設定」填入 Groq API Key。
+        </div>
       </div>
-      <div class="url-note" style="margin-top:10px">
-        💡 透過 <strong>Cloudflare Worker</strong> 免費抓取網頁，再由 <strong>Groq AI</strong> 自動擷取聯絡人、公司、Email、電話。需先在「⚙️ 設定」填入 Gemini API Key。
+      <!-- 批次 -->
+      <div class="url-panel" id="url-batch">
+        <textarea class="url-textarea" id="batchInp" placeholder="每行貼一個網址，例如：&#10;https://www.forging.org.tw/...?pageno=1&#10;https://www.forging.org.tw/...?pageno=2&#10;https://www.forging.org.tw/...?pageno=3"></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center">
+          <button class="btn p" id="batchBtn" onclick="crawlBatch()">🔍 批次擷取全部</button>
+          <span id="batch-status" style="font-size:12px;color:var(--t2)"></span>
+        </div>
+        <div class="batch-progress" id="batch-progress">
+          <div style="font-size:11px;color:var(--t2);margin-bottom:4px" id="batch-prog-text">處理中…</div>
+          <div class="batch-bar-wrap"><div class="batch-bar" id="batch-bar"></div></div>
+        </div>
+        <div class="url-note-blue" style="margin-top:10px">
+          💡 適合有分頁的名單網站，把每一頁的網址各貼一行，系統會依序自動抓取並合併加入名單。
+        </div>
+      </div>
+      <div id="crawl-loading" style="display:none;margin-top:10px">
+        <div class="ai-loading"><div class="ai-spin"></div><span id="crawl-loading-text">正在讀取網頁…</span></div>
       </div>
     </div>
-
-    <!-- Stats -->
     <div class="srow">
       <div class="sc total"><div class="si">👥</div><div><div class="sn" id="st-total">0</div><div class="sl">總名單</div></div></div>
       <div class="sc sent"><div class="si">✅</div><div><div class="sn" id="st-sent">0</div><div class="sl">已發送</div></div></div>
       <div class="sc pending"><div class="si">⏳</div><div><div class="sn" id="st-pending">0</div><div class="sl">待發送</div></div></div>
     </div>
-
-    <!-- Cards -->
+    <div class="list-toolbar">
+      <button class="btn sm" onclick="selectAll()">☑ 全選</button>
+      <button class="btn sm" onclick="clearSel()">☐ 取消</button>
+      <span id="sel-count-label" style="font-size:12px;color:var(--t2)"></span>
+      <div class="list-toolbar-r">
+        <button class="btn sm g" onclick="exportExcel()">📊 匯出 Excel</button>
+        <button class="btn sm d" onclick="deleteSelected()">🗑 刪除選取</button>
+      </div>
+    </div>
     <div class="cust-grid" id="cust-grid">
       <div class="empty-state" id="empty-contacts" style="grid-column:1/-1">
-        <div class="ei">📋</div>
-        <div class="et">尚無客戶名單</div>
-        <div class="es">點擊「手動新增」或未來使用自動爬取功能</div>
+        <div class="ei">📋</div><div class="et">尚無客戶名單</div>
+        <div class="es">輸入網址自動擷取，或點「手動新增」</div>
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════
-       Panel 2: Email 發送
-  ════════════════════════════════ -->
+  <!-- ══ P2: Email 發送 ══ -->
   <div class="cpanel" id="cp-send">
     <div class="email-layout">
-
-      <!-- Left: 選擇客戶 -->
       <div class="email-left">
         <div class="email-left-head">
-          <h3>選擇客戶</h3>
-          <span class="chip" style="font-size:10px" id="sel-count">未選取</span>
+          <h3>選擇收件人</h3>
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+            <button class="btn sm" onclick="selAll()">全選</button>
+            <button class="btn sm" onclick="selNone()">取消</button>
+            <span id="sel-count" style="font-size:11px;color:var(--t2)">未選取</span>
+          </div>
         </div>
-        <div class="cust-select-list" id="cust-select-list">
-          <div style="padding:30px;text-align:center;color:var(--t3);font-size:13px">尚無客戶，請先在「名單管理」新增</div>
-        </div>
+        <div class="cust-select-list" id="cust-select-list"></div>
       </div>
-
-      <!-- Right: 撰寫 Email -->
       <div class="email-right">
         <div class="email-compose">
           <div class="email-compose-head">
-            <h3>✉️ Email 內容</h3>
+            <h3>✉️ 撰寫 Email</h3>
             <span class="ai-badge">✨ Groq AI</span>
           </div>
           <div class="email-form">
             <div class="ef-row">
-              <div class="ef-label">收件人</div>
-              <input class="ef-input" id="ef-to" readonly placeholder="選取左側客戶後自動帶入" />
+              <div class="ef-label">套用範本</div>
+              <select class="ef-select" id="ef-tpl" onchange="applyTemplate()">
+                <option value="">— 不套用範本（手動撰寫）—</option>
+              </select>
+            </div>
+            <div class="ef-row">
+              <div class="ef-label">收件人 To</div>
+              <input class="ef-input" id="ef-to" placeholder="選左側客戶自動帶入，或直接輸入；多個用逗號分隔" />
+            </div>
+            <div class="ef-row">
+              <div class="ef-label">密件副本 BCC</div>
+              <input class="ef-input" id="ef-bcc" placeholder="密件副本（選填），多個用逗號分隔" />
             </div>
             <div class="ef-row">
               <div class="ef-label">主旨</div>
-              <input class="ef-input" id="ef-subject" placeholder="點擊「AI 生成」自動產生" />
+              <input class="ef-input" id="ef-subject" placeholder="輸入主旨，或點「AI 生成」自動產生" />
             </div>
             <div class="ef-row">
-              <div class="ef-label">內文</div>
-              <textarea class="ef-input ef-textarea" id="ef-body" placeholder="點擊「AI 生成」，Claude 將根據客戶資料與您的產品介紹自動撰寫個人化 Email 內容"></textarea>
+              <div class="ef-label">內文（HTML 格式）</div>
+              <!-- Rich Editor -->
+              <div class="editor-toolbar" id="editor-toolbar">
+                <button class="et-btn" onclick="fmt('bold')" title="粗體"><b>B</b></button>
+                <button class="et-btn" onclick="fmt('italic')" title="斜體"><i>I</i></button>
+                <button class="et-btn" onclick="fmt('underline')" title="底線"><u>U</u></button>
+                <div class="et-sep"></div>
+                <button class="et-btn" onclick="fmt('fontSize','4')" title="大字">大</button>
+                <button class="et-btn" onclick="fmt('fontSize','2')" title="小字">小</button>
+                <div class="et-sep"></div>
+                <button class="et-btn" onclick="fmt('foreColor','#2563EB')" style="color:#2563EB">A</button>
+                <button class="et-btn" onclick="fmt('foreColor','#f85149')" style="color:#f85149">A</button>
+                <button class="et-btn" onclick="fmt('foreColor','#3fb950')" style="color:#3fb950">A</button>
+                <button class="et-btn" onclick="fmt('foreColor','#000000')" style="color:#888">A</button>
+                <div class="et-sep"></div>
+                <button class="et-btn" onclick="insertImg()" title="插入圖片">🖼</button>
+                <button class="et-btn" onclick="insertImgUrl()" title="圖片網址">🔗🖼</button>
+                <div class="et-sep"></div>
+                <button class="et-btn" onclick="fmt('insertUnorderedList')">• 清單</button>
+                <button class="et-btn" onclick="fmt('justifyLeft')">⬅</button>
+                <button class="et-btn" onclick="fmt('justifyCenter')">⬛</button>
+                <button class="et-btn" onclick="fmt('justifyRight')">➡</button>
+                <div class="et-sep"></div>
+                <button class="et-btn" onclick="clearEditor()" style="color:var(--red)">清除</button>
+              </div>
+              <div class="editor-body" id="editor-body" contenteditable="true" spellcheck="false" placeholder="點擊「AI 生成」自動撰寫，或直接在此輸入 HTML 格式內容…"></div>
             </div>
             <div id="ai-loading-row" style="display:none">
               <div class="ai-loading"><div class="ai-spin"></div>Groq AI 正在撰寫個人化 Email…</div>
             </div>
           </div>
           <div class="email-actions">
-            <button class="btn p" id="btn-ai-gen" onclick="aiGenerateEmail()" disabled>✨ AI 生成內容</button>
-            <button class="btn g" id="btn-send-outlook" onclick="sendOutlook()" disabled>📤 Outlook 發送</button>
+            <button class="btn p" onclick="aiGenerateEmail()">✨ AI 生成內容</button>
+            <button class="btn g" onclick="sendOutlook()">📤 Outlook 發送</button>
+            <button class="btn" onclick="previewEmail()">👁 預覽</button>
             <button class="btn" onclick="clearCompose()">🗑 清除</button>
-          </div>
-        </div>
-
-        <!-- 產品資料預覽 -->
-        <div class="email-compose">
-          <div class="email-compose-head">
-            <h3>📦 產品資料（AI 參考用）</h3>
-            <button class="btn sm" onclick="swCP('settings',document.querySelector('.ctab:nth-child(4))'))">編輯</button>
-          </div>
-          <div class="email-form">
-            <div class="product-desc" id="product-preview">
-              <strong>尚未設定產品資料</strong><br>請前往「設定」頁面填寫產品名稱、描述與優勢，AI 將根據這些資料生成個人化推銷 Email。
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════
-       Panel 3: 發送紀錄
-  ════════════════════════════════ -->
+  <!-- ══ P3: 發送紀錄 ══ -->
   <div class="cpanel" id="cp-log">
     <div class="log-table-wrap">
       <div class="log-head">
         <h3>📋 發送紀錄</h3>
-        <button class="btn sm d" onclick="clearLog()">清除紀錄</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn sm g" onclick="exportLogExcel()">📊 匯出</button>
+          <button class="btn sm d" onclick="clearLog()">清除</button>
+        </div>
       </div>
-      <table class="log-table" id="log-table">
-        <thead><tr>
-          <th>客戶姓名</th><th>公司</th><th>Email</th><th>主旨</th><th>時間</th><th>狀態</th>
-        </tr></thead>
-        <tbody id="log-tbody">
-          <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--t3)">尚無發送紀錄</td></tr>
-        </tbody>
-      </table>
+      <div style="overflow-x:auto">
+        <table class="log-table">
+          <thead><tr><th>名稱</th><th>公司</th><th>Email</th><th>主旨</th><th>時間</th><th>狀態</th></tr></thead>
+          <tbody id="log-tbody"><tr><td colspan="6" style="text-align:center;padding:40px;color:var(--t3)">尚無紀錄</td></tr></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════
-       Panel 4: 設定
-  ════════════════════════════════ -->
+  <!-- ══ P4: 設定 ══ -->
   <div class="cpanel" id="cp-settings">
 
-    <!-- Groq API Key -->
+    <!-- API -->
     <div class="settings-box">
       <h3>🤖 Groq API 設定</h3>
       <div style="margin-bottom:10px;padding:10px 14px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.25);border-radius:8px;font-size:12px;color:var(--grn);line-height:1.7">
-        ✅ <strong>免費使用</strong>｜前往 <a href="https://console.groq.com" target="_blank" style="color:var(--ac)">console.groq.com</a> → 登入 → 點「API Keys」→「Create API Key」即可取得（格式：gsk_xxx）
+        ✅ <strong>免費</strong>｜前往 <a href="https://console.groq.com" target="_blank" style="color:var(--ac)">console.groq.com</a> → API Keys → Create API Key
       </div>
-      <div class="settings-grid">
-        <div class="sf-row" style="grid-column:1/-1">
-          <div class="sf-label">Groq API Key</div>
-          <input class="sf-input" id="cfg-apikey" type="password" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxx" />
-        </div>
-      </div>
+      <div class="sf-row"><div class="sf-label">Groq API Key</div><input class="sf-input" id="cfg-apikey" type="password" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxx" style="width:100%"/></div>
     </div>
 
-    <!-- 爬蟲 API 設定 -->
+    <!-- Crawler -->
     <div class="settings-box">
-      <h3>🕷️ 爬蟲 API 設定（Cloudflare Worker）</h3>
-      <div style="margin-bottom:10px;padding:10px 14px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.25);border-radius:8px;font-size:12px;color:var(--ac);line-height:1.7">
-        ✅ 已設定預設爬蟲 API，所有人開啟此網頁都可直接自動擷取，無需任何安裝。
-      </div>
-      <div class="settings-grid">
-        <div class="sf-row" style="grid-column:1/-1">
-          <div class="sf-label">爬蟲 API 網址</div>
-          <input class="sf-input" id="cfg-crawler-url" placeholder="https://sales.barry00000000.workers.dev" />
-        </div>
-      </div>
+      <h3>🕷️ 爬蟲 API（Cloudflare Worker）</h3>
+      <div class="sf-row"><div class="sf-label">爬蟲 API 網址</div><input class="sf-input" id="cfg-crawler-url" style="width:100%" placeholder="https://sales.barry00000000.workers.dev"/></div>
     </div>
 
-    <!-- 寄件人設定 -->
+    <!-- Sender -->
     <div class="settings-box">
       <h3>👤 寄件人設定</h3>
       <div class="settings-grid">
-        <div class="sf-row">
-          <div class="sf-label">姓名</div>
-          <input class="sf-input" id="cfg-sender-name" placeholder="王小明" />
-        </div>
-        <div class="sf-row">
-          <div class="sf-label">職稱</div>
-          <input class="sf-input" id="cfg-sender-title" placeholder="業務經理" />
-        </div>
-        <div class="sf-row">
-          <div class="sf-label">公司名稱</div>
-          <input class="sf-input" id="cfg-company" placeholder="實威國際股份有限公司" />
-        </div>
-        <div class="sf-row">
-          <div class="sf-label">電話</div>
-          <input class="sf-input" id="cfg-phone" placeholder="02-2345-6789" />
-        </div>
+        <div class="sf-row"><div class="sf-label">姓名</div><input class="sf-input" id="cfg-sender-name" placeholder="王小明"/></div>
+        <div class="sf-row"><div class="sf-label">職稱</div><input class="sf-input" id="cfg-sender-title" placeholder="業務經理"/></div>
+        <div class="sf-row"><div class="sf-label">公司</div><input class="sf-input" id="cfg-company" placeholder="實威國際"/></div>
+        <div class="sf-row"><div class="sf-label">電話</div><input class="sf-input" id="cfg-phone" placeholder="02-2345-6789"/></div>
       </div>
     </div>
 
-    <!-- 產品資料 -->
+    <!-- Product -->
     <div class="settings-box">
-      <h3>📦 產品資料（AI 生成 Email 的依據）</h3>
+      <h3>📦 產品資料</h3>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div class="sf-row">
-          <div class="sf-label">產品名稱</div>
-          <input class="sf-input" id="cfg-product-name" placeholder="3D 列印服務 / SolidWorks 軟體解決方案" />
-        </div>
-        <div class="sf-row">
-          <div class="sf-label">產品描述與核心優勢</div>
-          <textarea class="sf-input" id="cfg-product-desc" style="min-height:120px;resize:vertical"
-            placeholder="請描述您的產品特色、適用場景、主要優勢…&#10;例如：我們提供專業的 3D 列印服務，支援 FDM/SLA/SLS 多種工藝，可在 3-5 個工作日內完成快速打樣，協助客戶縮短產品開發周期…"></textarea>
-        </div>
-        <div class="sf-row">
-          <div class="sf-label">Email 風格偏好</div>
+        <div class="sf-row"><div class="sf-label">產品名稱</div><input class="sf-input" id="cfg-product-name" placeholder="3D 列印服務"/></div>
+        <div class="sf-row"><div class="sf-label">產品描述</div><textarea class="sf-input" id="cfg-product-desc" style="min-height:80px;resize:vertical" placeholder="產品特色、優勢…"></textarea></div>
+        <div class="sf-row"><div class="sf-label">Email 風格</div>
           <select class="sf-input" id="cfg-email-style">
             <option value="professional">專業正式</option>
             <option value="friendly">親切友善</option>
@@ -423,480 +425,627 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
       </div>
     </div>
 
-    <div style="display:flex;justify-content:flex-end;gap:8px">
+    <!-- Templates -->
+    <div class="settings-box">
+      <h3>📝 Email 範本管理</h3>
+      <div class="tpl-list" id="tpl-list"></div>
+      <button class="btn p" onclick="openTplEditor()">＋ 新增範本</button>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end">
       <button class="btn p" onclick="saveSettings()">💾 儲存設定</button>
     </div>
   </div>
+</div>
 
-</div><!-- /sp -->
-
-<!-- ── Modal: 手動新增客戶 ── -->
+<!-- Modal: 手動新增客戶 -->
 <div class="modal-ov" id="modal-add">
   <div class="modal">
-    <div class="modal-head">
-      <h3>＋ 新增客戶</h3>
-      <button class="modal-x" onclick="closeModal('modal-add')">✕</button>
-    </div>
+    <div class="modal-head"><h3 id="modal-title">＋ 新增客戶</h3><button class="modal-x" onclick="closeModal('modal-add')">✕</button></div>
     <div class="modal-body">
-      <div class="mf-row">
-        <div class="mf-label">聯絡人姓名 *</div>
-        <input class="mf-input" id="m-name" placeholder="王大明" />
-      </div>
-      <div class="mf-row">
-        <div class="mf-label">公司名稱</div>
-        <input class="mf-input" id="m-company" placeholder="XX 科技股份有限公司" />
-      </div>
-      <div class="mf-row">
-        <div class="mf-label">Email *</div>
-        <input class="mf-input" id="m-email" type="email" placeholder="example@company.com" />
-      </div>
-      <div class="mf-row">
-        <div class="mf-label">電話</div>
-        <input class="mf-input" id="m-phone" placeholder="02-1234-5678" />
-      </div>
-      <div class="mf-row">
-        <div class="mf-label">來源網址（選填）</div>
-        <input class="mf-input" id="m-url" placeholder="https://..." />
-      </div>
+      <div class="mf-row"><div class="mf-label">名稱 *</div><input class="mf-input" id="m-name" placeholder="聯絡人或公司名稱"/></div>
+      <div class="mf-row"><div class="mf-label">公司</div><input class="mf-input" id="m-company" placeholder="公司名稱"/></div>
+      <div class="mf-row"><div class="mf-label">Email *</div><input class="mf-input" id="m-email" type="email" placeholder="example@company.com"/></div>
+      <div class="mf-row"><div class="mf-label">電話</div><input class="mf-input" id="m-phone" placeholder="02-1234-5678"/></div>
+      <div class="mf-row"><div class="mf-label">來源網址</div><input class="mf-input" id="m-url" placeholder="https://..."/></div>
     </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('modal-add')">取消</button>
-      <button class="btn p" onclick="confirmAddCustomer()">確認新增</button>
+      <button class="btn p" id="modal-confirm-btn" onclick="confirmAddCustomer()">確認新增</button>
     </div>
+  </div>
+</div>
+
+<!-- Modal: 範本編輯 -->
+<div class="modal-ov" id="modal-tpl">
+  <div class="modal" style="max-width:680px">
+    <div class="modal-head"><h3 id="tpl-modal-title">📝 新增範本</h3><button class="modal-x" onclick="closeModal('modal-tpl')">✕</button></div>
+    <div class="tpl-editor-body">
+      <div class="mf-row"><div class="mf-label">範本名稱 *</div><input class="mf-input" id="tpl-name" placeholder="例如：3D列印開發信、產品促銷信"/></div>
+      <div class="mf-row"><div class="mf-label">預設主旨</div><input class="mf-input" id="tpl-subject" placeholder="例如：【實威國際】3D列印快速打樣服務介紹"/></div>
+      <div class="mf-row">
+        <div class="mf-label" style="margin-bottom:6px">插入圖片</div>
+        <div class="tpl-img-row">
+          <button class="btn sm" onclick="tplInsertImgFile()">📁 上傳圖片</button>
+          <button class="btn sm" onclick="tplInsertImgUrl()">🔗 圖片網址</button>
+          <input type="file" id="tpl-img-file" accept="image/*" style="display:none" onchange="tplHandleImgFile(event)"/>
+        </div>
+      </div>
+      <div class="mf-row">
+        <div class="mf-label" style="margin-bottom:6px">Email 內文（HTML 格式）</div>
+        <div class="editor-toolbar">
+          <button class="et-btn" onclick="tplFmt('bold')"><b>B</b></button>
+          <button class="et-btn" onclick="tplFmt('italic')"><i>I</i></button>
+          <button class="et-btn" onclick="tplFmt('underline')"><u>U</u></button>
+          <div class="et-sep"></div>
+          <button class="et-btn" onclick="tplFmt('fontSize','4')">大</button>
+          <button class="et-btn" onclick="tplFmt('fontSize','2')">小</button>
+          <div class="et-sep"></div>
+          <button class="et-btn" onclick="tplFmt('foreColor','#2563EB')" style="color:#2563EB">A</button>
+          <button class="et-btn" onclick="tplFmt('foreColor','#f85149')" style="color:#f85149">A</button>
+          <button class="et-btn" onclick="tplFmt('foreColor','#3fb950')" style="color:#3fb950">A</button>
+          <button class="et-btn" onclick="tplFmt('foreColor','#000000')" style="color:#888">A</button>
+          <div class="et-sep"></div>
+          <button class="et-btn" onclick="tplFmt('insertUnorderedList')">• 清單</button>
+          <button class="et-btn" onclick="tplFmt('justifyCenter')">⬛置中</button>
+        </div>
+        <div class="editor-body" id="tpl-body" contenteditable="true" spellcheck="false" style="min-height:240px" placeholder="在此輸入 Email 範本內容，支援 HTML 格式…"></div>
+      </div>
+      <div style="padding:8px 12px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);border-radius:8px;font-size:12px;color:var(--ac)">
+        💡 可使用變數：<code>{{name}}</code> = 客戶名稱，<code>{{company}}</code> = 公司名稱，套用時自動帶入。
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modal-tpl')">取消</button>
+      <button class="btn p" id="tpl-confirm-btn" onclick="saveTpl()">💾 儲存範本</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 預覽 Email -->
+<div class="modal-ov" id="modal-preview">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-head"><h3>👁 Email 預覽</h3><button class="modal-x" onclick="closeModal('modal-preview')">✕</button></div>
+    <div class="modal-body">
+      <div style="font-size:12px;color:var(--t2);margin-bottom:4px">主旨：<span id="preview-subject" style="color:var(--t1);font-weight:600"></span></div>
+      <div style="font-size:12px;color:var(--t2);margin-bottom:10px">收件人：<span id="preview-to" style="color:var(--t1)"></span></div>
+      <div id="preview-body" style="background:#fff;color:#222;padding:16px;border-radius:8px;font-size:13px;line-height:1.8;border:1px solid var(--bd);overflow-x:auto"></div>
+    </div>
+    <div class="modal-foot"><button class="btn p" onclick="closeModal('modal-preview')">關閉</button></div>
   </div>
 </div>
 
 <script>
 // ══ DATA ══
-let customers = JSON.parse(localStorage.getItem('cus_list') || '[]');
-let sendLog    = JSON.parse(localStorage.getItem('cus_log')  || '[]');
-let cfg        = JSON.parse(localStorage.getItem('cus_cfg')  || '{}');
-let selectedId = null;
+let customers=JSON.parse(localStorage.getItem('cus_list')||'[]');
+let sendLog=JSON.parse(localStorage.getItem('cus_log')||'[]');
+let cfg=JSON.parse(localStorage.getItem('cus_cfg')||'{}');
+let templates=JSON.parse(localStorage.getItem('cus_tpl')||'[]');
+let selectedIds=new Set();
+let editingId=null;
+let editingTplId=null;
 
-// ══ INIT ══
-function init(){
-  loadSettingsUI();
-  renderContacts();
-  renderSelectList();
-  renderLog();
-  updateChips();
-  updateProductPreview();
-}
+function init(){loadSettingsUI();renderContacts();renderSelectList();renderLog();updateChips();renderTplList();renderTplSelect();}
 
 // ══ THEME ══
-function toggleTheme(){
-  document.body.classList.toggle('lm');
-  document.getElementById('themeBtn').textContent = document.body.classList.contains('lm') ? '🌑 暗色' : '🌙 暗色';
-}
+function toggleTheme(){document.body.classList.toggle('lm');document.getElementById('themeBtn').textContent=document.body.classList.contains('lm')?'🌑 暗色':'🌙 暗色';}
 
 // ══ TABS ══
-function swCP(name, btn){
+function swCP(name,btn){
   document.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('.cpanel').forEach(p=>p.classList.remove('on'));
-  if(btn && btn.classList) btn.classList.add('on');
-  const p = document.getElementById('cp-'+name);
-  if(p) p.classList.add('on');
-  if(name==='send') renderSelectList();
-  if(name==='log')  renderLog();
+  if(btn&&btn.classList)btn.classList.add('on');
+  const p=document.getElementById('cp-'+name);if(p)p.classList.add('on');
+  if(name==='send'){renderSelectList();renderTplSelect();}
+  if(name==='log')renderLog();
+}
+function swMode(mode,btn){
+  document.querySelectorAll('.url-mode-btn').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.url-panel').forEach(p=>p.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  const p=document.getElementById('url-'+mode);if(p)p.classList.add('on');
 }
 
 // ══ MODAL ══
 function openManualAdd(){
+  editingId=null;
   ['m-name','m-company','m-email','m-phone','m-url'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('urlInp').value && (document.getElementById('m-url').value = document.getElementById('urlInp').value);
+  document.getElementById('modal-title').textContent='＋ 新增客戶';
+  document.getElementById('modal-confirm-btn').textContent='確認新增';
   document.getElementById('modal-add').classList.add('open');
 }
-function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function closeModal(id){document.getElementById(id).classList.remove('open');}
 
 function confirmAddCustomer(){
-  const name  = document.getElementById('m-name').value.trim();
-  const email = document.getElementById('m-email').value.trim();
-  if(!name){ toast('⚠️ 請填寫聯絡人姓名'); return; }
-  if(!email){ toast('⚠️ 請填寫 Email'); return; }
-  const c = {
-    id: Date.now(),
-    name, email,
-    company: document.getElementById('m-company').value.trim(),
-    phone:   document.getElementById('m-phone').value.trim(),
-    url:     document.getElementById('m-url').value.trim(),
-    status:  'unsent',
-    createdAt: new Date().toLocaleDateString('zh-TW')
-  };
-  customers.unshift(c);
-  save();
-  closeModal('modal-add');
-  renderContacts();
-  renderSelectList();
-  updateChips();
-  toast(`✅ 已新增：${name}`, 'ok');
+  const name=document.getElementById('m-name').value.trim();
+  const email=document.getElementById('m-email').value.trim();
+  if(!name){toast('⚠️ 請填寫名稱');return;}
+  if(!email){toast('⚠️ 請填寫 Email');return;}
+  if(editingId){
+    const c=customers.find(x=>x.id===editingId);
+    if(c){c.name=name;c.company=document.getElementById('m-company').value.trim();c.email=email;c.phone=document.getElementById('m-phone').value.trim();c.url=document.getElementById('m-url').value.trim();}
+    toast('✅ 已更新','ok');
+  }else{
+    customers.unshift({id:Date.now(),name,email,company:document.getElementById('m-company').value.trim(),phone:document.getElementById('m-phone').value.trim(),url:document.getElementById('m-url').value.trim(),status:'unsent',createdAt:new Date().toLocaleDateString('zh-TW')});
+    toast('✅ 已新增：'+name,'ok');
+  }
+  save();closeModal('modal-add');renderContacts();renderSelectList();updateChips();
 }
 
-// ══ CRAWL：Jina AI + Gemini ══
-async function crawlUrl(){
-  const url = document.getElementById('urlInp').value.trim();
-  if(!url){ toast('⚠️ 請輸入網址'); return; }
-  if(!url.startsWith('http')){ toast('⚠️ 請輸入完整網址（含 https://）'); return; }
-  const apiKey = cfg.apikey || '';
-  if(!apiKey){ toast('⚠️ 請先在「設定」填入 Gemini API Key'); swCP('settings', document.querySelector('.ctab:nth-child(4)')); return; }
+// ══ CRAWL ══
+async function crawlSingle(){
+  const url=document.getElementById('urlInp').value.trim();
+  if(!url||!url.startsWith('http')){toast('⚠️ 請輸入完整網址（含 https://）');return;}
+  const autoPager=document.getElementById('autopager').checked;
+  const maxPages=parseInt(document.getElementById('maxPages').value)||10;
+
+  document.getElementById('crawlBtn').disabled=true;
+  let totalAdded=0;
+
+  if(autoPager){
+    // 抓第一頁，同時找下一頁連結
+    let currentUrl=url;
+    let page=1;
+    document.getElementById('batch-progress').style.display='block';
+    while(currentUrl&&page<=maxPages){
+      document.getElementById('batch-prog-text').textContent=`抓取第 ${page} 頁：${currentUrl}`;
+      document.getElementById('batch-bar').style.width=Math.round((page/maxPages)*100)+'%';
+      const result=await crawlOneUrl(currentUrl,true);
+      totalAdded+=result.added;
+      currentUrl=result.nextUrl||'';
+      page++;
+      if(currentUrl) await new Promise(r=>setTimeout(r,800));
+    }
+    document.getElementById('batch-progress').style.display='none';
+    document.getElementById('batch-bar').style.width='0%';
+    toast(`✅ 共抓取 ${page-1} 頁，擷取 ${totalAdded} 筆資料`,'ok');
+  }else{
+    const result=await crawlOneUrl(url,false);
+    totalAdded=result.added;
+    if(totalAdded>0)toast('✅ 已擷取 '+totalAdded+' 筆資料','ok');
+  }
+  document.getElementById('urlInp').value='';
+  document.getElementById('crawlBtn').disabled=false;
+}
+
+async function crawlBatch(){
+  const raw=document.getElementById('batchInp').value.trim();
+  if(!raw){toast('⚠️ 請輸入網址');return;}
+  const urls=raw.split('\n').map(u=>u.trim()).filter(u=>u.startsWith('http'));
+  if(!urls.length){toast('⚠️ 請每行輸入完整網址');return;}
+  document.getElementById('batchBtn').disabled=true;
+  document.getElementById('batch-progress').style.display='block';
+  let totalAdded=0;
+  for(let i=0;i<urls.length;i++){
+    document.getElementById('batch-bar').style.width=Math.round((i/urls.length)*100)+'%';
+    document.getElementById('batch-prog-text').textContent=`第 ${i+1}/${urls.length} 頁：${urls[i]}`;
+    document.getElementById('batch-status').textContent=`${i+1}/${urls.length}`;
+    const r=await crawlOneUrl(urls[i],false);
+    totalAdded+=r.added;
+    await new Promise(r=>setTimeout(r,800));
+  }
+  document.getElementById('batch-bar').style.width='100%';
+  document.getElementById('batch-prog-text').textContent=`完成！共擷取 ${totalAdded} 筆`;
+  document.getElementById('batchBtn').disabled=false;
+  document.getElementById('batch-status').textContent='';
+  toast('✅ 批次完成，共擷取 '+totalAdded+' 筆','ok');
+}
+
+async function crawlOneUrl(url,detectNext){
+  const apiKey=cfg.apikey||'';
+  if(!apiKey){toast('⚠️ 請先在「設定」填入 Groq API Key');return{added:0,nextUrl:''};}
+  const crawlerUrl=(cfg.crawlerUrl||'https://sales.barry00000000.workers.dev').replace(/\/$/,'');
   document.getElementById('crawl-loading').style.display='block';
-  document.getElementById('crawlBtn').disabled = true;
+  document.getElementById('crawl-loading-text').textContent='讀取：'+url;
   try{
-    // Step 1: Jina AI 讀取網頁原始文字
-    const crawlerUrl = (cfg.crawlerUrl||'https://sales.barry00000000.workers.dev').replace(/\/$/, '');
-    const apiRes = await fetch(crawlerUrl+'?url='+encodeURIComponent(url));
-    if(!apiRes.ok) throw new Error('爬蟲 API 回傳錯誤（'+apiRes.status+'）');
-    const apiData = await apiRes.json();
-    if(apiData.error) throw new Error('爬蟲失敗：'+apiData.error);
-    const snippet = (apiData.text||'').slice(0,4000);
-    if(!snippet) throw new Error('網頁內容為空，可能被擋或需要登入');
-    // Step 2: Gemini 分析擷取
-    const prompt = `以下是一個網頁的文字內容，請從中找出所有公司或聯絡人資訊。
+    const apiRes=await fetch(crawlerUrl+'?url='+encodeURIComponent(url));
+    if(!apiRes.ok)throw new Error('爬蟲 API 錯誤（'+apiRes.status+'）');
+    const apiData=await apiRes.json();
+    if(apiData.error)throw new Error(apiData.error);
+    const snippet=(apiData.text||'').slice(0,5000);
+    if(!snippet)throw new Error('網頁內容為空');
+
+    const nextInstruct=detectNext?'\n另外請找出「下一頁」的連結URL（完整網址），放在 next_url 欄位，找不到填空字串。':'';
+    const prompt=`以下是一個網頁的文字內容，找出所有公司或聯絡人的資訊。
 
 網頁文字：
 ${snippet}
 
-請找出所有出現的：公司名稱、Email、電話號碼。
-聯絡人姓名如果沒有，就用公司名稱代替。
+找出所有 Email、電話、公司名稱。name 欄位填聯絡人姓名，沒有就填公司名稱。${nextInstruct}
 
-規則：
-- 每一筆 Email 或電話都要獨立列出
-- name 欄位優先填聯絡人姓名，沒有就填公司名稱
-- 只輸出 JSON 陣列，不要任何說明或 markdown
+只輸出純 JSON，格式如下，不要任何說明：
+{"contacts":[{"name":"","company":"","email":"","phone":""}]${detectNext?',"next_url":""':''}}`;
 
-格式：
-[{"name":"公司或聯絡人名稱","company":"公司名稱","email":"email","phone":"電話"}]
-
-如果完全沒有任何資料，回傳 []`;
-    const gemRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const groqRes=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-      body:JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],temperature:0.1,max_tokens:1024})
+      body:JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],temperature:0.1,max_tokens:2048})
     });
-    const gemData = await gemRes.json();
-    if(gemData.error) throw new Error('Groq 錯誤：'+gemData.error.message);
-    let raw = gemData.choices?.[0]?.message?.content || '[]';
-    raw = raw.replace(/```json|```/g,'').trim();
-    const contacts = JSON.parse(raw);
-    if(!Array.isArray(contacts)||!contacts.length){ toast('⚠️ 此網頁未找到聯絡資料，請改用手動新增'); return; }
-    let added = 0;
+    const groqData=await groqRes.json();
+    if(groqData.error)throw new Error('Groq：'+groqData.error.message);
+    let raw=groqData.choices?.[0]?.message?.content||'{}';
+    raw=raw.replace(/```json|```/g,'').trim();
+    const start=raw.indexOf('{');if(start>0)raw=raw.slice(start);
+    const parsed=JSON.parse(raw);
+    const contacts=parsed.contacts||[];
+    let nextUrl=parsed.next_url||'';
+    // 確保 nextUrl 是完整 URL
+    if(nextUrl&&!nextUrl.startsWith('http')){
+      try{const base=new URL(url);nextUrl=base.origin+nextUrl;}catch(e){nextUrl='';}
+    }
+    // 不要重複抓同一頁
+    if(nextUrl===url)nextUrl='';
+
+    let added=0;
     contacts.forEach(ct=>{
-      if(!ct.name && !ct.email) return;
-      customers.unshift({id:Date.now()+Math.random(),name:ct.name||'（未知聯絡人）',company:ct.company||'',email:ct.email||'',phone:ct.phone||'',url:url,status:'unsent',createdAt:new Date().toLocaleDateString('zh-TW')});
+      if(!ct.name&&!ct.email&&!ct.company)return;
+      customers.unshift({id:Date.now()+Math.random(),name:ct.name||ct.company||'（未知）',company:ct.company||'',email:ct.email||'',phone:ct.phone||'',url:url,status:'unsent',createdAt:new Date().toLocaleDateString('zh-TW')});
       added++;
     });
-    save(); renderContacts(); renderSelectList(); updateChips();
-    document.getElementById('urlInp').value='';
-    toast('✅ 已擷取 '+added+' 筆聯絡資料','ok');
-  }catch(err){
-    toast('❌ '+err.message,'err'); console.error(err);
-  }finally{
-    document.getElementById('crawl-loading').style.display='none';
-    document.getElementById('crawlBtn').disabled=false;
-  }
+    if(added>0){save();renderContacts();renderSelectList();updateChips();}
+    else if(!contacts.length)toast('⚠️ 未找到聯絡資料：'+url);
+    return{added,nextUrl};
+  }catch(err){toast('❌ '+err.message,'err');console.error(err);return{added:0,nextUrl:''};}
+  finally{document.getElementById('crawl-loading').style.display='none';}
 }
 
 // ══ RENDER CONTACTS ══
 function renderContacts(){
-  const grid = document.getElementById('cust-grid');
-  const empty = document.getElementById('empty-contacts');
-  if(!customers.length){ grid.innerHTML=''; grid.appendChild(empty); empty.style.display='block'; return; }
+  const grid=document.getElementById('cust-grid');
+  const empty=document.getElementById('empty-contacts');
+  const n=selectedIds.size;
+  document.getElementById('sel-count-label').textContent=n?`已選 ${n} 筆`:'';
+  if(!customers.length){grid.innerHTML='';grid.appendChild(empty);empty.style.display='block';return;}
   empty.style.display='none';
-  grid.innerHTML = customers.map(c=>`
-    <div class="cust-card" id="cc-${c.id}">
+  grid.innerHTML=customers.map(c=>{
+    const chk=selectedIds.has(c.id);
+    return`<div class="cust-card${chk?' checked':''}" id="cc-${c.id}">
       <div class="cust-card-head">
-        <div>
-          <div class="cust-name">${e(c.name)}</div>
-          <div class="cust-company">${e(c.company||'—')}</div>
+        <div style="display:flex;align-items:center;gap:8px;min-width:0">
+          <div class="card-check${chk?' on':''}" onclick="toggleCard(${c.id})"></div>
+          <div><div class="cust-name">${e(c.name)}</div><div class="cust-company">${e(c.company||'')}</div></div>
         </div>
-        <span class="status-badge ${c.status}">${statusLabel(c.status)}</span>
+        <span class="status-badge ${c.status}">${c.status==='sent'?'✅ 已發送':'📭 待發送'}</span>
       </div>
       <div class="cust-fields">
-        <div class="cust-field"><span>📧</span><span class="val">${e(c.email)}</span></div>
+        <div class="cust-field"><span>📧</span><span class="val">${e(c.email||'—')}</span></div>
         <div class="cust-field"><span>📞</span><span class="val">${e(c.phone||'—')}</span></div>
       </div>
       ${c.url?`<div class="src-url">🌐 ${e(c.url)}</div>`:''}
       <div class="cust-actions">
-        <button class="btn sm p" onclick="quickSend(${c.id})">✉️ 快速發送</button>
+        <button class="btn sm p" onclick="quickSend(${c.id})">✉️ 發送</button>
         <button class="btn sm" onclick="editCustomer(${c.id})">✏️ 編輯</button>
         <button class="btn sm d" onclick="deleteCustomer(${c.id})">🗑</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
-function statusLabel(s){
-  if(s==='sent')    return '✅ 已發送';
-  if(s==='pending') return '⏳ 草稿中';
-  return '📭 待發送';
+function toggleCard(id){if(selectedIds.has(id))selectedIds.delete(id);else selectedIds.add(id);renderContacts();}
+function selectAll(){customers.forEach(c=>selectedIds.add(c.id));renderContacts();}
+function clearSel(){selectedIds.clear();renderContacts();}
+function deleteSelected(){
+  if(!selectedIds.size){toast('⚠️ 請先選取');return;}
+  if(!confirm('確定刪除 '+selectedIds.size+' 筆？'))return;
+  customers=customers.filter(c=>!selectedIds.has(c.id));
+  selectedIds.clear();save();renderContacts();renderSelectList();updateChips();toast('🗑 已刪除');
+}
+function exportExcel(){
+  if(!customers.length){toast('⚠️ 名單為空');return;}
+  csvDownload([['名稱','公司','Email','電話','來源網址','狀態','日期'],...customers.map(c=>[c.name,c.company,c.email,c.phone,c.url,c.status,c.createdAt])],'客戶名單.csv');
+  toast('✅ 已匯出','ok');
+}
+function exportLogExcel(){
+  if(!sendLog.length){toast('⚠️ 無紀錄');return;}
+  csvDownload([['名稱','公司','Email','主旨','時間'],...sendLog.map(l=>[l.name,l.company,l.email,l.subject,l.time])],'發送紀錄.csv');
+  toast('✅ 已匯出','ok');
+}
+function csvDownload(rows,filename){
+  const bom='\uFEFF';
+  const csv=bom+rows.map(r=>r.map(v=>'"'+(String(v||'').replace(/"/g,'""'))+'"').join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=filename;a.click();
 }
 
-// ══ RENDER SELECT LIST ══
+// ══ SELECT LIST ══
 function renderSelectList(){
-  const list = document.getElementById('cust-select-list');
-  if(!customers.length){
-    list.innerHTML='<div style="padding:30px;text-align:center;color:var(--t3);font-size:13px">尚無客戶，請先在「名單管理」新增</div>';
-    return;
-  }
-  list.innerHTML = customers.map(c=>`
-    <div class="cust-select-item ${selectedId===c.id?'sel':''}" onclick="selectCustomer(${c.id})">
-      <div class="cust-avatar">${c.name[0]}</div>
-      <div><div class="cn">${e(c.name)}</div><div class="ce">${e(c.email)}</div></div>
+  const list=document.getElementById('cust-select-list');
+  if(!customers.length){list.innerHTML='<div style="padding:30px;text-align:center;color:var(--t3);font-size:13px">尚無客戶</div>';return;}
+  list.innerHTML=customers.map(c=>{
+    const on=selectedIds.has(c.id);
+    return`<div class="cust-select-item${on?' sel':''}" onclick="toggleSel(${c.id})">
+      <div class="sel-check${on?' on':''}"></div>
+      <div class="cust-avatar">${(c.name||'?')[0]}</div>
+      <div><div class="cn">${e(c.name)}</div><div class="ce">${e(c.email||'無 Email')}</div></div>
+    </div>`;
+  }).join('');
+  updateToField();
+}
+function toggleSel(id){
+  if(selectedIds.has(id))selectedIds.delete(id);else selectedIds.add(id);
+  renderSelectList();
+  document.getElementById('sel-count').textContent=selectedIds.size?`已選 ${selectedIds.size} 位`:'未選取';
+}
+function selAll(){customers.forEach(c=>selectedIds.add(c.id));renderSelectList();document.getElementById('sel-count').textContent=`已選 ${selectedIds.size} 位`;}
+function selNone(){selectedIds.clear();renderSelectList();document.getElementById('sel-count').textContent='未選取';}
+function updateToField(){
+  const emails=customers.filter(c=>selectedIds.has(c.id)&&c.email).map(c=>c.email);
+  if(emails.length)document.getElementById('ef-to').value=emails.join(', ');
+}
+function quickSend(id){selectedIds.clear();selectedIds.add(id);swCP('send',document.querySelector('.ctab:nth-child(2)'));}
+
+// ══ RICH EDITOR ══
+function fmt(cmd,val){document.getElementById('editor-body').focus();document.execCommand(cmd,false,val||null);}
+function clearEditor(){document.getElementById('editor-body').innerHTML='';}
+function insertImg(){
+  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=ev=>{document.getElementById('editor-body').focus();document.execCommand('insertHTML',false,`<img src="${ev.target.result}" style="max-width:100%"/>`);}
+    r.readAsDataURL(f);
+  };inp.click();
+}
+function insertImgUrl(){
+  const url=prompt('請輸入圖片網址：');
+  if(url){document.getElementById('editor-body').focus();document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%"/>`);}
+}
+
+// ══ TEMPLATE ══
+function renderTplList(){
+  const list=document.getElementById('tpl-list');
+  if(!templates.length){list.innerHTML='<div style="color:var(--t3);font-size:13px;padding:8px 0">尚未建立任何範本</div>';return;}
+  list.innerHTML=templates.map(t=>`
+    <div class="tpl-item">
+      <div><div class="tpl-name">${e(t.name)}</div><div class="tpl-sub">${e(t.subject||'（無預設主旨）')}</div></div>
+      <div class="tpl-actions">
+        <button class="btn sm" onclick="editTpl(${t.id})">✏️ 編輯</button>
+        <button class="btn sm d" onclick="deleteTpl(${t.id})">🗑</button>
+      </div>
     </div>`).join('');
 }
+function renderTplSelect(){
+  const sel=document.getElementById('ef-tpl');
+  sel.innerHTML='<option value="">— 不套用範本（手動撰寫）—</option>';
+  templates.forEach(t=>sel.innerHTML+=`<option value="${t.id}">${e(t.name)}</option>`);
+}
+function applyTemplate(){
+  const id=parseInt(document.getElementById('ef-tpl').value);
+  if(!id)return;
+  const t=templates.find(x=>x.id===id);if(!t)return;
+  // 套入客戶變數
+  const c=customers.find(x=>selectedIds.has(x.id));
+  const name=c?c.name:'{{name}}';
+  const company=c?c.company:'{{company}}';
+  let body=t.body||'';
+  body=body.replace(/{{name}}/g,name).replace(/{{company}}/g,company);
+  document.getElementById('ef-subject').value=(t.subject||'').replace(/{{name}}/g,name).replace(/{{company}}/g,company);
+  document.getElementById('editor-body').innerHTML=body;
+  toast('✅ 已套用範本：'+t.name,'ok');
+}
+function openTplEditor(){
+  editingTplId=null;
+  document.getElementById('tpl-name').value='';
+  document.getElementById('tpl-subject').value='';
+  document.getElementById('tpl-body').innerHTML='';
+  document.getElementById('tpl-modal-title').textContent='📝 新增範本';
+  document.getElementById('modal-tpl').classList.add('open');
+}
+function editTpl(id){
+  const t=templates.find(x=>x.id===id);if(!t)return;
+  editingTplId=id;
+  document.getElementById('tpl-name').value=t.name;
+  document.getElementById('tpl-subject').value=t.subject||'';
+  document.getElementById('tpl-body').innerHTML=t.body||'';
+  document.getElementById('tpl-modal-title').textContent='✏️ 編輯範本：'+t.name;
+  document.getElementById('modal-tpl').classList.add('open');
+}
+function saveTpl(){
+  const name=document.getElementById('tpl-name').value.trim();
+  if(!name){toast('⚠️ 請填寫範本名稱');return;}
+  const tpl={
+    id:editingTplId||Date.now(),
+    name,
+    subject:document.getElementById('tpl-subject').value.trim(),
+    body:document.getElementById('tpl-body').innerHTML
+  };
+  if(editingTplId){const i=templates.findIndex(x=>x.id===editingTplId);if(i>=0)templates[i]=tpl;}
+  else templates.push(tpl);
+  saveTplStore();renderTplList();renderTplSelect();closeModal('modal-tpl');
+  toast('✅ 範本已儲存','ok');
+}
+function deleteTpl(id){
+  if(!confirm('確定刪除此範本？'))return;
+  templates=templates.filter(x=>x.id!==id);
+  saveTplStore();renderTplList();renderTplSelect();toast('🗑 已刪除');
+}
+function saveTplStore(){localStorage.setItem('cus_tpl',JSON.stringify(templates));}
 
-function selectCustomer(id){
-  selectedId = id;
-  const c = customers.find(x=>x.id===id);
-  document.getElementById('ef-to').value = c.email;
-  document.getElementById('ef-subject').value = '';
-  document.getElementById('ef-body').value = '';
-  document.getElementById('btn-ai-gen').disabled = false;
-  document.getElementById('sel-count').textContent = c.name;
-  renderSelectList();
+// 範本編輯器工具列
+function tplFmt(cmd,val){document.getElementById('tpl-body').focus();document.execCommand(cmd,false,val||null);}
+function tplInsertImgFile(){document.getElementById('tpl-img-file').click();}
+function tplHandleImgFile(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{document.getElementById('tpl-body').focus();document.execCommand('insertHTML',false,`<img src="${ev.target.result}" style="max-width:100%;border-radius:4px;margin:6px 0"/>`);}
+  r.readAsDataURL(f);
+}
+function tplInsertImgUrl(){
+  const url=prompt('請輸入圖片網址：');
+  if(url){document.getElementById('tpl-body').focus();document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%;border-radius:4px;margin:6px 0"/>`);}
 }
 
-// ══ QUICK SEND ══
-function quickSend(id){
-  selectCustomer(id);
-  swCP('send', document.querySelector('.ctab:nth-child(2)'));
-}
-
-// ══ AI GENERATE (Gemini) ══
+// ══ AI GENERATE ══
 async function aiGenerateEmail(){
-  if(!selectedId){ toast('⚠️ 請先選取客戶'); return; }
-  const apiKey = cfg.apikey || '';
-  if(!apiKey){ toast('⚠️ 請先在「設定」填入 Gemini API Key'); swCP('settings', document.querySelector('.ctab:nth-child(4)')); return; }
-
-  const c = customers.find(x=>x.id===selectedId);
-  const productName = cfg.productName || '3D 列印服務';
-  const productDesc = cfg.productDesc || '專業 3D 列印服務，支援多種工藝';
-  const senderName  = cfg.senderName  || '業務';
-  const senderTitle = cfg.senderTitle || '業務代表';
-  const company     = cfg.company     || '實威國際';
-  const emailStyle  = cfg.emailStyle  || 'professional';
-  const styleMap    = { professional:'專業正式', friendly:'親切友善', concise:'簡短精要' };
+  const apiKey=cfg.apikey||'';
+  if(!apiKey){toast('⚠️ 請先填入 Groq API Key');swCP('settings',document.querySelector('.ctab:nth-child(4)'));return;}
+  const toEmails=document.getElementById('ef-to').value.trim();
+  const selList=customers.filter(c=>selectedIds.has(c.id));
+  if(!toEmails&&!selList.length){toast('⚠️ 請選取收件人');return;}
+  const c=selList[0]||{name:'客戶',company:'',email:toEmails};
+  const productName=cfg.productName||'3D 列印服務';
+  const productDesc=cfg.productDesc||'專業 3D 列印服務';
+  const senderName=cfg.senderName||'業務';
+  const senderTitle=cfg.senderTitle||'業務代表';
+  const company=cfg.company||'實威國際';
+  const styleMap={professional:'專業正式',friendly:'親切友善',concise:'簡短精要'};
+  const emailStyle=styleMap[cfg.emailStyle||'professional'];
 
   document.getElementById('ai-loading-row').style.display='block';
-  document.getElementById('btn-ai-gen').disabled = true;
-  document.getElementById('btn-send-outlook').disabled = true;
+  document.getElementById('editor-body').innerHTML='<span style="color:#888">生成中…</span>';
 
-  const prompt = `你是一位專業的業務開發人員，請根據以下資料撰寫一封開發信 Email。
+  const prompt=`你是專業業務，請撰寫一封 HTML 格式的開發信 Email。
 
-【客戶資料】
-- 聯絡人：${c.name}
-- 公司：${c.company||'未知公司'}
-- Email：${c.email}
+客戶：${c.name}，公司：${c.company||'未知'}
+產品：${productName}
+產品描述：${productDesc}
+寄件人：${senderName}，${senderTitle}，${company}
+風格：${emailStyle}
 
-【產品資料】
-- 產品名稱：${productName}
-- 產品描述：${productDesc}
-
-【寄件人資料】
-- 姓名：${senderName}
-- 職稱：${senderTitle}
-- 公司：${company}
-
-【Email 風格】${styleMap[emailStyle]||'專業正式'}
-
-請輸出 JSON 格式，只輸出 JSON 不要任何說明或 markdown：
-{
-  "subject": "Email 主旨（30字以內）",
-  "body": "Email 內文（包含稱呼、內容、署名，使用\\n換行）"
-}`;
+請輸出純 JSON，格式如下，body 為 HTML 字串（可用 <b>、<p>、<br>、<ul><li> 等標籤），不要 markdown：
+{"subject":"主旨（30字內）","body":"<p>HTML 內文...</p>"}`;
 
   try{
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
-        })
-      }
-    );
-    const data = await res.json();
-    if(data.error){ throw new Error(data.error.message); }
-    let text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    text = text.replace(/```json|```/g,'').trim();
-    const parsed = JSON.parse(text);
-    document.getElementById('ef-subject').value = parsed.subject || '';
-    document.getElementById('ef-body').value    = parsed.body    || '';
-    document.getElementById('btn-send-outlook').disabled = false;
-    toast('✅ AI Email 已生成', 'ok');
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+      body:JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],temperature:0.7,max_tokens:1500})
+    });
+    const data=await res.json();
+    if(data.error)throw new Error(data.error.message);
+    let text=data.choices?.[0]?.message?.content||'{}';
+    text=text.replace(/```json|```/g,'').trim();
+    const start=text.indexOf('{');if(start>0)text=text.slice(start);
+    const parsed=JSON.parse(text);
+    document.getElementById('ef-subject').value=parsed.subject||'';
+    document.getElementById('editor-body').innerHTML=parsed.body||'';
+    if(!document.getElementById('ef-to').value.trim())updateToField();
+    toast('✅ AI Email 已生成','ok');
   }catch(err){
-    toast('❌ AI 生成失敗：'+err.message, 'err');
-    console.error(err);
+    document.getElementById('editor-body').innerHTML='';
+    toast('❌ AI 生成失敗：'+err.message,'err');console.error(err);
   }finally{
     document.getElementById('ai-loading-row').style.display='none';
-    document.getElementById('btn-ai-gen').disabled = false;
   }
+}
+
+// ══ PREVIEW ══
+function previewEmail(){
+  const subject=document.getElementById('ef-subject').value;
+  const to=document.getElementById('ef-to').value;
+  const body=document.getElementById('editor-body').innerHTML;
+  document.getElementById('preview-subject').textContent=subject||'（無主旨）';
+  document.getElementById('preview-to').textContent=to||'（無收件人）';
+  document.getElementById('preview-body').innerHTML=body||'（無內文）';
+  document.getElementById('modal-preview').classList.add('open');
 }
 
 // ══ SEND OUTLOOK ══
 function sendOutlook(){
-  const to      = document.getElementById('ef-to').value.trim();
-  const subject = document.getElementById('ef-subject').value.trim();
-  const body    = document.getElementById('ef-body').value.trim();
-  if(!to||!subject||!body){ toast('⚠️ 請填寫收件人、主旨與內文'); return; }
+  const to=document.getElementById('ef-to').value.trim();
+  const bcc=document.getElementById('ef-bcc').value.trim();
+  const subject=document.getElementById('ef-subject').value.trim();
+  const bodyHtml=document.getElementById('editor-body').innerHTML;
+  const bodyText=document.getElementById('editor-body').innerText;
+  if(!to){toast('⚠️ 請填寫收件人');return;}
+  if(!subject){toast('⚠️ 請填寫主旨');return;}
+  if(!bodyText.trim()){toast('⚠️ 請填寫內文');return;}
 
-  // Outlook Web compose URL
-  const params = new URLSearchParams({
-    to, subject,
-    body: body.replace(/\n/g,'%0A')
-  });
-  const url = `https://outlook.office.com/mail/deeplink/compose?to=${encodeURIComponent(to)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.open(url, '_blank');
+  let mailto=`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+  if(bcc)mailto+=`&bcc=${encodeURIComponent(bcc)}`;
+  window.location.href=mailto;
 
-  // 紀錄
-  const c = customers.find(x=>x.id===selectedId);
-  if(c){
-    c.status = 'sent';
-    sendLog.unshift({
-      id: Date.now(),
-      custId: c.id,
-      name: c.name,
-      company: c.company||'—',
-      email: to,
-      subject,
-      time: new Date().toLocaleString('zh-TW'),
-    });
-    save();
-    renderContacts();
-    updateChips();
-    renderLog();
-  }
-  toast('📤 已開啟 Outlook，請確認並發送', 'ok');
+  const selList=customers.filter(c=>selectedIds.has(c.id));
+  selList.forEach(c=>c.status='sent');
+  const logName=selList.length?selList.map(c=>c.name).join('、'):to;
+  sendLog.unshift({id:Date.now(),name:logName,company:selList.map(c=>c.company||'').join('、'),email:to,subject,time:new Date().toLocaleString('zh-TW')});
+  save();renderContacts();updateChips();renderLog();
+  toast('📤 已開啟 Outlook 寄信視窗','ok');
 }
 
-// ══ LOG ══
-function renderLog(){
-  const tbody = document.getElementById('log-tbody');
-  if(!sendLog.length){
-    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--t3)">尚無發送紀錄</td></tr>';
-    return;
-  }
-  tbody.innerHTML = sendLog.map(l=>`
-    <tr>
-      <td class="lt-name">${e(l.name)}</td>
-      <td>${e(l.company)}</td>
-      <td class="lt-email">${e(l.email)}</td>
-      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e(l.subject)}</td>
-      <td class="lt-time">${e(l.time)}</td>
-      <td><span class="status-badge sent">✅ 已開啟</span></td>
-    </tr>`).join('');
-}
-
-function clearLog(){
-  if(!confirm('確定清除所有發送紀錄？')) return;
-  sendLog=[];save();renderLog();toast('🗑 紀錄已清除');
-}
-
-// ══ DELETE / EDIT ══
-function deleteCustomer(id){
-  if(!confirm('確定刪除此客戶？')) return;
-  customers = customers.filter(x=>x.id!==id);
-  if(selectedId===id){ selectedId=null; document.getElementById('ef-to').value=''; }
-  save();renderContacts();renderSelectList();updateChips();
-  toast('🗑 已刪除');
-}
-
-function editCustomer(id){
-  const c = customers.find(x=>x.id===id);
-  if(!c) return;
-  document.getElementById('m-name').value    = c.name;
-  document.getElementById('m-company').value = c.company||'';
-  document.getElementById('m-email').value   = c.email;
-  document.getElementById('m-phone').value   = c.phone||'';
-  document.getElementById('m-url').value     = c.url||'';
-  // Temporarily replace confirm button behavior
-  const btn = document.querySelector('#modal-add .modal-foot .btn.p');
-  const orig = btn.onclick;
-  btn.onclick = ()=>{
-    const name  = document.getElementById('m-name').value.trim();
-    const email = document.getElementById('m-email').value.trim();
-    if(!name||!email){ toast('⚠️ 必填欄位不得為空'); return; }
-    c.name    = name;
-    c.email   = email;
-    c.company = document.getElementById('m-company').value.trim();
-    c.phone   = document.getElementById('m-phone').value.trim();
-    c.url     = document.getElementById('m-url').value.trim();
-    save();closeModal('modal-add');renderContacts();renderSelectList();
-    toast('✅ 已更新', 'ok');
-    btn.onclick = orig;
-  };
-  document.getElementById('modal-add').classList.add('open');
-}
-
-// ══ CLEAR COMPOSE ══
 function clearCompose(){
-  ['ef-to','ef-subject','ef-body'].forEach(id=>document.getElementById(id).value='');
-  selectedId=null;
-  document.getElementById('btn-ai-gen').disabled=true;
-  document.getElementById('btn-send-outlook').disabled=true;
+  ['ef-to','ef-bcc','ef-subject'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('editor-body').innerHTML='';
+  document.getElementById('ef-tpl').value='';
+  selectedIds.clear();
   document.getElementById('sel-count').textContent='未選取';
   renderSelectList();
 }
 
+// ══ LOG ══
+function renderLog(){
+  const tbody=document.getElementById('log-tbody');
+  if(!sendLog.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--t3)">尚無紀錄</td></tr>';return;}
+  tbody.innerHTML=sendLog.map(l=>`<tr>
+    <td class="lt-name">${e(l.name)}</td><td>${e(l.company)}</td><td class="lt-email">${e(l.email)}</td>
+    <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e(l.subject)}</td>
+    <td class="lt-time">${e(l.time)}</td><td><span class="status-badge sent">✅ 已發送</span></td>
+  </tr>`).join('');
+}
+function clearLog(){if(!confirm('確定清除？'))return;sendLog=[];save();renderLog();toast('🗑 已清除');}
+
+// ══ EDIT/DELETE ══
+function editCustomer(id){
+  editingId=id;
+  const c=customers.find(x=>x.id===id);if(!c)return;
+  document.getElementById('m-name').value=c.name;
+  document.getElementById('m-company').value=c.company||'';
+  document.getElementById('m-email').value=c.email;
+  document.getElementById('m-phone').value=c.phone||'';
+  document.getElementById('m-url').value=c.url||'';
+  document.getElementById('modal-title').textContent='✏️ 編輯客戶';
+  document.getElementById('modal-confirm-btn').textContent='確認更新';
+  document.getElementById('modal-add').classList.add('open');
+}
+function deleteCustomer(id){
+  if(!confirm('確定刪除？'))return;
+  customers=customers.filter(x=>x.id!==id);
+  selectedIds.delete(id);save();renderContacts();renderSelectList();updateChips();toast('🗑 已刪除');
+}
+
 // ══ SETTINGS ══
 function loadSettingsUI(){
-  document.getElementById('cfg-apikey').value        = cfg.apikey||'';
-  document.getElementById('cfg-crawler-url').value   = cfg.crawlerUrl||'https://sales.barry00000000.workers.dev';
-  document.getElementById('cfg-sender-name').value   = cfg.senderName||'';
-  document.getElementById('cfg-sender-title').value  = cfg.senderTitle||'';
-  document.getElementById('cfg-company').value       = cfg.company||'';
-  document.getElementById('cfg-phone').value         = cfg.phone||'';
-  document.getElementById('cfg-product-name').value  = cfg.productName||'';
-  document.getElementById('cfg-product-desc').value  = cfg.productDesc||'';
-  document.getElementById('cfg-email-style').value   = cfg.emailStyle||'professional';
+  document.getElementById('cfg-apikey').value=cfg.apikey||'';
+  document.getElementById('cfg-crawler-url').value=cfg.crawlerUrl||'https://sales.barry00000000.workers.dev';
+  document.getElementById('cfg-sender-name').value=cfg.senderName||'';
+  document.getElementById('cfg-sender-title').value=cfg.senderTitle||'';
+  document.getElementById('cfg-company').value=cfg.company||'';
+  document.getElementById('cfg-phone').value=cfg.phone||'';
+  document.getElementById('cfg-product-name').value=cfg.productName||'';
+  document.getElementById('cfg-product-desc').value=cfg.productDesc||'';
+  document.getElementById('cfg-email-style').value=cfg.emailStyle||'professional';
 }
 function saveSettings(){
-  cfg.apikey      = document.getElementById('cfg-apikey').value.trim();
-  cfg.crawlerUrl  = document.getElementById('cfg-crawler-url').value.trim() || 'https://sales.barry00000000.workers.dev';
-  cfg.senderName  = document.getElementById('cfg-sender-name').value.trim();
-  cfg.senderTitle = document.getElementById('cfg-sender-title').value.trim();
-  cfg.company     = document.getElementById('cfg-company').value.trim();
-  cfg.phone       = document.getElementById('cfg-phone').value.trim();
-  cfg.productName = document.getElementById('cfg-product-name').value.trim();
-  cfg.productDesc = document.getElementById('cfg-product-desc').value.trim();
-  cfg.emailStyle  = document.getElementById('cfg-email-style').value;
-  save();updateProductPreview();toast('✅ 設定已儲存', 'ok');
-}
-function updateProductPreview(){
-  const n = cfg.productName||'—';
-  const d = cfg.productDesc||'尚未設定產品描述';
-  document.getElementById('product-preview').innerHTML = `<strong>${e(n)}</strong><br>${e(d)}`;
-}
-
-// ══ CHIPS ══
-function updateChips(){
-  const total   = customers.length;
-  const sent    = customers.filter(c=>c.status==='sent').length;
-  const pending = total - sent;
-  document.getElementById('chip-total').textContent = total;
-  document.getElementById('chip-sent').textContent  = sent;
-  document.getElementById('st-total').textContent   = total;
-  document.getElementById('st-sent').textContent    = sent;
-  document.getElementById('st-pending').textContent = pending;
-}
-
-// ══ PERSIST ══
-function save(){
-  localStorage.setItem('cus_list', JSON.stringify(customers));
-  localStorage.setItem('cus_log',  JSON.stringify(sendLog));
-  localStorage.setItem('cus_cfg',  JSON.stringify(cfg));
+  cfg.apikey=document.getElementById('cfg-apikey').value.trim();
+  cfg.crawlerUrl=document.getElementById('cfg-crawler-url').value.trim()||'https://sales.barry00000000.workers.dev';
+  cfg.senderName=document.getElementById('cfg-sender-name').value.trim();
+  cfg.senderTitle=document.getElementById('cfg-sender-title').value.trim();
+  cfg.company=document.getElementById('cfg-company').value.trim();
+  cfg.phone=document.getElementById('cfg-phone').value.trim();
+  cfg.productName=document.getElementById('cfg-product-name').value.trim();
+  cfg.productDesc=document.getElementById('cfg-product-desc').value.trim();
+  cfg.emailStyle=document.getElementById('cfg-email-style').value;
+  save();toast('✅ 設定已儲存','ok');
 }
 
 // ══ UTILS ══
-function e(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function toast(msg, type=''){
-  const t = document.createElement('div');
-  t.className = 'toast'+(type?' '+type:'');
-  t.textContent = msg;
-  document.getElementById('toasts').appendChild(t);
-  setTimeout(()=>t.remove(), 3000);
+function updateChips(){
+  const total=customers.length,sent=customers.filter(c=>c.status==='sent').length;
+  document.getElementById('chip-total').textContent=total;
+  document.getElementById('chip-sent').textContent=sent;
+  document.getElementById('st-total').textContent=total;
+  document.getElementById('st-sent').textContent=sent;
+  document.getElementById('st-pending').textContent=total-sent;
 }
-
+function save(){
+  localStorage.setItem('cus_list',JSON.stringify(customers));
+  localStorage.setItem('cus_log',JSON.stringify(sendLog));
+  localStorage.setItem('cus_cfg',JSON.stringify(cfg));
+}
+function e(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function toast(msg,type=''){
+  const t=document.createElement('div');t.className='toast'+(type?' '+type:'');
+  t.textContent=msg;document.getElementById('toasts').appendChild(t);
+  setTimeout(()=>t.remove(),3500);
+}
 init();
 </script>
 </body>
