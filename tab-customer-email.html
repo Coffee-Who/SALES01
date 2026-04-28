@@ -383,7 +383,40 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
       </div>
     </div>
   </div>
+<!-- ══ P3.5: BCC 產生器 ══ -->
+<div class="cpanel" id="cp-bcc">
+  <div class="url-input-wrap" style="max-width:640px;margin:0 auto">
+    <h3>📨 BCC Email 產生器</h3>
+    <div class="url-note-blue" style="margin-bottom:14px">
+      貼入 Email 清單 → 自動過濾重複與無效格式 → 一鍵複製 → 貼到 Outlook BCC 欄位批次發送
+    </div>
+    <div style="background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2);border-radius:8px;padding:9px 14px;font-size:12px;color:var(--grn);margin-bottom:14px;line-height:1.8">
+      📋 操作流程：名單管理匯出 CSV → 複製 Email 欄 → 貼入下方 → 產生 → 複製 → 開 Outlook 新信 → 貼到 BCC → 送出
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:4px">
+      <span style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em">貼入 Email 清單</span>
+      <textarea class="url-textarea" id="bcc-inp" style="min-height:160px" placeholder="每行一個 Email，例如：
+john@company.com
+mary@example.com
 
+也支援逗號、分號分隔"></textarea>
+    </div>
+    <div style="font-size:11px;color:var(--t3);margin-bottom:12px">支援每行一個 / 逗號 / 分號 / 空格，自動去除重複與無效格式</div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+      <button class="btn p" onclick="bccProcess()">產生 BCC 清單</button>
+      <button class="btn" onclick="bccClear()">清除</button>
+    </div>
+    <div id="bcc-result-wrap" style="display:none">
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap" id="bcc-stats"></div>
+      <div style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">BCC 貼上內容</div>
+      <div id="bcc-result-box" style="background:var(--bg2);border:1px solid var(--bd2);border-radius:8px;padding:12px;font-size:12px;color:var(--t1);word-break:break-all;line-height:1.7;min-height:60px;margin-bottom:10px"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn g" id="bcc-copy-btn" onclick="bccCopy()">複製 → 貼到 Outlook BCC</button>
+      </div>
+      <div id="bcc-invalid-wrap" style="margin-top:10px"></div>
+    </div>
+  </div>
+</div>
   <!-- ══ P4: 設定 ══ -->
   <div class="cpanel" id="cp-settings">
 
@@ -470,8 +503,9 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
       <div class="mf-row">
         <div class="mf-label" style="margin-bottom:6px">插入圖片</div>
         <div class="tpl-img-row">
-          <button class="btn sm" onclick="tplInsertImgFile()">📁 上傳圖片</button>
-          <button class="btn sm" onclick="tplInsertImgUrl()">🔗 圖片網址</button>
+          <button class="ctab" onclick="swCP('log',this)">📋 發送紀錄</button>
+          <button class="ctab" onclick="swCP('bcc',this)">📨 BCC 產生器</button>
+          <button class="ctab" onclick="swCP('settings',this)">⚙️ 設定</button>
           <input type="file" id="tpl-img-file" accept="image/*" style="display:none" onchange="tplHandleImgFile(event)"/>
         </div>
       </div>
@@ -1135,6 +1169,49 @@ function toast(msg,type=''){
   setTimeout(()=>t.remove(),3500);
 }
 init();
+  /* ── BCC 產生器 ── */
+let _bccResult = '';
+function bccProcess() {
+  const raw = document.getElementById('bcc-inp').value.trim();
+  if (!raw) return;
+  const tokens = raw.split(/[\n,;　 ]+/).map(s => s.trim()).filter(Boolean);
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const valid = [], invalid = [], seen = new Set();
+  tokens.forEach(t => {
+    if (re.test(t)) { const l = t.toLowerCase(); if (!seen.has(l)) { seen.add(l); valid.push(t); } }
+    else if (t.length) invalid.push(t);
+  });
+  document.getElementById('bcc-result-wrap').style.display = valid.length ? 'block' : 'none';
+  if (!valid.length) { toast('沒有找到有效的 Email，請確認格式', 'err'); return; }
+  _bccResult = valid.join(', ');
+  document.getElementById('bcc-result-box').textContent = _bccResult;
+  const dupes = tokens.filter(t => re.test(t)).length - valid.length;
+  document.getElementById('bcc-stats').innerHTML =
+    `✅ 有效 ${valid.length} 筆` +
+    (dupes > 0 ? `⚠️ 去除重複 ${dupes} 筆` : '') +
+    (invalid.length ? `❌ 無效 ${invalid.length} 筆` : '');
+  document.getElementById('bcc-invalid-wrap').innerHTML = invalid.length
+    ? '
+無效格式（已略過）
+' +
+      invalid.map(e => `${e}`).join('') : '';
+  const btn = document.getElementById('bcc-copy-btn');
+  btn.textContent = '複製 → 貼到 Outlook BCC'; btn.className = 'btn g';
+}
+function bccCopy() {
+  if (!_bccResult) return;
+  navigator.clipboard.writeText(_bccResult).then(() => {
+    const btn = document.getElementById('bcc-copy-btn');
+    btn.textContent = '✓ 已複製！貼到 Outlook BCC 欄位';
+    setTimeout(() => { btn.textContent = '複製 → 貼到 Outlook BCC'; }, 3000);
+    toast('已複製 ' + _bccResult.split(',').length + ' 個 Email！');
+  });
+}
+function bccClear() {
+  document.getElementById('bcc-inp').value = '';
+  document.getElementById('bcc-result-wrap').style.display = 'none';
+  _bccResult = '';
+}
 </script>
 </body>
 </html>
