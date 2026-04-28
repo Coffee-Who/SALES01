@@ -550,15 +550,23 @@ async function crawlUrl(){
     const snippet = (apiData.text||'').slice(0,4000);
     if(!snippet) throw new Error('網頁內容為空，可能被擋或需要登入');
     // Step 2: Gemini 分析擷取
-    const prompt = `以下是一個公司網頁的文字內容，請從中找出所有可能的聯絡人資訊（姓名、公司、Email、電話）。
+    const prompt = `以下是一個網頁的文字內容，請從中找出所有公司或聯絡人資訊。
 
 網頁文字：
 ${snippet}
 
-請只輸出 JSON 陣列，格式如下，欄位找不到請填空字串：
-[{"name":"聯絡人姓名","company":"公司名稱","email":"email","phone":"電話"}]
+請找出所有出現的：公司名稱、Email、電話號碼。
+聯絡人姓名如果沒有，就用公司名稱代替。
 
-如果完全找不到聯絡人，回傳 []`;
+規則：
+- 每一筆 Email 或電話都要獨立列出
+- name 欄位優先填聯絡人姓名，沒有就填公司名稱
+- 只輸出 JSON 陣列，不要任何說明或 markdown
+
+格式：
+[{"name":"公司或聯絡人名稱","company":"公司名稱","email":"email","phone":"電話"}]
+
+如果完全沒有任何資料，回傳 []`;
     const gemRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
