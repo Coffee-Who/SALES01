@@ -39,7 +39,6 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .btn.w{background:rgba(210,153,34,.15);color:var(--ylw);border-color:var(--ylw)}
 .btn.d{background:rgba(248,81,73,.15);color:var(--red);border-color:var(--red)}.btn.d:hover{background:rgba(248,81,73,.25)}
 .btn.sm{font-size:11px;padding:4px 10px}.btn:disabled{opacity:.4;cursor:not-allowed}
-/* URL */
 .url-input-wrap{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:20px}
 .url-input-wrap h3{font-size:14px;font-weight:700;margin-bottom:14px}
 .url-modes{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
@@ -60,7 +59,6 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .batch-progress{margin-top:10px;display:none}
 .batch-bar-wrap{background:var(--bg3);border-radius:4px;height:6px;margin:6px 0}
 .batch-bar{background:var(--ac);height:6px;border-radius:4px;width:0%;transition:width .3s}
-/* Stats */
 .srow{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
 .sc{background:var(--bg1);border:1px solid var(--bd);border-radius:10px;padding:12px 18px;display:flex;align-items:center;gap:12px;min-width:110px}
 .sc .si{font-size:22px}.sc .sn{font-size:22px;font-weight:900;line-height:1}
@@ -68,7 +66,6 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .sc.total .sn{color:var(--ac)}.sc.sent .sn{color:var(--grn)}.sc.pending .sn{color:var(--ylw)}
 .list-toolbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
 .list-toolbar-r{margin-left:auto;display:flex;gap:8px}
-/* Cards */
 .cust-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:4px}
 .cust-card{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden;transition:.15s}
 .cust-card:hover{border-color:var(--bd2);box-shadow:var(--sh)}
@@ -90,7 +87,6 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .empty-state .ei{font-size:48px;margin-bottom:12px}
 .empty-state .et{font-size:15px;font-weight:600;color:var(--t2);margin-bottom:4px}
 .empty-state .es{font-size:13px}
-/* Email panel */
 .email-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:20px;align-items:start}
 @media(max-width:768px){.email-layout{grid-template-columns:1fr}}
 .email-left{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
@@ -120,16 +116,13 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .ai-loading{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);padding:6px 0}
 .ai-spin{width:14px;height:14px;border:2px solid var(--bd2);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* Rich editor */
 .editor-toolbar{display:flex;gap:4px;padding:8px 12px;background:var(--bg2);border:1px solid var(--bd2);border-radius:8px 8px 0 0;flex-wrap:wrap;align-items:center}
 .et-btn{background:var(--bg3);border:1px solid var(--bd2);color:var(--t1);font-size:12px;padding:3px 8px;border-radius:4px;cursor:pointer;font-family:inherit;transition:.1s}
 .et-btn:hover{background:var(--bd2)}.et-btn.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 .et-sep{width:1px;height:18px;background:var(--bd2);margin:0 2px}
-.et-color{width:22px;height:22px;border-radius:4px;border:1px solid var(--bd2);cursor:pointer;padding:1px}
 .editor-body{min-height:200px;padding:12px;border:1px solid var(--bd2);border-top:none;border-radius:0 0 8px 8px;background:var(--bg2);color:var(--t1);font-size:13px;line-height:1.7;outline:none;overflow-y:auto}
 .editor-body:focus{border-color:var(--ac)}
 .editor-body img{max-width:100%;border-radius:4px;margin:4px 0}
-/* Settings */
 .settings-box{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:20px}
 .settings-box h3{font-size:13px;font-weight:700;margin-bottom:12px}
 .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -139,18 +132,14 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .sf-input{padding:8px 12px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:13px;font-family:inherit;outline:none}
 .sf-input:focus{border-color:var(--ac)}
 .sf-input::placeholder{color:var(--t3)}
-/* Template list */
 .tpl-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
 .tpl-item{background:var(--bg2);border:1px solid var(--bd2);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .tpl-item.sel{border-color:var(--ac);background:var(--abg)}
 .tpl-name{font-size:13px;font-weight:600;color:var(--t1)}
 .tpl-sub{font-size:11px;color:var(--t2);margin-top:2px}
 .tpl-actions{display:flex;gap:6px;flex-shrink:0}
-/* Template editor modal */
 .tpl-editor-body{padding:20px;display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow-y:auto}
 .tpl-img-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.tpl-img-preview{max-width:100%;max-height:120px;border-radius:6px;border:1px solid var(--bd2);margin-top:6px;display:none}
-/* Log */
 .log-table-wrap{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
 .log-head{padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
 .log-head h3{font-size:13px;font-weight:700}
@@ -160,12 +149,10 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .log-table tr:last-child td{border-bottom:none}
 .log-table tr:hover td{background:var(--bg2)}
 .lt-name{font-weight:600;color:var(--t1)}.lt-email{color:var(--t2)}.lt-time{color:var(--t3)}
-/* Toast */
 #toasts{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:7px;z-index:9999}
 .toast{padding:9px 16px;border-radius:8px;font-size:12px;background:var(--bg3);border:1px solid var(--bd2);animation:tin .2s ease;max-width:300px}
 .toast.ok{background:#0d2a14;border-color:var(--grn);color:var(--grn)}.toast.err{background:#2d0000;border-color:var(--red);color:var(--red)}
 @keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-/* Modal */
 .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-ov.open{display:flex}
 .modal{background:var(--bg1);border:1px solid var(--bd2);border-radius:16px;width:100%;max-width:560px;overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
@@ -178,6 +165,9 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .mf-input{padding:9px 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:13px;font-family:inherit;outline:none}
 .mf-input:focus{border-color:var(--ac)}
 .modal-foot{padding:14px 20px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
+/* BCC 產生器專用 */
+.bcc-stat-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;background:var(--bg2);border:1px solid var(--bd2);font-size:12px;color:var(--t2);margin:2px}
+.bcc-invalid-tag{font-size:11px;color:var(--red);background:rgba(248,81,73,.1);padding:2px 7px;border-radius:4px;margin:2px;display:inline-block}
 </style>
 </head>
 <body>
@@ -207,6 +197,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
     <button class="ctab on" onclick="swCP('contacts',this)">👥 名單管理</button>
     <button class="ctab" onclick="swCP('send',this)">✉️ Email 發送</button>
     <button class="ctab" onclick="swCP('log',this)">📋 發送紀錄</button>
+    <button class="ctab" onclick="swCP('bcc',this)">📨 BCC 產生器</button>
     <button class="ctab" onclick="swCP('settings',this)">⚙️ 設定</button>
   </div>
 
@@ -219,7 +210,6 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
         <button class="url-mode-btn" onclick="swMode('batch',this)">📋 批次網址</button>
         <button class="url-mode-btn" onclick="openManualAdd()">＋ 手動新增</button>
       </div>
-      <!-- 單一 -->
       <div class="url-panel on" id="url-single">
         <div class="url-row">
           <input class="url-inp" id="urlInp" type="url" placeholder="https://www.客戶公司網站.com/contact" />
@@ -238,7 +228,6 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
           ⚠️ 僅限公開網頁，需先在「⚙️ 設定」填入 Groq API Key。
         </div>
       </div>
-      <!-- 批次 -->
       <div class="url-panel" id="url-batch">
         <textarea class="url-textarea" id="batchInp" placeholder="每行貼一個網址，例如：&#10;https://www.forging.org.tw/...?pageno=1&#10;https://www.forging.org.tw/...?pageno=2&#10;https://www.forging.org.tw/...?pageno=3"></textarea>
         <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center">
@@ -320,7 +309,6 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
             </div>
             <div class="ef-row">
               <div class="ef-label">內文（HTML 格式）</div>
-              <!-- Rich Editor -->
               <div class="editor-toolbar" id="editor-toolbar">
                 <button class="et-btn" onclick="fmt('bold')" title="粗體"><b>B</b></button>
                 <button class="et-btn" onclick="fmt('italic')" title="斜體"><i>I</i></button>
@@ -344,7 +332,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
                 <div class="et-sep"></div>
                 <button class="et-btn" onclick="clearEditor()" style="color:var(--red)">清除</button>
               </div>
-              <div class="editor-body" id="editor-body" contenteditable="true" spellcheck="false" placeholder="點擊「AI 生成」自動撰寫，或直接在此輸入 HTML 格式內容…"></div>
+              <div class="editor-body" id="editor-body" contenteditable="true" spellcheck="false"></div>
             </div>
             <div id="ai-loading-row" style="display:none">
               <div class="ai-loading"><div class="ai-spin"></div>Groq AI 正在撰寫個人化 Email…</div>
@@ -383,44 +371,38 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
       </div>
     </div>
   </div>
-<!-- ══ P3.5: BCC 產生器 ══ -->
-<div class="cpanel" id="cp-bcc">
-  <div class="url-input-wrap" style="max-width:640px;margin:0 auto">
-    <h3>📨 BCC Email 產生器</h3>
-    <div class="url-note-blue" style="margin-bottom:14px">
-      貼入 Email 清單 → 自動過濾重複與無效格式 → 一鍵複製 → 貼到 Outlook BCC 欄位批次發送
-    </div>
-    <div style="background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2);border-radius:8px;padding:9px 14px;font-size:12px;color:var(--grn);margin-bottom:14px;line-height:1.8">
-      📋 操作流程：名單管理匯出 CSV → 複製 Email 欄 → 貼入下方 → 產生 → 複製 → 開 Outlook 新信 → 貼到 BCC → 送出
-    </div>
-    <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:4px">
-      <span style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em">貼入 Email 清單</span>
-      <textarea class="url-textarea" id="bcc-inp" style="min-height:160px" placeholder="每行一個 Email，例如：
-john@company.com
-mary@example.com
 
-也支援逗號、分號分隔"></textarea>
-    </div>
-    <div style="font-size:11px;color:var(--t3);margin-bottom:12px">支援每行一個 / 逗號 / 分號 / 空格，自動去除重複與無效格式</div>
-    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
-      <button class="btn p" onclick="bccProcess()">產生 BCC 清單</button>
-      <button class="btn" onclick="bccClear()">清除</button>
-    </div>
-    <div id="bcc-result-wrap" style="display:none">
-      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap" id="bcc-stats"></div>
-      <div style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">BCC 貼上內容</div>
-      <div id="bcc-result-box" style="background:var(--bg2);border:1px solid var(--bd2);border-radius:8px;padding:12px;font-size:12px;color:var(--t1);word-break:break-all;line-height:1.7;min-height:60px;margin-bottom:10px"></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn g" id="bcc-copy-btn" onclick="bccCopy()">複製 → 貼到 Outlook BCC</button>
+  <!-- ══ P4: BCC 產生器 ══ -->
+  <div class="cpanel" id="cp-bcc">
+    <div class="url-input-wrap" style="max-width:680px;margin:0 auto">
+      <h3>📨 BCC Email 產生器</h3>
+      <div class="url-note-blue" style="margin-bottom:12px">
+        貼入 Email 清單 → 自動過濾重複與無效格式 → 一鍵複製 → 貼到 Outlook BCC 欄位批次發送
       </div>
-      <div id="bcc-invalid-wrap" style="margin-top:10px"></div>
+      <div style="background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2);border-radius:8px;padding:9px 14px;font-size:12px;color:var(--grn);margin-bottom:16px;line-height:1.8">
+        📋 操作流程：名單管理匯出 CSV → 複製 Email 欄 → 貼入下方 → 點「產生」→ 點「複製」→ 開 Outlook 新信 → 貼到 BCC → 送出
+      </div>
+      <div style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">貼入 Email 清單</div>
+      <textarea class="url-textarea" id="bcc-inp" style="min-height:180px" placeholder="每行一個 Email，例如：&#10;john@company.com&#10;mary@example.com&#10;sales@firm.com&#10;&#10;也支援逗號、分號分隔格式"></textarea>
+      <div style="font-size:11px;color:var(--t3);margin:6px 0 14px">支援每行一個 / 逗號 / 分號 / 空格，自動去除重複與無效格式</div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+        <button class="btn p" onclick="bccProcess()">產生 BCC 清單</button>
+        <button class="btn" onclick="bccClear()">清除</button>
+      </div>
+      <div id="bcc-result-wrap" style="display:none">
+        <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap" id="bcc-stats"></div>
+        <div style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">BCC 貼上內容</div>
+        <div id="bcc-result-box" style="background:var(--bg2);border:1px solid var(--bd2);border-radius:8px;padding:12px;font-size:12px;color:var(--t1);word-break:break-all;line-height:1.7;min-height:60px;margin-bottom:10px"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn g" id="bcc-copy-btn" onclick="bccCopy()">複製 → 貼到 Outlook BCC</button>
+        </div>
+        <div id="bcc-invalid-wrap" style="margin-top:12px"></div>
+      </div>
     </div>
   </div>
-</div>
-  <!-- ══ P4: 設定 ══ -->
-  <div class="cpanel" id="cp-settings">
 
-    <!-- API -->
+  <!-- ══ P5: 設定 ══ -->
+  <div class="cpanel" id="cp-settings">
     <div class="settings-box">
       <h3>🤖 Groq API 設定</h3>
       <div style="margin-bottom:10px;padding:10px 14px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.25);border-radius:8px;font-size:12px;color:var(--grn);line-height:1.7">
@@ -428,14 +410,10 @@ mary@example.com
       </div>
       <div class="sf-row"><div class="sf-label">Groq API Key</div><input class="sf-input" id="cfg-apikey" type="password" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxx" style="width:100%"/></div>
     </div>
-
-    <!-- Crawler -->
     <div class="settings-box">
       <h3>🕷️ 爬蟲 API（Cloudflare Worker）</h3>
       <div class="sf-row"><div class="sf-label">爬蟲 API 網址</div><input class="sf-input" id="cfg-crawler-url" style="width:100%" placeholder="https://sales.barry00000000.workers.dev"/></div>
     </div>
-
-    <!-- Sender -->
     <div class="settings-box">
       <h3>👤 寄件人設定</h3>
       <div class="settings-grid">
@@ -445,8 +423,6 @@ mary@example.com
         <div class="sf-row"><div class="sf-label">電話</div><input class="sf-input" id="cfg-phone" placeholder="02-2345-6789"/></div>
       </div>
     </div>
-
-    <!-- Product -->
     <div class="settings-box">
       <h3>📦 產品資料</h3>
       <div style="display:flex;flex-direction:column;gap:10px">
@@ -461,14 +437,11 @@ mary@example.com
         </div>
       </div>
     </div>
-
-    <!-- Templates -->
     <div class="settings-box">
       <h3>📝 Email 範本管理</h3>
       <div class="tpl-list" id="tpl-list"></div>
       <button class="btn p" onclick="openTplEditor()">＋ 新增範本</button>
     </div>
-
     <div style="display:flex;justify-content:flex-end">
       <button class="btn p" onclick="saveSettings()">💾 儲存設定</button>
     </div>
@@ -503,9 +476,8 @@ mary@example.com
       <div class="mf-row">
         <div class="mf-label" style="margin-bottom:6px">插入圖片</div>
         <div class="tpl-img-row">
-          <button class="ctab" onclick="swCP('log',this)">📋 發送紀錄</button>
-          <button class="ctab" onclick="swCP('bcc',this)">📨 BCC 產生器</button>
-          <button class="ctab" onclick="swCP('settings',this)">⚙️ 設定</button>
+          <button class="btn sm" onclick="tplInsertImgFile()">📁 上傳圖片</button>
+          <button class="btn sm" onclick="tplInsertImgUrl()">🔗 圖片網址</button>
           <input type="file" id="tpl-img-file" accept="image/*" style="display:none" onchange="tplHandleImgFile(event)"/>
         </div>
       </div>
@@ -527,7 +499,7 @@ mary@example.com
           <button class="et-btn" onclick="tplFmt('insertUnorderedList')">• 清單</button>
           <button class="et-btn" onclick="tplFmt('justifyCenter')">⬛置中</button>
         </div>
-        <div class="editor-body" id="tpl-body" contenteditable="true" spellcheck="false" style="min-height:240px" placeholder="在此輸入 Email 範本內容，支援 HTML 格式…"></div>
+        <div class="editor-body" id="tpl-body" contenteditable="true" spellcheck="false" style="min-height:240px"></div>
       </div>
       <div style="padding:8px 12px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);border-radius:8px;font-size:12px;color:var(--ac)">
         💡 可使用變數：<code>{{name}}</code> = 客戶名稱，<code>{{company}}</code> = 公司名稱，套用時自動帶入。
@@ -616,23 +588,18 @@ async function crawlSingle(){
   if(!url||!url.startsWith('http')){toast('⚠️ 請輸入完整網址（含 https://）');return;}
   const autoPager=document.getElementById('autopager').checked;
   const maxPages=parseInt(document.getElementById('maxPages').value)||10;
-
   document.getElementById('crawlBtn').disabled=true;
   let totalAdded=0;
   const loadingEl=document.getElementById('crawl-loading');
   const loadingText=document.getElementById('crawl-loading-text');
-
   if(autoPager){
-    let currentUrl=url;
-    let page=1;
+    let currentUrl=url;let page=1;
     loadingEl.style.display='block';
     while(currentUrl&&page<=maxPages){
       loadingText.textContent=`自動分頁：第 ${page} 頁`;
       const result=await crawlOneUrl(currentUrl,true);
-      totalAdded+=result.added;
-      currentUrl=result.nextUrl||'';
-      page++;
-      if(currentUrl) await new Promise(r=>setTimeout(r,800));
+      totalAdded+=result.added;currentUrl=result.nextUrl||'';page++;
+      if(currentUrl)await new Promise(r=>setTimeout(r,800));
     }
     loadingEl.style.display='none';
     toast(`✅ 共抓取 ${page-1} 頁，擷取 ${totalAdded} 筆資料`,'ok');
@@ -681,18 +648,8 @@ async function crawlOneUrl(url,detectNext){
     if(apiData.error)throw new Error(apiData.error);
     const snippet=(apiData.text||'').slice(0,5000);
     if(!snippet)throw new Error('網頁內容為空');
-
     const nextInstruct=detectNext?'\n另外請找出「下一頁」的連結URL（完整網址），放在 next_url 欄位，找不到填空字串。':'';
-    const prompt=`以下是一個網頁的文字內容，找出所有公司或聯絡人的資訊。
-
-網頁文字：
-${snippet}
-
-找出所有 Email、電話、公司名稱。name 欄位填聯絡人姓名，沒有就填公司名稱。${nextInstruct}
-
-只輸出純 JSON，格式如下，不要任何說明：
-{"contacts":[{"name":"","company":"","email":"","phone":""}]${detectNext?',"next_url":""':''}}`;
-
+    const prompt=`以下是一個網頁的文字內容，找出所有公司或聯絡人的資訊。\n\n網頁文字：\n${snippet}\n\n找出所有 Email、電話、公司名稱。name 欄位填聯絡人姓名，沒有就填公司名稱。${nextInstruct}\n\n只輸出純 JSON，格式如下，不要任何說明：\n{"contacts":[{"name":"","company":"","email":"","phone":""}]${detectNext?',"next_url":""':''}}`;
     const groqRes=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
@@ -706,13 +663,8 @@ ${snippet}
     const parsed=JSON.parse(raw);
     const contacts=parsed.contacts||[];
     let nextUrl=parsed.next_url||'';
-    // 確保 nextUrl 是完整 URL
-    if(nextUrl&&!nextUrl.startsWith('http')){
-      try{const base=new URL(url);nextUrl=base.origin+nextUrl;}catch(e){nextUrl='';}
-    }
-    // 不要重複抓同一頁
+    if(nextUrl&&!nextUrl.startsWith('http')){try{const base=new URL(url);nextUrl=base.origin+nextUrl;}catch(e){nextUrl='';}}
     if(nextUrl===url)nextUrl='';
-
     let added=0;
     contacts.forEach(ct=>{
       if(!ct.name&&!ct.email&&!ct.company)return;
@@ -732,13 +684,9 @@ function renderContacts(){
   const n=selectedIds.size;
   document.getElementById('sel-count-label').textContent=n?`已選 ${n} 筆`:'';
   if(!customers.length){
-    grid.innerHTML=`<div class="empty-state" id="empty-contacts" style="grid-column:1/-1">
-      <div class="ei">📋</div><div class="et">尚無客戶名單</div>
-      <div class="es">輸入網址自動擷取，或點「手動新增」</div>
-    </div>`;
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="ei">📋</div><div class="et">尚無客戶名單</div><div class="es">輸入網址自動擷取，或點「手動新增」</div></div>`;
     return;
   }
-  grid.innerHTML='';
   grid.innerHTML=customers.map(c=>{
     const chk=selectedIds.has(c.id);
     return`<div class="cust-card${chk?' checked':''}" id="cc-${c.id}">
@@ -813,37 +761,22 @@ function updateToField(){
   const emails=customers.filter(c=>selectedIds.has(c.id)&&c.email).map(c=>c.email);
   if(emails.length)document.getElementById('ef-to').value=emails.join(', ');
 }
-function quickSend(id){selectedIds.clear();selectedIds.add(id);swCP('send',document.querySelector('.ctab:nth-child(2)'));}
+function quickSend(id){selectedIds.clear();selectedIds.add(id);swCP('send',document.querySelectorAll('.ctab')[1]);}
 
 // ══ RICH EDITOR ══
 function fmt(cmd,val){document.getElementById('editor-body').focus();document.execCommand(cmd,false,val||null);}
 function clearEditor(){document.getElementById('editor-body').innerHTML='';}
 function insertImg(){
   const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
-  inp.onchange=e=>{
-    const f=e.target.files[0];if(!f)return;
-    const r=new FileReader();
-    r.onload=ev=>{document.getElementById('editor-body').focus();document.execCommand('insertHTML',false,`<img src="${ev.target.result}" style="max-width:100%"/>`);}
-    r.readAsDataURL(f);
-  };inp.click();
+  inp.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{document.getElementById('editor-body').focus();document.execCommand('insertHTML',false,`<img src="${ev.target.result}" style="max-width:100%"/>`);}; r.readAsDataURL(f);};inp.click();
 }
-function insertImgUrl(){
-  const url=prompt('請輸入圖片網址：');
-  if(url){document.getElementById('editor-body').focus();document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%"/>`);}
-}
+function insertImgUrl(){const url=prompt('請輸入圖片網址：');if(url){document.getElementById('editor-body').focus();document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%"/>`);};}
 
 // ══ TEMPLATE ══
 function renderTplList(){
   const list=document.getElementById('tpl-list');
   if(!templates.length){list.innerHTML='<div style="color:var(--t3);font-size:13px;padding:8px 0">尚未建立任何範本</div>';return;}
-  list.innerHTML=templates.map(t=>`
-    <div class="tpl-item">
-      <div><div class="tpl-name">${e(t.name)}</div><div class="tpl-sub">${e(t.subject||'（無預設主旨）')}</div></div>
-      <div class="tpl-actions">
-        <button class="btn sm" onclick="editTpl(${t.id})">✏️ 編輯</button>
-        <button class="btn sm d" onclick="deleteTpl(${t.id})">🗑</button>
-      </div>
-    </div>`).join('');
+  list.innerHTML=templates.map(t=>`<div class="tpl-item"><div><div class="tpl-name">${e(t.name)}</div><div class="tpl-sub">${e(t.subject||'（無預設主旨）')}</div></div><div class="tpl-actions"><button class="btn sm" onclick="editTpl(${t.id})">✏️ 編輯</button><button class="btn sm d" onclick="deleteTpl(${t.id})">🗑</button></div></div>`).join('');
 }
 function renderTplSelect(){
   const sel=document.getElementById('ef-tpl');
@@ -851,13 +784,10 @@ function renderTplSelect(){
   templates.forEach(t=>sel.innerHTML+=`<option value="${t.id}">${e(t.name)}</option>`);
 }
 function applyTemplate(){
-  const id=parseInt(document.getElementById('ef-tpl').value);
-  if(!id)return;
+  const id=parseInt(document.getElementById('ef-tpl').value);if(!id)return;
   const t=templates.find(x=>x.id===id);if(!t)return;
-  // 套入客戶變數
   const c=customers.find(x=>selectedIds.has(x.id));
-  const name=c?c.name:'{{name}}';
-  const company=c?c.company:'{{company}}';
+  const name=c?c.name:'{{name}}';const company=c?c.company:'{{company}}';
   let body=t.body||'';
   body=body.replace(/{{name}}/g,name).replace(/{{company}}/g,company);
   document.getElementById('ef-subject').value=(t.subject||'').replace(/{{name}}/g,name).replace(/{{company}}/g,company);
@@ -884,42 +814,21 @@ function editTpl(id){
 function saveTpl(){
   const name=document.getElementById('tpl-name').value.trim();
   if(!name){toast('⚠️ 請填寫範本名稱');return;}
-  const tpl={
-    id:editingTplId||Date.now(),
-    name,
-    subject:document.getElementById('tpl-subject').value.trim(),
-    body:document.getElementById('tpl-body').innerHTML
-  };
-  if(editingTplId){const i=templates.findIndex(x=>x.id===editingTplId);if(i>=0)templates[i]=tpl;}
-  else templates.push(tpl);
-  saveTplStore();renderTplList();renderTplSelect();closeModal('modal-tpl');
-  toast('✅ 範本已儲存','ok');
+  const tpl={id:editingTplId||Date.now(),name,subject:document.getElementById('tpl-subject').value.trim(),body:document.getElementById('tpl-body').innerHTML};
+  if(editingTplId){const i=templates.findIndex(x=>x.id===editingTplId);if(i>=0)templates[i]=tpl;}else templates.push(tpl);
+  saveTplStore();renderTplList();renderTplSelect();closeModal('modal-tpl');toast('✅ 範本已儲存','ok');
 }
-function deleteTpl(id){
-  if(!confirm('確定刪除此範本？'))return;
-  templates=templates.filter(x=>x.id!==id);
-  saveTplStore();renderTplList();renderTplSelect();toast('🗑 已刪除');
-}
+function deleteTpl(id){if(!confirm('確定刪除此範本？'))return;templates=templates.filter(x=>x.id!==id);saveTplStore();renderTplList();renderTplSelect();toast('🗑 已刪除');}
 function saveTplStore(){localStorage.setItem('cus_tpl',JSON.stringify(templates));}
-
-// 範本編輯器工具列
 function tplFmt(cmd,val){document.getElementById('tpl-body').focus();document.execCommand(cmd,false,val||null);}
 function tplInsertImgFile(){document.getElementById('tpl-img-file').click();}
-function tplHandleImgFile(e){
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{document.getElementById('tpl-body').focus();document.execCommand('insertHTML',false,`<img src="${ev.target.result}" style="max-width:100%;border-radius:4px;margin:6px 0"/>`);}
-  r.readAsDataURL(f);
-}
-function tplInsertImgUrl(){
-  const url=prompt('請輸入圖片網址：');
-  if(url){document.getElementById('tpl-body').focus();document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%;border-radius:4px;margin:6px 0"/>`);}
-}
+function tplHandleImgFile(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{document.getElementById('tpl-body').focus();document.execCommand('insertHTML',false,`<img src="${ev.target.result}" style="max-width:100%;border-radius:4px;margin:6px 0"/>`);}; r.readAsDataURL(f);}
+function tplInsertImgUrl(){const url=prompt('請輸入圖片網址：');if(url){document.getElementById('tpl-body').focus();document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%;border-radius:4px;margin:6px 0"/>`);};}
 
 // ══ AI GENERATE ══
 async function aiGenerateEmail(){
   const apiKey=cfg.apikey||'';
-  if(!apiKey){toast('⚠️ 請先填入 Groq API Key');swCP('settings',document.querySelector('.ctab:nth-child(4)'));return;}
+  if(!apiKey){toast('⚠️ 請先填入 Groq API Key');swCP('settings',document.querySelectorAll('.ctab')[4]);return;}
   const toEmails=document.getElementById('ef-to').value.trim();
   const selList=customers.filter(c=>selectedIds.has(c.id));
   if(!toEmails&&!selList.length){toast('⚠️ 請選取收件人');return;}
@@ -931,21 +840,9 @@ async function aiGenerateEmail(){
   const company=cfg.company||'實威國際';
   const styleMap={professional:'專業正式',friendly:'親切友善',concise:'簡短精要'};
   const emailStyle=styleMap[cfg.emailStyle||'professional'];
-
   document.getElementById('ai-loading-row').style.display='block';
   document.getElementById('editor-body').innerHTML='<span style="color:#888">生成中…</span>';
-
-  const prompt=`你是專業業務，請撰寫一封 HTML 格式的開發信 Email。
-
-客戶：${c.name}，公司：${c.company||'未知'}
-產品：${productName}
-產品描述：${productDesc}
-寄件人：${senderName}，${senderTitle}，${company}
-風格：${emailStyle}
-
-請輸出純 JSON，格式如下，body 為 HTML 字串（可用 <b>、<p>、<br>、<ul><li> 等標籤），不要 markdown：
-{"subject":"主旨（30字內）","body":"<p>HTML 內文...</p>"}`;
-
+  const prompt=`你是專業業務，請撰寫一封 HTML 格式的開發信 Email。\n\n客戶：${c.name}，公司：${c.company||'未知'}\n產品：${productName}\n產品描述：${productDesc}\n寄件人：${senderName}，${senderTitle}，${company}\n風格：${emailStyle}\n\n請輸出純 JSON，格式如下，body 為 HTML 字串，不要 markdown：\n{"subject":"主旨（30字內）","body":"<p>HTML 內文...</p>"}`;
   try{
     const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
@@ -961,12 +858,8 @@ async function aiGenerateEmail(){
     document.getElementById('editor-body').innerHTML=parsed.body||'';
     if(!document.getElementById('ef-to').value.trim())updateToField();
     toast('✅ AI Email 已生成','ok');
-  }catch(err){
-    document.getElementById('editor-body').innerHTML='';
-    toast('❌ AI 生成失敗：'+err.message,'err');console.error(err);
-  }finally{
-    document.getElementById('ai-loading-row').style.display='none';
-  }
+  }catch(err){document.getElementById('editor-body').innerHTML='';toast('❌ AI 生成失敗：'+err.message,'err');console.error(err);}
+  finally{document.getElementById('ai-loading-row').style.display='none';}
 }
 
 // ══ PREVIEW ══
@@ -980,64 +873,32 @@ function previewEmail(){
   document.getElementById('modal-preview').classList.add('open');
 }
 
-// ══ EXPORT SEND LIST (批次發送清單) ══
+// ══ EXPORT SEND LIST ══
 function exportSendList(){
-  const subject = document.getElementById('ef-subject').value.trim();
-  const bodyHtml = document.getElementById('editor-body').innerHTML;
-  const bodyText = document.getElementById('editor-body').innerText;
-  if(!subject){ toast('⚠️ 請填寫主旨'); return; }
-  if(!bodyText.trim()){ toast('⚠️ 請填寫內文'); return; }
-
-  const bcc = document.getElementById('ef-bcc').value.trim();
-  const manualTo = document.getElementById('ef-to').value.trim();
-  const selList = customers.filter(c => selectedIds.has(c.id) && c.email);
-
-  let list = [];
-
+  const subject=document.getElementById('ef-subject').value.trim();
+  const bodyHtml=document.getElementById('editor-body').innerHTML;
+  const bodyText=document.getElementById('editor-body').innerText;
+  if(!subject){toast('⚠️ 請填寫主旨');return;}
+  if(!bodyText.trim()){toast('⚠️ 請填寫內文');return;}
+  const bcc=document.getElementById('ef-bcc').value.trim();
+  const manualTo=document.getElementById('ef-to').value.trim();
+  const selList=customers.filter(c=>selectedIds.has(c.id)&&c.email);
+  let list=[];
   if(selList.length){
-    // 從名單選取的客戶，逐封個人化
-    list = selList.map(c => ({
-      to: c.email,
-      bcc: bcc,
-      subject: subject.replace(/{{name}}/g, c.name).replace(/{{company}}/g, c.company||''),
-      bodyHtml: bodyHtml.replace(/{{name}}/g, e(c.name)).replace(/{{company}}/g, e(c.company||'')),
-      name: c.name,
-      company: c.company||''
-    }));
-  } else if(manualTo){
-    // 手動輸入的 Email，支援多個（逗號分隔）
-    const emails = manualTo.split(',').map(s=>s.trim()).filter(s=>s);
-    list = emails.map(email => ({
-      to: email,
-      bcc: bcc,
-      subject: subject,
-      bodyHtml: bodyHtml,
-      name: email,
-      company: ''
-    }));
+    list=selList.map(c=>({to:c.email,bcc,subject:subject.replace(/{{name}}/g,c.name).replace(/{{company}}/g,c.company||''),bodyHtml:bodyHtml.replace(/{{name}}/g,e(c.name)).replace(/{{company}}/g,e(c.company||'')),name:c.name,company:c.company||''}));
+  }else if(manualTo){
+    const emails=manualTo.split(',').map(s=>s.trim()).filter(s=>s);
+    list=emails.map(email=>({to:email,bcc,subject,bodyHtml,name:email,company:''}));
   }
-
-  if(!list.length){ toast('⚠️ 請選取客戶或在收件人欄位輸入 Email'); return; }
-
-  const payload = {
-    generated: new Date().toLocaleString('zh-TW'),
-    count: list.length,
-    mails: list
-  };
-
-  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = '批次發送清單_' + new Date().toISOString().slice(0,10) + '.json';
-  a.click();
-
-  // 更新記錄
-  selList.forEach(c => c.status = 'sent');
-  const logName = selList.map(c=>c.name).join('、');
-  sendLog.unshift({id:Date.now(), name:logName, company:selList.map(c=>c.company||'').join('、'),
-    email:selList.map(c=>c.email).join(', '), subject, time:new Date().toLocaleString('zh-TW')});
-  save(); renderContacts(); updateChips(); renderLog();
-  toast('✅ 已下載批次發送清單（'+list.length+' 封），請執行 AHK 腳本發送', 'ok');
+  if(!list.length){toast('⚠️ 請選取客戶或在收件人欄位輸入 Email');return;}
+  const payload={generated:new Date().toLocaleString('zh-TW'),count:list.length,mails:list};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='批次發送清單_'+new Date().toISOString().slice(0,10)+'.json';a.click();
+  selList.forEach(c=>c.status='sent');
+  const logName=selList.map(c=>c.name).join('、');
+  sendLog.unshift({id:Date.now(),name:logName,company:selList.map(c=>c.company||'').join('、'),email:selList.map(c=>c.email).join(', '),subject,time:new Date().toLocaleString('zh-TW')});
+  save();renderContacts();updateChips();renderLog();
+  toast('✅ 已下載批次發送清單（'+list.length+' 封）','ok');
 }
 
 // ══ SEND OUTLOOK ══
@@ -1050,32 +911,21 @@ async function sendOutlook(){
   if(!to){toast('⚠️ 請填寫收件人');return;}
   if(!subject){toast('⚠️ 請填寫主旨');return;}
   if(!bodyText.trim()){toast('⚠️ 請填寫內文');return;}
-
-  // 複製 HTML 到剪貼簿（保留格式、圖片）
   try{
     const blob=new Blob([bodyHtml],{type:'text/html'});
     const textBlob=new Blob([bodyText],{type:'text/plain'});
     const item=new ClipboardItem({'text/html':blob,'text/plain':textBlob});
     await navigator.clipboard.write([item]);
-    toast('✅ 內文已複製到剪貼簿（含圖片格式）','ok');
+    toast('✅ 內文已複製到剪貼簿','ok');
   }catch(err){
-    // fallback: 複製純文字
-    try{await navigator.clipboard.writeText(bodyText);toast('⚠️ 已複製純文字（瀏覽器不支援 HTML 複製）');}
+    try{await navigator.clipboard.writeText(bodyText);toast('⚠️ 已複製純文字');}
     catch(e){toast('⚠️ 無法自動複製，請手動複製內文');}
   }
-
-  // 開啟 Outlook（帶主旨、收件人，內文請手動貼上）
   await new Promise(r=>setTimeout(r,400));
   let mailto=`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}`;
   if(bcc)mailto+=`&bcc=${encodeURIComponent(bcc)}`;
   window.location.href=mailto;
-
-  // 顯示操作提示
-  setTimeout(()=>{
-    toast('📋 請在 Outlook 內文處按 Ctrl+V 貼上（格式與圖片完整保留）','ok');
-  },1200);
-
-  // 記錄
+  setTimeout(()=>{toast('📋 請在 Outlook 內文處按 Ctrl+V 貼上','ok');},1200);
   const selList=customers.filter(c=>selectedIds.has(c.id));
   selList.forEach(c=>c.status='sent');
   const logName=selList.length?selList.map(c=>c.name).join('、'):to;
@@ -1096,18 +946,13 @@ function clearCompose(){
 function renderLog(){
   const tbody=document.getElementById('log-tbody');
   if(!sendLog.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--t3)">尚無紀錄</td></tr>';return;}
-  tbody.innerHTML=sendLog.map(l=>`<tr>
-    <td class="lt-name">${e(l.name)}</td><td>${e(l.company)}</td><td class="lt-email">${e(l.email)}</td>
-    <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e(l.subject)}</td>
-    <td class="lt-time">${e(l.time)}</td><td><span class="status-badge sent">✅ 已發送</span></td>
-  </tr>`).join('');
+  tbody.innerHTML=sendLog.map(l=>`<tr><td class="lt-name">${e(l.name)}</td><td>${e(l.company)}</td><td class="lt-email">${e(l.email)}</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e(l.subject)}</td><td class="lt-time">${e(l.time)}</td><td><span class="status-badge sent">✅ 已發送</span></td></tr>`).join('');
 }
 function clearLog(){if(!confirm('確定清除？'))return;sendLog=[];save();renderLog();toast('🗑 已清除');}
 
 // ══ EDIT/DELETE ══
 function editCustomer(id){
-  editingId=id;
-  const c=customers.find(x=>x.id===id);if(!c)return;
+  editingId=id;const c=customers.find(x=>x.id===id);if(!c)return;
   document.getElementById('m-name').value=c.name;
   document.getElementById('m-company').value=c.company||'';
   document.getElementById('m-email').value=c.email;
@@ -1148,6 +993,48 @@ function saveSettings(){
   save();toast('✅ 設定已儲存','ok');
 }
 
+// ══ BCC 產生器 ══
+let _bccResult='';
+function bccProcess(){
+  const raw=document.getElementById('bcc-inp').value.trim();
+  if(!raw)return;
+  const tokens=raw.split(/[\n,;　 ]+/).map(s=>s.trim()).filter(Boolean);
+  const re=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const valid=[],invalid=[],seen=new Set();
+  tokens.forEach(t=>{
+    if(re.test(t)){const l=t.toLowerCase();if(!seen.has(l)){seen.add(l);valid.push(t);}}
+    else if(t.length)invalid.push(t);
+  });
+  const wrap=document.getElementById('bcc-result-wrap');
+  if(!valid.length){toast('沒有找到有效的 Email，請確認格式','err');wrap.style.display='none';return;}
+  _bccResult=valid.join(', ');
+  wrap.style.display='block';
+  document.getElementById('bcc-result-box').textContent=_bccResult;
+  const dupes=tokens.filter(t=>re.test(t)).length-valid.length;
+  document.getElementById('bcc-stats').innerHTML=
+    `<span class="bcc-stat-chip">✅ 有效 <b>${valid.length}</b> 筆</span>`+
+    (dupes>0?`<span class="bcc-stat-chip" style="color:var(--ylw);border-color:var(--ylw)">⚠️ 去除重複 <b>${dupes}</b> 筆</span>`:'')+
+    (invalid.length?`<span class="bcc-stat-chip" style="color:var(--red);border-color:var(--red)">❌ 無效 <b>${invalid.length}</b> 筆</span>`:'');
+  document.getElementById('bcc-invalid-wrap').innerHTML=invalid.length
+    ?'<div style="font-size:11px;color:var(--t3);margin-bottom:6px">無效格式（已略過）</div>'+invalid.map(v=>`<span class="bcc-invalid-tag">${e(v)}</span>`).join(''):'';
+  const btn=document.getElementById('bcc-copy-btn');
+  btn.textContent='複製 → 貼到 Outlook BCC';
+}
+function bccCopy(){
+  if(!_bccResult)return;
+  navigator.clipboard.writeText(_bccResult).then(()=>{
+    const btn=document.getElementById('bcc-copy-btn');
+    btn.textContent='✓ 已複製！開啟 Outlook 貼到 BCC 欄位';
+    toast('✅ 已複製 '+_bccResult.split(',').length+' 個 Email！','ok');
+    setTimeout(()=>{btn.textContent='複製 → 貼到 Outlook BCC';},3000);
+  });
+}
+function bccClear(){
+  document.getElementById('bcc-inp').value='';
+  document.getElementById('bcc-result-wrap').style.display='none';
+  _bccResult='';
+}
+
 // ══ UTILS ══
 function updateChips(){
   const total=customers.length,sent=customers.filter(c=>c.status==='sent').length;
@@ -1169,49 +1056,6 @@ function toast(msg,type=''){
   setTimeout(()=>t.remove(),3500);
 }
 init();
-  /* ── BCC 產生器 ── */
-let _bccResult = '';
-function bccProcess() {
-  const raw = document.getElementById('bcc-inp').value.trim();
-  if (!raw) return;
-  const tokens = raw.split(/[\n,;　 ]+/).map(s => s.trim()).filter(Boolean);
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const valid = [], invalid = [], seen = new Set();
-  tokens.forEach(t => {
-    if (re.test(t)) { const l = t.toLowerCase(); if (!seen.has(l)) { seen.add(l); valid.push(t); } }
-    else if (t.length) invalid.push(t);
-  });
-  document.getElementById('bcc-result-wrap').style.display = valid.length ? 'block' : 'none';
-  if (!valid.length) { toast('沒有找到有效的 Email，請確認格式', 'err'); return; }
-  _bccResult = valid.join(', ');
-  document.getElementById('bcc-result-box').textContent = _bccResult;
-  const dupes = tokens.filter(t => re.test(t)).length - valid.length;
-  document.getElementById('bcc-stats').innerHTML =
-    `✅ 有效 ${valid.length} 筆` +
-    (dupes > 0 ? `⚠️ 去除重複 ${dupes} 筆` : '') +
-    (invalid.length ? `❌ 無效 ${invalid.length} 筆` : '');
-  document.getElementById('bcc-invalid-wrap').innerHTML = invalid.length
-    ? '
-無效格式（已略過）
-' +
-      invalid.map(e => `${e}`).join('') : '';
-  const btn = document.getElementById('bcc-copy-btn');
-  btn.textContent = '複製 → 貼到 Outlook BCC'; btn.className = 'btn g';
-}
-function bccCopy() {
-  if (!_bccResult) return;
-  navigator.clipboard.writeText(_bccResult).then(() => {
-    const btn = document.getElementById('bcc-copy-btn');
-    btn.textContent = '✓ 已複製！貼到 Outlook BCC 欄位';
-    setTimeout(() => { btn.textContent = '複製 → 貼到 Outlook BCC'; }, 3000);
-    toast('已複製 ' + _bccResult.split(',').length + ' 個 Email！');
-  });
-}
-function bccClear() {
-  document.getElementById('bcc-inp').value = '';
-  document.getElementById('bcc-result-wrap').style.display = 'none';
-  _bccResult = '';
-}
 </script>
 </body>
 </html>
