@@ -943,7 +943,7 @@ function previewEmail(){
 }
 
 // ══ SEND OUTLOOK ══
-function sendOutlook(){
+async function sendOutlook(){
   const to=document.getElementById('ef-to').value.trim();
   const bcc=document.getElementById('ef-bcc').value.trim();
   const subject=document.getElementById('ef-subject').value.trim();
@@ -953,16 +953,36 @@ function sendOutlook(){
   if(!subject){toast('⚠️ 請填寫主旨');return;}
   if(!bodyText.trim()){toast('⚠️ 請填寫內文');return;}
 
-  let mailto=`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+  // 複製 HTML 到剪貼簿（保留格式、圖片）
+  try{
+    const blob=new Blob([bodyHtml],{type:'text/html'});
+    const textBlob=new Blob([bodyText],{type:'text/plain'});
+    const item=new ClipboardItem({'text/html':blob,'text/plain':textBlob});
+    await navigator.clipboard.write([item]);
+    toast('✅ 內文已複製到剪貼簿（含圖片格式）','ok');
+  }catch(err){
+    // fallback: 複製純文字
+    try{await navigator.clipboard.writeText(bodyText);toast('⚠️ 已複製純文字（瀏覽器不支援 HTML 複製）');}
+    catch(e){toast('⚠️ 無法自動複製，請手動複製內文');}
+  }
+
+  // 開啟 Outlook（帶主旨、收件人，內文請手動貼上）
+  await new Promise(r=>setTimeout(r,400));
+  let mailto=`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}`;
   if(bcc)mailto+=`&bcc=${encodeURIComponent(bcc)}`;
   window.location.href=mailto;
 
+  // 顯示操作提示
+  setTimeout(()=>{
+    toast('📋 請在 Outlook 內文處按 Ctrl+V 貼上（格式與圖片完整保留）','ok');
+  },1200);
+
+  // 記錄
   const selList=customers.filter(c=>selectedIds.has(c.id));
   selList.forEach(c=>c.status='sent');
   const logName=selList.length?selList.map(c=>c.name).join('、'):to;
   sendLog.unshift({id:Date.now(),name:logName,company:selList.map(c=>c.company||'').join('、'),email:to,subject,time:new Date().toLocaleString('zh-TW')});
   save();renderContacts();updateChips();renderLog();
-  toast('📤 已開啟 Outlook 寄信視窗','ok');
 }
 
 function clearCompose(){
