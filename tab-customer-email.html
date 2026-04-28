@@ -581,23 +581,22 @@ async function crawlSingle(){
 
   document.getElementById('crawlBtn').disabled=true;
   let totalAdded=0;
+  const loadingEl=document.getElementById('crawl-loading');
+  const loadingText=document.getElementById('crawl-loading-text');
 
   if(autoPager){
-    // 抓第一頁，同時找下一頁連結
     let currentUrl=url;
     let page=1;
-    document.getElementById('batch-progress').style.display='block';
+    loadingEl.style.display='block';
     while(currentUrl&&page<=maxPages){
-      document.getElementById('batch-prog-text').textContent=`抓取第 ${page} 頁：${currentUrl}`;
-      document.getElementById('batch-bar').style.width=Math.round((page/maxPages)*100)+'%';
+      loadingText.textContent=`自動分頁：第 ${page} 頁`;
       const result=await crawlOneUrl(currentUrl,true);
       totalAdded+=result.added;
       currentUrl=result.nextUrl||'';
       page++;
       if(currentUrl) await new Promise(r=>setTimeout(r,800));
     }
-    document.getElementById('batch-progress').style.display='none';
-    document.getElementById('batch-bar').style.width='0%';
+    loadingEl.style.display='none';
     toast(`✅ 共抓取 ${page-1} 頁，擷取 ${totalAdded} 筆資料`,'ok');
   }else{
     const result=await crawlOneUrl(url,false);
@@ -659,7 +658,7 @@ ${snippet}
     const groqRes=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-      body:JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],temperature:0.1,max_tokens:2048})
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],temperature:0.1,max_tokens:2048})
     });
     const groqData=await groqRes.json();
     if(groqData.error)throw new Error('Groq：'+groqData.error.message);
@@ -907,7 +906,7 @@ async function aiGenerateEmail(){
   try{
     const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-      body:JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],temperature:0.7,max_tokens:1500})
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],temperature:0.7,max_tokens:1500})
     });
     const data=await res.json();
     if(data.error)throw new Error(data.error.message);
