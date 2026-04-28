@@ -204,7 +204,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 <!-- ── Title ── -->
 <div class="stitle">
   <h2>客戶開發<em> Email 系統</em></h2>
-  <p>輸入客戶網址蒐集聯絡資料，Claude AI 自動生成個人化 Email，一鍵 Outlook 發送</p>
+  <p>輸入客戶網址蒐集聯絡資料，Groq AI 自動生成個人化 Email，一鍵 Outlook 發送</p>
   <div class="stitle-meta">
     <div class="chip">👥 名單 <b id="chip-total">0</b></div>
     <div class="chip">✅ 已發送 <b id="chip-sent">0</b></div>
@@ -238,7 +238,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
         <div class="ai-loading" style="margin-top:10px"><div class="ai-spin"></div>正在讀取網頁並擷取聯絡資料，請稍候…</div>
       </div>
       <div class="url-note" style="margin-top:10px">
-        💡 透過 <strong>Cloudflare Worker</strong> 免費抓取網頁，再由 <strong>Gemini</strong> 自動擷取聯絡人、公司、Email、電話。需先在「⚙️ 設定」填入 Gemini API Key。
+        💡 透過 <strong>Cloudflare Worker</strong> 免費抓取網頁，再由 <strong>Groq AI</strong> 自動擷取聯絡人、公司、Email、電話。需先在「⚙️ 設定」填入 Gemini API Key。
       </div>
     </div>
 
@@ -281,7 +281,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
         <div class="email-compose">
           <div class="email-compose-head">
             <h3>✉️ Email 內容</h3>
-            <span class="ai-badge">✨ Gemini AI</span>
+            <span class="ai-badge">✨ Groq AI</span>
           </div>
           <div class="email-form">
             <div class="ef-row">
@@ -297,7 +297,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
               <textarea class="ef-input ef-textarea" id="ef-body" placeholder="點擊「AI 生成」，Claude 將根據客戶資料與您的產品介紹自動撰寫個人化 Email 內容"></textarea>
             </div>
             <div id="ai-loading-row" style="display:none">
-              <div class="ai-loading"><div class="ai-spin"></div>Gemini AI 正在撰寫個人化 Email…</div>
+              <div class="ai-loading"><div class="ai-spin"></div>Groq AI 正在撰寫個人化 Email…</div>
             </div>
           </div>
           <div class="email-actions">
@@ -348,16 +348,16 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
   ════════════════════════════════ -->
   <div class="cpanel" id="cp-settings">
 
-    <!-- Gemini API Key -->
+    <!-- Groq API Key -->
     <div class="settings-box">
-      <h3>🤖 Google Gemini API 設定</h3>
+      <h3>🤖 Groq API 設定</h3>
       <div style="margin-bottom:10px;padding:10px 14px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.25);border-radius:8px;font-size:12px;color:var(--grn);line-height:1.7">
-        ✅ <strong>免費使用</strong>｜前往 <a href="https://aistudio.google.com" target="_blank" style="color:var(--ac)">aistudio.google.com</a> → 登入 Google 帳號 → 點「Get API Key」→「Create API Key」即可取得
+        ✅ <strong>免費使用</strong>｜前往 <a href="https://console.groq.com" target="_blank" style="color:var(--ac)">console.groq.com</a> → 登入 → 點「API Keys」→「Create API Key」即可取得（格式：gsk_xxx）
       </div>
       <div class="settings-grid">
         <div class="sf-row" style="grid-column:1/-1">
-          <div class="sf-label">Gemini API Key</div>
-          <input class="sf-input" id="cfg-apikey" type="password" placeholder="AIzaSy-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+          <div class="sf-label">Groq API Key</div>
+          <input class="sf-input" id="cfg-apikey" type="password" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxx" />
         </div>
       </div>
     </div>
@@ -559,14 +559,14 @@ ${snippet}
 [{"name":"聯絡人姓名","company":"公司名稱","email":"email","phone":"電話"}]
 
 如果完全找不到聯絡人，回傳 []`;
-    const gemRes = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+apiKey,
-      {method:'POST',headers:{'Content-Type':'application/json'},
-       body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.1,maxOutputTokens:1024}})}
-    );
+    const gemRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+      body:JSON.stringify({model:'llama3-8b-8192',messages:[{role:'user',content:prompt}],temperature:0.1,max_tokens:1024})
+    });
     const gemData = await gemRes.json();
-    if(gemData.error) throw new Error('Gemini 錯誤：'+gemData.error.message);
-    let raw = gemData.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+    if(gemData.error) throw new Error('Groq 錯誤：'+gemData.error.message);
+    let raw = gemData.choices?.[0]?.message?.content || '[]';
     raw = raw.replace(/```json|```/g,'').trim();
     const contacts = JSON.parse(raw);
     if(!Array.isArray(contacts)||!contacts.length){ toast('⚠️ 此網頁未找到聯絡資料，請改用手動新增'); return; }
