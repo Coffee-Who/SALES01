@@ -954,20 +954,36 @@ function exportSendList(){
   if(!subject){ toast('⚠️ 請填寫主旨'); return; }
   if(!bodyText.trim()){ toast('⚠️ 請填寫內文'); return; }
 
-  const selList = customers.filter(c => selectedIds.has(c.id) && c.email);
-  if(!selList.length){ toast('⚠️ 請選取至少一位有 Email 的客戶'); return; }
-
   const bcc = document.getElementById('ef-bcc').value.trim();
+  const manualTo = document.getElementById('ef-to').value.trim();
+  const selList = customers.filter(c => selectedIds.has(c.id) && c.email);
 
-  // 每位客戶產生一封，subject/body 可帶入變數
-  const list = selList.map(c => ({
-    to: c.email,
-    bcc: bcc,
-    subject: subject.replace(/{{name}}/g, c.name).replace(/{{company}}/g, c.company||''),
-    bodyHtml: bodyHtml.replace(/{{name}}/g, e(c.name)).replace(/{{company}}/g, e(c.company||'')),
-    name: c.name,
-    company: c.company||''
-  }));
+  let list = [];
+
+  if(selList.length){
+    // 從名單選取的客戶，逐封個人化
+    list = selList.map(c => ({
+      to: c.email,
+      bcc: bcc,
+      subject: subject.replace(/{{name}}/g, c.name).replace(/{{company}}/g, c.company||''),
+      bodyHtml: bodyHtml.replace(/{{name}}/g, e(c.name)).replace(/{{company}}/g, e(c.company||'')),
+      name: c.name,
+      company: c.company||''
+    }));
+  } else if(manualTo){
+    // 手動輸入的 Email，支援多個（逗號分隔）
+    const emails = manualTo.split(',').map(s=>s.trim()).filter(s=>s);
+    list = emails.map(email => ({
+      to: email,
+      bcc: bcc,
+      subject: subject,
+      bodyHtml: bodyHtml,
+      name: email,
+      company: ''
+    }));
+  }
+
+  if(!list.length){ toast('⚠️ 請選取客戶或在收件人欄位輸入 Email'); return; }
 
   const payload = {
     generated: new Date().toLocaleString('zh-TW'),
