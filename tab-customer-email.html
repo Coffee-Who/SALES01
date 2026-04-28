@@ -352,9 +352,13 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
           </div>
           <div class="email-actions">
             <button class="btn p" onclick="aiGenerateEmail()">✨ AI 生成內容</button>
-            <button class="btn g" onclick="sendOutlook()">📤 Outlook 發送</button>
+            <button class="btn g" onclick="sendOutlook()">📤 單封發送</button>
+            <button class="btn w" onclick="exportSendList()">📦 批次發送清單</button>
             <button class="btn" onclick="previewEmail()">👁 預覽</button>
             <button class="btn" onclick="clearCompose()">🗑 清除</button>
+          </div>
+          <div style="padding:0 16px 14px;font-size:11px;color:var(--t2);line-height:1.7">
+            💡 <b>批次發送流程：</b>選取多位客戶 → 編好內文 → 點「📦 批次發送清單」下載 JSON → 執行 <b>實威發信機.ahk</b> 自動逐封發送
           </div>
         </div>
       </div>
@@ -940,6 +944,50 @@ function previewEmail(){
   document.getElementById('preview-to').textContent=to||'（無收件人）';
   document.getElementById('preview-body').innerHTML=body||'（無內文）';
   document.getElementById('modal-preview').classList.add('open');
+}
+
+// ══ EXPORT SEND LIST (批次發送清單) ══
+function exportSendList(){
+  const subject = document.getElementById('ef-subject').value.trim();
+  const bodyHtml = document.getElementById('editor-body').innerHTML;
+  const bodyText = document.getElementById('editor-body').innerText;
+  if(!subject){ toast('⚠️ 請填寫主旨'); return; }
+  if(!bodyText.trim()){ toast('⚠️ 請填寫內文'); return; }
+
+  const selList = customers.filter(c => selectedIds.has(c.id) && c.email);
+  if(!selList.length){ toast('⚠️ 請選取至少一位有 Email 的客戶'); return; }
+
+  const bcc = document.getElementById('ef-bcc').value.trim();
+
+  // 每位客戶產生一封，subject/body 可帶入變數
+  const list = selList.map(c => ({
+    to: c.email,
+    bcc: bcc,
+    subject: subject.replace(/{{name}}/g, c.name).replace(/{{company}}/g, c.company||''),
+    bodyHtml: bodyHtml.replace(/{{name}}/g, e(c.name)).replace(/{{company}}/g, e(c.company||'')),
+    name: c.name,
+    company: c.company||''
+  }));
+
+  const payload = {
+    generated: new Date().toLocaleString('zh-TW'),
+    count: list.length,
+    mails: list
+  };
+
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '批次發送清單_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+
+  // 更新記錄
+  selList.forEach(c => c.status = 'sent');
+  const logName = selList.map(c=>c.name).join('、');
+  sendLog.unshift({id:Date.now(), name:logName, company:selList.map(c=>c.company||'').join('、'),
+    email:selList.map(c=>c.email).join(', '), subject, time:new Date().toLocaleString('zh-TW')});
+  save(); renderContacts(); updateChips(); renderLog();
+  toast('✅ 已下載批次發送清單（'+list.length+' 封），請執行 AHK 腳本發送', 'ok');
 }
 
 // ══ SEND OUTLOOK ══
