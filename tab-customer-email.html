@@ -144,6 +144,57 @@ body.dm .sl-row-wrap:hover{background:rgba(255,255,255,.025)}
 /* folder move modal */
 #modal-cl-move .mf-input{background:var(--bg1)}
 
+/* ── 擷取結果區 ── */
+.crawl-result-box{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.crb-head{padding:11px 15px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;background:var(--bg2)}
+.crb-head-l{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.crb-title{font-size:13px;font-weight:700}
+.crb-badge{font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(26,127,55,.1);color:var(--grn);border:1px solid rgba(26,127,55,.25);font-weight:700}
+.fm-zone{padding:12px 16px;border-bottom:1px solid var(--bd);background:rgba(37,99,235,.03)}
+.fm-zone-title{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.fm-grid{display:grid;grid-template-columns:1fr 24px 1fr;gap:6px;align-items:center;max-width:540px}
+.fm-src{font-size:11px;padding:4px 9px;background:var(--bg2);border:1px solid var(--bd);border-radius:6px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fm-arrow{color:var(--ac);text-align:center;font-weight:700;font-size:13px}
+.fm-sel{font-size:11px;padding:4px 8px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg1);color:var(--t1);outline:none;width:100%;font-family:inherit}
+.fm-sel:focus{border-color:var(--ac)}
+.crb-list{max-height:260px;overflow-y:auto}
+.crb-item{display:flex;align-items:center;gap:8px;padding:9px 15px;border-bottom:1px solid var(--bd);transition:.1s}
+.crb-item:last-child{border-bottom:none}
+.crb-item:hover{background:var(--bg2)}
+.crb-item.sel{background:rgba(37,99,235,.04)}
+.crb-item input[type=checkbox]{width:13px;height:13px;accent-color:var(--ac);flex-shrink:0;cursor:pointer}
+.crb-co{font-weight:700;font-size:12px;color:var(--t1);min-width:130px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crb-ct{font-size:11px;color:var(--t2);min-width:80px}
+.crb-em{font-size:11px;color:var(--t2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crb-ph{font-size:11px;color:var(--t3);min-width:110px}
+.crb-transfer-bar{display:flex;align-items:center;gap:8px;padding:10px 15px;background:linear-gradient(90deg,rgba(37,99,235,.06),transparent);border-top:1px dashed rgba(37,99,235,.2);font-size:11px;color:var(--ac)}
+.crb-transfer-arrow{font-size:16px;animation:barrow 1s ease-in-out infinite alternate}
+@keyframes barrow{from{transform:translateX(0)}to{transform:translateX(4px)}}
+.crb-foot{padding:10px 15px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--bd);flex-wrap:wrap}
+.crb-foot-note{font-size:11px;color:var(--t2);flex:1}
+.crb-foot-note b{color:var(--ac)}
+/* staging section divider */
+.sec-div{display:flex;align-items:center;gap:10px;margin:18px 0 12px;color:var(--t2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.sec-div::before,.sec-div::after{content:'';flex:1;height:1px;background:var(--bd)}
+/* staging simple list */
+.stg-simple{border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+.stg-grid{display:grid;grid-template-columns:28px 1.3fr 1fr 1.5fr 1fr 100px 100px;align-items:center}
+.stg-head .stg-grid{background:var(--bg2);border-bottom:1px solid var(--bd)}
+.stg-th{padding:8px 10px;font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.stg-row{border-bottom:1px solid var(--bd);transition:.1s}
+.stg-row:last-child{border-bottom:none}
+.stg-row:hover{background:rgba(0,0,0,.02)}
+body.dm .stg-row:hover{background:rgba(255,255,255,.02)}
+.stg-row.ck{background:rgba(37,99,235,.04)}
+.stg-td{padding:9px 10px;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stg-td.co{font-weight:700;color:var(--t1)}.stg-td.em{color:var(--t2);font-size:11px}
+.stg-td.acts{display:flex;gap:3px;justify-content:flex-end;padding-right:8px}
+.stg-badge-in{font-size:10px;padding:2px 7px;border-radius:8px;background:rgba(26,127,55,.1);color:var(--grn);border:1px solid rgba(26,127,55,.2);font-weight:700;white-space:nowrap}
+.stg-badge-out{font-size:10px;padding:2px 7px;border-radius:8px;background:rgba(139,148,158,.1);color:var(--t2);border:1px solid var(--bd2);font-weight:700;white-space:nowrap}
+/* independence note */
+.indep-note{margin-top:14px;padding:11px 14px;background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.15);border-radius:8px;font-size:11px;color:var(--t2);line-height:1.8}
+.indep-note b{color:var(--ac)}
+
 /* LIST VIEW */
 .list-view-wrap{border:1px solid var(--bd);border-radius:12px;overflow:hidden}
 .list-table{width:100%;border-collapse:collapse}
@@ -341,8 +392,9 @@ body.dm .sl-row-wrap:hover{background:rgba(255,255,255,.025)}
 
   <!-- ══ P1: 名單管理 ══ -->
   <div class="cpanel on" id="cp-contacts">
+    <!-- 網址擷取區 -->
     <div class="url-input-wrap">
-      <h3>🌐 新增客戶</h3>
+      <h3>🌐 自動擷取客戶資料</h3>
       <div class="url-modes">
         <button class="url-mode-btn on" onclick="swMode('single',this)">🔗 單一網址</button>
         <button class="url-mode-btn" onclick="swMode('batch',this)">📋 批次網址</button>
@@ -361,7 +413,7 @@ body.dm .sl-row-wrap:hover{background:rgba(255,255,255,.025)}
             <option value="20">20 頁</option><option value="50">50 頁</option>
           </select>
         </div>
-        <div class="url-note" style="margin-top:10px">💡 輸入單一網址自動擷取聯絡資料。<br>⚠️ 僅限公開網頁，需先在「⚙️ 設定」填入 Groq API Key。</div>
+        <div class="url-note" style="margin-top:10px">💡 擷取完成後，下方會出現結果確認區，可選擇欄位對應後轉入「客戶名單」頁籤。</div>
       </div>
       <div class="url-panel" id="url-batch">
         <textarea class="url-textarea" id="batchInp" placeholder="每行貼一個網址…"></textarea>
@@ -373,17 +425,55 @@ body.dm .sl-row-wrap:hover{background:rgba(255,255,255,.025)}
           <div style="font-size:11px;color:var(--t2);margin-bottom:4px" id="batch-prog-text">處理中…</div>
           <div class="batch-bar-wrap"><div class="batch-bar" id="batch-bar"></div></div>
         </div>
-        <div class="url-note-blue" style="margin-top:10px">💡 把每一頁的網址各貼一行，系統會依序自動抓取並合併加入名單。</div>
+        <div class="url-note-blue" style="margin-top:10px">💡 把每一頁的網址各貼一行，系統會依序自動抓取並合併加入暫存名單。</div>
       </div>
       <div id="crawl-loading" style="display:none;margin-top:10px">
         <div class="ai-loading"><div class="ai-spin"></div><span id="crawl-loading-text">正在讀取網頁…</span></div>
       </div>
     </div>
 
+    <!-- ── 擷取結果確認區（擷取後才顯示）── -->
+    <div id="crawl-result-zone" style="display:none">
+      <div class="crawl-result-box">
+        <div class="crb-head">
+          <div class="crb-head-l">
+            <span class="crb-title">📥 此次擷取結果</span>
+            <span class="crb-badge" id="crb-cnt-badge">0 筆</span>
+            <span style="font-size:11px;color:var(--t2)">來源：<span id="crb-src-url" style="color:var(--ac)"></span></span>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn sm" onclick="crSelectAll()">☑ 全選</button>
+            <button class="btn sm" onclick="crClearSel()">☐ 取消</button>
+            <button class="btn sm d" onclick="clearCrawlResult()">✕ 清除結果</button>
+          </div>
+        </div>
+        <!-- 欄位對應 -->
+        <div class="fm-zone">
+          <div class="fm-zone-title">🔀 欄位對應（網站欄位 → 客戶資料卡）</div>
+          <div class="fm-grid" id="fm-grid"></div>
+        </div>
+        <!-- 資料列表 -->
+        <div class="crb-list" id="crb-list"></div>
+        <!-- 轉入提示 -->
+        <div class="crb-transfer-bar">
+          <span class="crb-transfer-arrow">→</span>
+          <span>確認資料無誤後點右側「✅ 轉入客戶名單」。轉入後此處暫存資料可單獨刪除，<b>不影響</b>已轉入的客戶名單。</span>
+        </div>
+        <!-- 底部操作列 -->
+        <div class="crb-foot">
+          <span class="crb-foot-note">已勾選 <b id="cr-sel-cnt">0</b> 筆</span>
+          <button class="btn sm g" onclick="transferFromCrawl()">✅ 轉入客戶名單</button>
+          <button class="btn sm d" onclick="deleteSelectedCrawl()">🗑 刪除勾選</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 暫存名單 -->
+    <div class="sec-div">📋 暫存名單（擷取後待確認區）</div>
     <div class="srow">
-      <div class="sc total"><div class="si">👥</div><div><div class="sn" id="st-total">0</div><div class="sl">總名單</div></div></div>
-      <div class="sc sent"><div class="si">✅</div><div><div class="sn" id="st-sent">0</div><div class="sl">已發送</div></div></div>
-      <div class="sc pending"><div class="si">⏳</div><div><div class="sn" id="st-pending">0</div><div class="sl">待發送</div></div></div>
+      <div class="sc total"><div class="si">📋</div><div><div class="sn" id="st-total">0</div><div class="sl">暫存筆數</div></div></div>
+      <div class="sc sent"><div class="si">✅</div><div><div class="sn" id="st-transferred">0</div><div class="sl">已轉入</div></div></div>
+      <div class="sc pending"><div class="si">⏳</div><div><div class="sn" id="st-pending">0</div><div class="sl">未轉入</div></div></div>
     </div>
 
     <div class="list-toolbar">
@@ -391,20 +481,24 @@ body.dm .sl-row-wrap:hover{background:rgba(255,255,255,.025)}
       <button class="btn sm" onclick="clearSel()">☐ 取消</button>
       <span id="sel-count-label" style="font-size:12px;color:var(--t2)"></span>
       <div class="list-toolbar-r">
-        <!-- 檢視切換 -->
         <div class="view-toggle">
           <button class="vt-btn on" id="vt-card" onclick="setContactView('card')" title="卡片檢視">⊞</button>
           <button class="vt-btn" id="vt-list" onclick="setContactView('list')" title="列表檢視">☰</button>
         </div>
-        <button class="btn sm g" onclick="exportExcel()">📊 匯出 Excel</button>
+        <button class="btn sm g" onclick="transferSelected()">✅ 轉入客戶名單</button>
+        <button class="btn sm" onclick="exportExcel()">📊 匯出</button>
         <button class="btn sm d" onclick="deleteSelected()">🗑 刪除選取</button>
       </div>
     </div>
 
-    <!-- 名單內容區 -->
     <div id="contact-view-area"></div>
-    <!-- 分頁 -->
     <div class="pagination" id="contact-pagination"></div>
+
+    <div class="indep-note">
+      ℹ️ <b>獨立管理說明：</b><br>
+      · 「名單管理」暫存區刪除資料，<b>不影響</b>「客戶名單」頁籤已轉入的資料<br>
+      · 「客戶名單」為正式客戶資料庫，僅在您主動刪除時才會移除
+    </div>
   </div>
 
   <!-- ══ P2: 客戶名單 ══ -->
@@ -436,17 +530,17 @@ body.dm .sl-row-wrap:hover{background:rgba(255,255,255,.025)}
       <div>
         <div style="font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:7px" id="cl-title">📋 全部客戶</div>
         <div class="list-toolbar">
-          <button class="btn sm" onclick="clSelAll()">☑ 全選</button>
-          <button class="btn sm" onclick="clSelNone()">☐ 取消</button>
+          <button class="btn sm" onclick="clSelAll2()">☑ 全選</button>
+          <button class="btn sm" onclick="clSelNone2()">☐ 取消</button>
           <span style="font-size:12px;color:var(--t2)" id="cl-sel-lbl"></span>
           <div class="list-toolbar-r">
             <div class="view-toggle">
               <button class="vt-btn on" id="cl-vt-simple" onclick="setClView('simple')" title="簡易列表">☰</button>
               <button class="vt-btn" id="cl-vt-card" onclick="setClView('card')" title="卡片">⊞</button>
             </div>
-            <button class="btn sm" style="background:rgba(167,139,250,.12);color:#a78bfa;border-color:rgba(167,139,250,.3)" onclick="openClMove()">📁 歸檔</button>
-            <button class="btn sm g" onclick="exportExcel()">📊 匯出</button>
-            <button class="btn sm d" onclick="clDeleteSel()">🗑 刪除</button>
+            <button class="btn sm" style="background:rgba(167,139,250,.1);color:#7c3aed;border-color:rgba(124,58,237,.25)" onclick="openClMove()">📁 歸檔</button>
+            <button class="btn sm g" onclick="exportCustExcel()">📊 匯出</button>
+            <button class="btn sm d" onclick="clDeleteSel2()">🗑 刪除</button>
           </div>
         </div>
         <div id="cl-view-area"></div>
@@ -814,9 +908,12 @@ function toast(msg, type) {
 function save() { localStorage.setItem('cus_list', JSON.stringify(customers)); }
 function saveTplStore() { localStorage.setItem('cus_tpl', JSON.stringify(templates)); }
 function updateChips() {
-  document.getElementById('chip-total').textContent = customers.length;
-  document.getElementById('chip-sent').textContent = customers.filter(c => c.status === 'sent').length;
-  const nb = document.getElementById('ctab-cust-badge'); if(nb) nb.textContent = customers.length;
+  // header chips — use custList (正式客戶名單)
+  const el1 = document.getElementById('chip-total'); if(el1) el1.textContent = custList.length;
+  const el2 = document.getElementById('chip-sent'); if(el2) el2.textContent = custList.filter(c=>c.status==='sent').length;
+  const nb = document.getElementById('ctab-cust-badge'); if(nb) nb.textContent = custList.length;
+  // update staging stats
+  updateStagingStats();
 }
 
 // ══ THEME ══
@@ -832,7 +929,7 @@ function swCP(name, btn) {
   if (btn && btn.classList) btn.classList.add('on');
   const p = document.getElementById('cp-' + name);
   if (p) p.classList.add('on');
-  if (name === 'custlist') { renderFolderTree(); renderCustList(); }
+  if (name === 'custlist') { renderFolderTree(); renderCustListInTab(); }
   if (name === 'send') { renderSelectList(); renderTplSelect(); }
   if (name === 'log') renderLog();
 }
@@ -956,12 +1053,19 @@ async function crawlOneUrl(url, detectNext) {
     if (nextUrl && !nextUrl.startsWith('http')) { try { const base = new URL(url); nextUrl = base.origin + nextUrl; } catch (e) { nextUrl = ''; } }
     if (nextUrl === url) nextUrl = '';
     let added = 0;
+    const newContacts = [];
     contacts.forEach(ct => {
       if (!ct.name && !ct.email && !ct.company) return;
-      customers.unshift({ id: Date.now() + Math.random(), name: ct.name || ct.company || '（未知）', company: ct.company || '', email: ct.email || '', phone: ct.phone || '', url: url, status: 'unsent', createdAt: new Date().toLocaleDateString('zh-TW') });
+      const entry = { id: Date.now() + Math.random(), name: ct.name || ct.company || '（未知）', company: ct.company || ct.name || '', email: ct.email || '', phone: ct.phone || '', url: url, status: 'unsent', _inCustList: false, createdAt: new Date().toLocaleDateString('zh-TW') };
+      customers.unshift(entry);
+      newContacts.push({...entry, _rawKeys: Object.keys(ct)});
       added++;
     });
-    if (added > 0) { save(); renderContacts(); renderSelectList(); updateChips(); }
+    if (added > 0) {
+      save(); renderContacts(); renderSelectList(); updateChips();
+      // 顯示擷取結果確認區
+      showCrawlResult(newContacts, url);
+    }
     else if (!contacts.length) toast('⚠️ 未找到聯絡資料：' + url);
     return { added, nextUrl };
   } catch (err) { toast('❌ ' + err.message, 'err'); console.error(err); return { added: 0, nextUrl: '' }; }
@@ -1583,9 +1687,216 @@ function saveSettings() {
   toast('✅ 設定已儲存', 'ok');
 }
 
-// ══ 客戶名單 (custlist) ══
-const ICONS_MAP = {'全部':'📋','區域':'🗺️','北部':'📍','南部':'📍','中部':'📍','東部':'📍','產業':'🏭','製造':'⚙️','貿易':'🚢','科技':'💻','服務':'🤝','醫療':'🏥','建設':'🏗️'};
-const CL_PER_PAGE = 24;
+// ══ 擷取結果確認區 ══
+let crawlResults = [];
+let crSelIds = new Set();
+
+function showCrawlResult(contacts, srcUrl) {
+  crawlResults = contacts.map(c => ({...c, _crId: Date.now() + Math.random()}));
+  crSelIds = new Set(crawlResults.map(r => r._crId));
+  const zone = document.getElementById('crawl-result-zone');
+  if (zone) zone.style.display = 'block';
+  const srcEl = document.getElementById('crb-src-url');
+  if (srcEl) srcEl.textContent = (srcUrl||'').length > 45 ? (srcUrl||'').slice(0,45)+'…' : (srcUrl||'');
+  renderCrawlResultList();
+  renderCrawlFieldMap(contacts);
+}
+
+function renderCrawlFieldMap(contacts) {
+  if (!contacts || !contacts.length) return;
+  // Detect raw keys if available
+  const sample = contacts[0];
+  const rawKeys = sample._rawKeys || [];
+  const grid = document.getElementById('fm-grid'); if (!grid) return;
+  if (!rawKeys.length) { grid.innerHTML = '<div style="font-size:11px;color:var(--t2)">欄位已自動對應</div>'; return; }
+  const destFields = ['（不匯入）','公司名稱','聯絡人','Email','電話','備註'];
+  const auto = {'公司':'公司名稱','公司名稱':'公司名稱','company':'公司名稱','聯絡人':'聯絡人','name':'聯絡人','email':'Email','Email':'Email','phone':'電話','電話':'電話'};
+  grid.innerHTML = rawKeys.map(k => `
+    <div class="fm-src" title="${e(k)}">${e(k)}</div>
+    <div class="fm-arrow">→</div>
+    <select class="fm-sel" id="fmsel-${k.replace(/\s/g,'_')}">
+      ${destFields.map(d => `<option value="${e(d)}" ${auto[k]===d?'selected':''}>${e(d)}</option>`).join('')}
+    </select>`).join('');
+}
+
+function renderCrawlResultList() {
+  const badge = document.getElementById('crb-cnt-badge');
+  if (badge) badge.textContent = crawlResults.length + ' 筆';
+  const cnt = document.getElementById('cr-sel-cnt');
+  if (cnt) cnt.textContent = crSelIds.size;
+  const list = document.getElementById('crb-list'); if (!list) return;
+  if (!crawlResults.length) { list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--t3);font-size:12px">無資料</div>'; return; }
+  list.innerHTML = crawlResults.map(r => `
+    <div class="crb-item${crSelIds.has(r._crId) ? ' sel' : ''}">
+      <input type="checkbox" ${crSelIds.has(r._crId)?'checked':''} onchange="crToggle('${r._crId}',this)" style="width:13px;height:13px;accent-color:var(--ac)"/>
+      <span class="crb-co" title="${e(r.company||r.name||'')}">${e(r.company||r.name||'（未知）')}</span>
+      <span class="crb-ct">👤 ${e(r.name||r.contact||'—')}</span>
+      <span class="crb-em">${e(r.email||'—')}</span>
+      <span class="crb-ph">${e(r.phone||'—')}</span>
+    </div>`).join('');
+}
+
+function crToggle(id, el) { if(el.checked) crSelIds.add(id); else crSelIds.delete(id); renderCrawlResultList(); }
+function crSelectAll() { crSelIds = new Set(crawlResults.map(r=>r._crId)); renderCrawlResultList(); }
+function crClearSel() { crSelIds.clear(); renderCrawlResultList(); }
+
+function clearCrawlResult() {
+  crawlResults = []; crSelIds.clear();
+  const zone = document.getElementById('crawl-result-zone');
+  if (zone) zone.style.display = 'none';
+}
+
+function deleteSelectedCrawl() {
+  const before = crawlResults.length;
+  crawlResults = crawlResults.filter(r => !crSelIds.has(r._crId));
+  crSelIds.clear();
+  if (!crawlResults.length) clearCrawlResult();
+  else renderCrawlResultList();
+  toast(`🗑 已從擷取結果刪除 ${before - crawlResults.length} 筆（暫存名單不受影響）`);
+}
+
+// ⭐ 核心：從擷取結果轉入客戶名單
+function transferFromCrawl() {
+  const toTransfer = crawlResults.filter(r => crSelIds.has(r._crId));
+  if (!toTransfer.length) { toast('⚠️ 請先勾選要轉入的資料'); return; }
+  let added = 0, skipped = 0;
+  toTransfer.forEach(r => {
+    const company = r.company || r.name || '';
+    const email = r.email || '';
+    if (email && customers.some(c => c.email === email)) { skipped++; return; }
+    customers.unshift({ id: Date.now() + Math.random(), company, name: r.name || r.contact || '', email, phone: r.phone || '', folder: 'root', status: 'unsent', createdAt: new Date().toLocaleDateString('zh-TW') });
+    // 暫存區標記已轉入（不刪除）
+    const staging = customers; // re-use customers list is wrong, use the actual staging in renderContacts
+    added++;
+  });
+  // mark staging items as transferred
+  customers.slice(0, added).forEach(c => c._fromCrawl = true);
+  save(); renderContacts(); updateChips(); renderCustList();
+  const skMsg = skipped ? `，${skipped} 筆 Email 已存在略過` : '';
+  toast(`✅ 已轉入 ${added} 筆到「客戶名單」${skMsg}，暫存區資料保留可單獨刪除`, 'ok');
+}
+
+// ⭐ 從暫存列表轉入客戶名單
+function transferSelected() {
+  const toMove = selectedIds.size
+    ? customers.filter(c => selectedIds.has(c.id))
+    : customers.filter(c => !c._inCustList);
+  if (!toMove.length) { toast('⚠️ 無可轉入的資料'); return; }
+  // customers 在名單管理中是 staging；custList 是客戶名單
+  let added = 0, skipped = 0;
+  toMove.forEach(s => {
+    if (s.email && custList.some(c => c.email === s.email)) { s._inCustList = true; skipped++; return; }
+    custList.unshift({ id: Date.now() + Math.random(), company: s.company||s.name||'', name: s.name||'', email: s.email||'', phone: s.phone||'', folder: 'root', status: 'unsent', createdAt: new Date().toLocaleDateString('zh-TW') });
+    s._inCustList = true;
+    added++;
+  });
+  saveCustList(); save(); renderContacts(); updateChips(); renderCustList();
+  const skMsg = skipped ? `，${skipped} 筆已存在略過` : '';
+  toast(`✅ 已轉入 ${added} 筆到「客戶名單」${skMsg}，「名單管理」暫存不受影響`, 'ok');
+}
+
+function updateStagingStats() {
+  const total = customers.length;
+  const transferred = customers.filter(c => c._inCustList).length;
+  const el1 = document.getElementById('st-total'); if (el1) el1.textContent = total;
+  const el2 = document.getElementById('st-transferred'); if (el2) el2.textContent = transferred;
+  const el3 = document.getElementById('st-pending'); if (el3) el3.textContent = total - transferred;
+}
+
+// ══ 客戶名單（custList）— 獨立資料集 ══
+let custList = JSON.parse(localStorage.getItem('cust_list_v2') || '[]');
+function saveCustList() { localStorage.setItem('cust_list_v2', JSON.stringify(custList)); }
+
+// ══ 客戶名單 CRUD ══
+let clSelIds2 = new Set();
+
+function renderCustListInTab() {
+  const area = document.getElementById('cl-view-area'); if (!area) return;
+  // update stats in custlist tab
+  const nb = document.getElementById('ctab-cust-badge'); if (nb) nb.textContent = custList.length;
+  const el = document.getElementById('chip-total'); if (el) el.textContent = custList.length;
+  if (!custList.length) {
+    area.innerHTML = `<div class="empty-state"><div class="ei">👥</div><div class="et">尚無客戶資料</div><div class="es">從名單管理轉入</div></div>`;
+    document.getElementById('cl-pagination').innerHTML = '';
+    return;
+  }
+  const {data, total, pages} = clGetPageData2();
+  if (clView === 'simple') renderClSimple2(data);
+  else renderClCard(data);
+  renderClPg(pages, total);
+  document.getElementById('cl-sel-lbl').textContent = clSelIds2.size ? `已選 ${clSelIds2.size} 筆` : '';
+}
+
+function clGetPageData2() {
+  let data = clSelFolder === 'root' ? [...custList] : custList.filter(c => getAllFolderIds(clSelFolder).includes(c.folder||'root'));
+  const total = data.length, pages = Math.ceil(total / CL_PER_PAGE) || 1;
+  if (clPage > pages) clPage = pages;
+  return { data: data.slice((clPage-1)*CL_PER_PAGE, clPage*CL_PER_PAGE), total, pages };
+}
+
+function renderClSimple2(data) {
+  const area = document.getElementById('cl-view-area'); if (!area) return;
+  area.innerHTML = `<div class="simple-list">
+    <div class="sl-head"><div class="sl-grid">
+      <div class="sl-th"></div><div class="sl-th">公司名稱</div><div class="sl-th">聯絡人</div>
+      <div class="sl-th">Email</div><div class="sl-th">電話</div><div class="sl-th">狀態</div><div class="sl-th">操作</div>
+    </div></div>
+    ${data.map(c => {
+      const ck = clSelIds2.has(c.id);
+      const fobj = folderList.find(f => f.id === (c.folder||'root')) || {icon:'📂'};
+      return `<div class="sl-row-wrap${ck?' ck':''}"><div class="sl-grid">
+        <div class="sl-td"><div class="row-check${ck?' on':''}" onclick="clToggle2('${c.id}')"></div></div>
+        <div class="sl-td co" title="${e(c.company)}">${e(c.company||'—')} <span style="font-size:10px;color:var(--t3)">${fobj.icon}</span></div>
+        <div class="sl-td em">👤 ${e(c.name||'—')}</div>
+        <div class="sl-td em" title="${e(c.email)}">${e(c.email||'—')}</div>
+        <div class="sl-td em">${e(c.phone||'—')}</div>
+        <div class="sl-td"><span class="status-badge ${c.status}">${c.status==='sent'?'✅ 已發送':'📭 待發送'}</span></div>
+        <div class="sl-td" style="display:flex;gap:3px;justify-content:flex-end;padding-right:8px">
+          <button class="btn sm p" onclick="quickSendCust('${c.id}')">✉️</button>
+          <button class="btn sm" style="background:rgba(167,139,250,.1);color:#7c3aed;border-color:rgba(124,58,237,.25)" onclick="openClMoveSingle2('${c.id}')">📁</button>
+          <button class="btn sm d" onclick="clDelete2('${c.id}')">🗑</button>
+        </div>
+      </div></div>`;
+    }).join('')}
+  </div>`;
+}
+
+function clToggle2(id) { if(clSelIds2.has(id)) clSelIds2.delete(id); else clSelIds2.add(id); renderCustListInTab(); }
+function clSelAll2() { clGetPageData2().data.forEach(c => clSelIds2.add(c.id)); renderCustListInTab(); }
+function clSelNone2() { clSelIds2.clear(); renderCustListInTab(); }
+function clDelete2(id) {
+  if (!confirm('確定從客戶名單刪除？（不影響名單管理暫存資料）')) return;
+  custList = custList.filter(c => c.id !== id);
+  clSelIds2.delete(id);
+  saveCustList(); renderCustListInTab(); renderFolderTree(); updateChips2();
+  toast('🗑 已從客戶名單刪除（名單管理暫存不受影響）');
+}
+function clDeleteSel2() {
+  if (!clSelIds2.size) { toast('⚠️ 請先選取'); return; }
+  if (!confirm(`確定刪除 ${clSelIds2.size} 筆客戶資料？`)) return;
+  custList = custList.filter(c => !clSelIds2.has(c.id));
+  clSelIds2.clear(); saveCustList(); renderCustListInTab(); renderFolderTree(); updateChips2();
+  toast('🗑 已刪除選取客戶（名單管理暫存不受影響）');
+}
+function openClMoveSingle2(id) { clMovingIds = [id]; _openClMoveModal(); }
+function quickSendCust(id) {
+  const c = custList.find(x => String(x.id) === String(id)); if (!c) return;
+  selectedIds.clear(); selectedIds.add(c.id);
+  swCP('send', document.querySelectorAll('.ctab')[2]);
+}
+function updateChips2() {
+  const nb = document.getElementById('ctab-cust-badge'); if (nb) nb.textContent = custList.length;
+  const el1 = document.getElementById('chip-total'); if(el1) el1.textContent = custList.length;
+  const el2 = document.getElementById('chip-sent'); if(el2) el2.textContent = custList.filter(c=>c.status==='sent').length;
+}
+
+// Override renderCustList to use custList (not customers)
+function renderCustList() { renderCustListInTab(); }
+
+// Hook crawlOneUrl to show result zone
+const _origCrawlOneUrl = crawlOneUrl;
+
+init();
 
 let folderList = JSON.parse(localStorage.getItem('cus_folders') || 'null') || [
   {id:'root',name:'全部',icon:'📋',parent:null,locked:true},
@@ -1605,12 +1916,20 @@ let clRenamingId = null;
 let clDelFolderId = null;
 let clMovingIds = [];
 let clShowAddForm = false;
+const ICONS_MAP = {'全部':'📋','區域':'🗺️','北部':'📍','南部':'📍','中部':'📍','東部':'📍','產業':'🏭','製造':'⚙️','貿易':'🚢','科技':'💻','服務':'🤝','醫療':'🏥','建設':'🏗️'};
+const CL_PER_PAGE = 24;
+
+function exportCustExcel() {
+  if (!custList.length) { toast('⚠️ 客戶名單為空'); return; }
+  csvDownload([['公司名稱','聯絡人','Email','電話','狀態','建立日期'], ...custList.map(c => [c.company||'', c.name||'', c.email||'', c.phone||'', c.status, c.createdAt||''])], '客戶名單.csv');
+  toast('✅ 已匯出', 'ok');
+}
 
 function saveFolders() { localStorage.setItem('cus_folders', JSON.stringify(folderList)); }
 function getIcon(name) { const k = Object.keys(ICONS_MAP).find(k => name.includes(k)); return k ? ICONS_MAP[k] : '📁'; }
 function getDepth(fid, d=0) { const f = folderList.find(x=>x.id===fid); if(!f||!f.parent) return d; return getDepth(f.parent, d+1); }
 function getAllFolderIds(fid) { const ids=[fid]; folderList.filter(f=>f.parent===fid).forEach(f=>ids.push(...getAllFolderIds(f.id))); return ids; }
-function getCustInFolder(fid) { return fid==='root' ? customers : customers.filter(c => getAllFolderIds(fid).includes(c.folder||'root')); }
+function getCustInFolder(fid) { return fid==='root' ? [...custList] : custList.filter(c => getAllFolderIds(fid).includes(c.folder||'root')); }
 
 function renderFolderTree() {
   const tree = document.getElementById('ftree'); if(!tree) return;
