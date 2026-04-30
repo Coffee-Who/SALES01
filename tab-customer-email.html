@@ -370,6 +370,33 @@ body.dm .excel-preview-tbl tr:hover td{background:rgba(255,255,255,.025)}
 .mf-input{padding:9px 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg1);color:var(--t1);font-size:13px;font-family:inherit;outline:none;width:100%}
 .mf-input:focus{border-color:var(--ac)}
 .modal-foot{padding:14px 20px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
+/* ── BCC 產生器 ── */
+.bcc-layout{display:flex;flex-direction:column;gap:16px}
+.bcc-intro{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;padding:16px 18px}
+.bcc-intro h3{font-size:14px;font-weight:700;margin-bottom:5px}
+.bcc-intro p{font-size:12px;color:var(--t2);line-height:1.6}
+.bcc-flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px}
+.bcc-step{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--abg);color:var(--ac);border:1px solid rgba(37,99,235,.2)}
+.bcc-arrow{color:var(--t3);font-size:14px}
+.bcc-main{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:680px){.bcc-main{grid-template-columns:1fr}}
+.bcc-col{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.bcc-col-head{padding:11px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;background:var(--bg2);flex-wrap:wrap;gap:6px}
+.bcc-col-title{font-size:12px;font-weight:700}
+.bcc-textarea{flex:1;min-height:260px;padding:12px 14px;border:none;background:var(--bg1);color:var(--t1);font-size:12px;font-family:'DM Sans','Noto Sans TC',monospace;line-height:1.7;resize:none;outline:none}
+.bcc-textarea::placeholder{color:var(--t3);line-height:1.9}
+.bcc-input-hint{padding:7px 14px;font-size:10px;color:var(--t3);border-top:1px solid var(--bd);background:var(--bg2)}
+.bcc-result-box{flex:1;min-height:200px;padding:12px 14px;overflow-y:auto;font-size:12px;line-height:1.8;font-family:monospace;color:var(--t1);background:var(--bg1)}
+.bcc-empty-hint{color:var(--t3);font-family:inherit;padding-top:8px}
+.bcc-email-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;background:var(--abg);border:1px solid rgba(37,99,235,.2);font-size:11px;color:var(--ac);margin:2px 3px;font-family:inherit;cursor:default}
+.bcc-email-tag .bcc-rm{font-size:12px;cursor:pointer;color:var(--t2);line-height:1;padding:0 2px}
+.bcc-email-tag .bcc-rm:hover{color:var(--red)}
+.bcc-stats{font-size:11px;font-weight:700;padding:2px 9px;border-radius:10px;background:rgba(26,127,55,.1);color:var(--grn);border:1px solid rgba(26,127,55,.2)}
+.bcc-invalid-title{font-size:10px;font-weight:700;color:var(--ylw);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
+.bcc-invalid-list{font-size:11px;color:var(--t2);padding:8px 10px;background:rgba(154,103,0,.07);border:1px solid rgba(154,103,0,.2);border-radius:7px;line-height:1.8;word-break:break-all}
+.bcc-action-bar{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;padding:14px 16px}
+.bcc-copied-note{font-size:12px;font-weight:600;color:var(--grn);padding:8px 12px;background:rgba(26,127,55,.08);border:1px solid rgba(26,127,55,.2);border-radius:7px;margin-top:8px}
+kbd{display:inline-block;padding:1px 6px;border:1px solid var(--bd2);border-radius:4px;font-size:11px;font-family:monospace;background:var(--bg2);color:var(--t1)}
 </style>
 </head>
 <body>
@@ -402,6 +429,7 @@ body.dm .excel-preview-tbl tr:hover td{background:rgba(255,255,255,.025)}
     <button class="ctab on" onclick="swCP('contacts',this)">📋 名單管理</button>
     <button class="ctab" onclick="swCP('custlist',this)">👥 客戶名單 <span id="ctab-cust-badge" style="font-size:10px;padding:1px 6px;border-radius:8px;background:rgba(37,99,235,.15);color:var(--ac);font-weight:700;margin-left:2px">0</span></button>
     <button class="ctab" onclick="swCP('send',this)">✉️ Email 發送</button>
+    <button class="ctab" onclick="swCP('bcc',this)">📨 BCC 產生器</button>
     <button class="ctab" onclick="swCP('log',this)">📊 發送紀錄</button>
     <button class="ctab" onclick="swCP('settings',this)">⚙️ 設定</button>
   </div>
@@ -702,6 +730,79 @@ body.dm .excel-preview-tbl tr:hover td{background:rgba(255,255,255,.025)}
     </div>
   </div>
 
+  <!-- ══ BCC 產生器 ══ -->
+  <div class="cpanel" id="cp-bcc">
+    <div class="bcc-layout">
+
+      <!-- 說明 -->
+      <div class="bcc-intro">
+        <h3>📨 BCC 批次發送產生器</h3>
+        <p>將任意格式的 Email 清單貼入下方，自動整理成 Outlook BCC 格式，30 秒完成批次發送。</p>
+        <div class="bcc-flow">
+          <span class="bcc-step">1 貼入名單</span><span class="bcc-arrow">→</span>
+          <span class="bcc-step">2 點「產生」</span><span class="bcc-arrow">→</span>
+          <span class="bcc-step">3 複製 BCC</span><span class="bcc-arrow">→</span>
+          <span class="bcc-step">4 貼到 Outlook</span><span class="bcc-arrow">→</span>
+          <span class="bcc-step">✅ 送出</span>
+        </div>
+      </div>
+
+      <div class="bcc-main">
+        <!-- 左：輸入 -->
+        <div class="bcc-col">
+          <div class="bcc-col-head">
+            <span class="bcc-col-title">📋 貼入 Email 清單</span>
+            <div style="display:flex;gap:5px">
+              <button class="btn sm" onclick="bccImportFromList()">從名單匯入</button>
+              <button class="btn sm d" onclick="document.getElementById('bcc-input').value='';bccProcess()">清除</button>
+            </div>
+          </div>
+          <textarea class="bcc-textarea" id="bcc-input" placeholder="支援多種格式，任意貼入：&#10;&#10;wang@abc.com&#10;lee@xyz.tw, chang@def.com&#10;chen@ghi.tw; lin@jkl.com&#10;wu@mno.tw 吳小明 MNO 企業&#10;&#10;系統自動辨識並過濾無效 Email" oninput="bccProcess()"></textarea>
+          <div class="bcc-input-hint">
+            支援格式：每行一個、逗號、分號、空格分隔均可，有夾雜文字也沒關係
+          </div>
+        </div>
+
+        <!-- 右：結果 -->
+        <div class="bcc-col">
+          <div class="bcc-col-head">
+            <span class="bcc-col-title">✅ 有效 Email 清單</span>
+            <div style="display:flex;gap:5px;align-items:center">
+              <span class="bcc-stats" id="bcc-stats">0 筆</span>
+              <button class="btn sm d" id="bcc-dedup-btn" onclick="bccDedup()" style="display:none">去重複</button>
+            </div>
+          </div>
+          <div class="bcc-result-box" id="bcc-result-box">
+            <div class="bcc-empty-hint">← 在左側貼入 Email 清單後自動顯示</div>
+          </div>
+          <!-- 無效清單 -->
+          <div id="bcc-invalid-zone" style="display:none;margin-top:8px">
+            <div class="bcc-invalid-title">⚠️ 無法辨識（共 <span id="bcc-invalid-cnt">0</span> 筆，已自動略過）</div>
+            <div class="bcc-invalid-list" id="bcc-invalid-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部操作 -->
+      <div class="bcc-action-bar">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn p" id="bcc-copy-btn" onclick="bccCopy()" disabled>
+            📋 複製 BCC 清單 → 貼到 Outlook
+          </button>
+          <button class="btn" onclick="bccCopyList()">📄 複製純列表</button>
+          <button class="btn g" onclick="bccExportCsv()">📊 匯出 CSV</button>
+        </div>
+        <div class="bcc-copied-note" id="bcc-copied-note" style="display:none">
+          ✅ 已複製！開啟 Outlook → 新郵件 → 點 BCC 欄位 → Ctrl+V 貼上
+        </div>
+        <div style="font-size:11px;color:var(--t2);margin-top:8px;line-height:1.7">
+          💡 <b>使用方式：</b>點「複製 BCC 清單」→ 開 Outlook 新郵件 → 點 BCC 欄位 → 按 <kbd>Ctrl+V</kbd> 貼上 → 填好主旨和內文 → 送出
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ══ P3: 發送紀錄 ══ -->
   <div class="cpanel" id="cp-log">
     <!-- 統計卡 -->
@@ -998,7 +1099,8 @@ function swCP(name, btn) {
   const p = document.getElementById('cp-' + name);
   if (p) p.classList.add('on');
   if (name === 'custlist') { renderFolderTree(); renderCustListInTab(); }
-  if (name === 'send') { renderSelectList(); renderTplSelect(); }
+  if (name === 'send') { renderSelectList(); renderTplSelect(); updateSendBccNote && updateSendBccNote(); }
+  if (name === 'bcc') { bccProcess(); }
   if (name === 'log') renderLog();
 }
 function swMode(mode, btn) {
@@ -1464,11 +1566,27 @@ function clearCompose() { document.getElementById('ef-to').value = ''; document.
 // ══ SEND ══
 function sendOutlook() {
   const to = document.getElementById('ef-to').value.trim();
+  const bcc = document.getElementById('ef-bcc').value.trim();
   const subject = document.getElementById('ef-subject').value.trim();
-  const body = document.getElementById('editor-body').innerText;
+  const bodyHtml = document.getElementById('editor-body').innerHTML;
+  const bodyText = document.getElementById('editor-body').innerText;
   if (!to) { toast('⚠️ 請填寫收件人'); return; }
   if (!subject) { toast('⚠️ 請填寫主旨'); return; }
-  // 記錄發送（依月份）
+
+  // ── 複製 HTML 內容到剪貼簿（供 Outlook 直接貼上）──
+  try {
+    if (navigator.clipboard && window.ClipboardItem) {
+      const htmlBlob = new Blob([bodyHtml], { type: 'text/html' });
+      const textBlob = new Blob([bodyText], { type: 'text/plain' });
+      navigator.clipboard.write([new ClipboardItem({ 'text/html': htmlBlob, 'text/plain': textBlob })]);
+    } else {
+      // 舊版備援
+      const ta = document.createElement('textarea'); ta.value = bodyHtml;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    }
+  } catch(err) { console.warn('剪貼簿複製失敗:', err); }
+
+  // 記錄發送
   const now = new Date();
   const month = now.getMonth() + 1;
   const timeStr = now.toLocaleString('zh-TW');
@@ -1480,8 +1598,14 @@ function sendOutlook() {
     if (cust) cust.status = 'sent';
   });
   save(); updateChips(); renderContacts();
-  window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  toast('✅ 已開啟 Outlook', 'ok');
+
+  // 開啟 Outlook（mailto）
+  let mailtoUrl = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}`;
+  if (bcc) mailtoUrl += `&bcc=${encodeURIComponent(bcc)}`;
+  mailtoUrl += `&body=${encodeURIComponent('【請貼上剪貼簿中的 HTML 內容】\n\n' + bodyText)}`;
+  window.location.href = mailtoUrl;
+
+  toast('✅ HTML 已複製到剪貼簿！Outlook 開啟後，在內文區按 Ctrl+V 貼上', 'ok');
 }
 
 function addToLog(c, subject, timeStr, month) {
@@ -2193,6 +2317,152 @@ function cancelOcrImport() {
   const zone = document.getElementById('img-preview-zone'); if(zone) zone.style.display = 'none';
   const fi = document.getElementById('img-file-inp'); if(fi) fi.value = '';
   ocrParsed = {};
+}
+
+// ══ BCC 產生器 ══
+let bccValidEmails = [];
+
+function bccProcess() {
+  const raw = (document.getElementById('bcc-input').value || '').trim();
+  if (!raw) {
+    bccValidEmails = [];
+    renderBccResult();
+    return;
+  }
+
+  // 用正則找出所有 email
+  const emailRegex = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g;
+  const found = raw.match(emailRegex) || [];
+
+  // 分有效/無效
+  const valid = [];
+  const invalid = [];
+  const seen = new Set();
+  found.forEach(em => {
+    const lower = em.toLowerCase();
+    if (!seen.has(lower)) { seen.add(lower); valid.push(lower); }
+  });
+
+  // 找無法辨識的行（沒有 email 的行）
+  const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(l => l);
+  lines.forEach(l => {
+    if (!emailRegex.test(l)) { emailRegex.lastIndex = 0; invalid.push(l); }
+    emailRegex.lastIndex = 0;
+  });
+
+  bccValidEmails = valid;
+  renderBccResult();
+
+  // 統計
+  const statsEl = document.getElementById('bcc-stats');
+  if (statsEl) statsEl.textContent = valid.length + ' 筆有效';
+
+  // 重複偵測
+  const allFound = raw.match(emailRegex) || [];
+  const dupBtn = document.getElementById('bcc-dedup-btn');
+  if (dupBtn) dupBtn.style.display = allFound.length > valid.length ? 'inline-flex' : 'none';
+
+  // 無效列表
+  const invZone = document.getElementById('bcc-invalid-zone');
+  const invCnt = document.getElementById('bcc-invalid-cnt');
+  const invList = document.getElementById('bcc-invalid-list');
+  if (invalid.length > 0 && invZone && invCnt && invList) {
+    invZone.style.display = 'block';
+    invCnt.textContent = invalid.length;
+    invList.textContent = invalid.join('\n');
+  } else if (invZone) {
+    invZone.style.display = 'none';
+  }
+
+  // 啟用複製按鈕
+  const copyBtn = document.getElementById('bcc-copy-btn');
+  if (copyBtn) copyBtn.disabled = !valid.length;
+}
+
+function bccDedup() {
+  const ta = document.getElementById('bcc-input');
+  if (!ta) return;
+  const emailRegex = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g;
+  const found = ta.value.match(emailRegex) || [];
+  const unique = [...new Set(found.map(e => e.toLowerCase()))];
+  ta.value = unique.join('\n');
+  bccProcess();
+  toast('✅ 已去除重複 Email', 'ok');
+}
+
+function renderBccResult() {
+  const box = document.getElementById('bcc-result-box');
+  if (!box) return;
+  if (!bccValidEmails.length) {
+    box.innerHTML = '<div class="bcc-empty-hint">← 在左側貼入 Email 清單後自動顯示</div>';
+    return;
+  }
+  box.innerHTML = bccValidEmails.map((em, i) =>
+    `<span class="bcc-email-tag">${e(em)}<span class="bcc-rm" onclick="bccRemove(${i})" title="移除">✕</span></span>`
+  ).join('');
+}
+
+function bccRemove(idx) {
+  bccValidEmails.splice(idx, 1);
+  renderBccResult();
+  const statsEl = document.getElementById('bcc-stats');
+  if (statsEl) statsEl.textContent = bccValidEmails.length + ' 筆有效';
+  const copyBtn = document.getElementById('bcc-copy-btn');
+  if (copyBtn) copyBtn.disabled = !bccValidEmails.length;
+}
+
+function bccCopy() {
+  if (!bccValidEmails.length) return;
+  const bccStr = bccValidEmails.join('; ');
+  navigator.clipboard.writeText(bccStr).then(() => {
+    const note = document.getElementById('bcc-copied-note');
+    if (note) { note.style.display = 'block'; setTimeout(() => note.style.display = 'none', 5000); }
+    toast('✅ BCC 清單已複製！請開啟 Outlook 新郵件貼上', 'ok');
+  }).catch(() => {
+    // 備援
+    const ta = document.createElement('textarea'); ta.value = bccStr;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    toast('✅ 已複製', 'ok');
+  });
+}
+
+function bccCopyList() {
+  if (!bccValidEmails.length) { toast('⚠️ 尚無有效 Email'); return; }
+  const text = bccValidEmails.join('\n');
+  navigator.clipboard.writeText(text).then(() => toast('✅ 已複製純列表', 'ok')).catch(() => {
+    const ta = document.createElement('textarea'); ta.value = text;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    toast('✅ 已複製', 'ok');
+  });
+}
+
+function bccExportCsv() {
+  if (!bccValidEmails.length) { toast('⚠️ 尚無有效 Email'); return; }
+  csvDownload([['Email'], ...bccValidEmails.map(em => [em])], 'BCC清單.csv');
+  toast('✅ 已匯出', 'ok');
+}
+
+function bccImportFromList() {
+  // 從名單管理 customers 匯入
+  const emails = customers.filter(c => c.email).map(c => c.email);
+  if (!emails.length) {
+    // 嘗試 custList
+    const cl = custList.filter(c => c.email).map(c => c.email);
+    if (!cl.length) { toast('⚠️ 名單為空，請先到名單管理新增客戶'); return; }
+    document.getElementById('bcc-input').value = cl.join('\n');
+  } else {
+    document.getElementById('bcc-input').value = emails.join('\n');
+  }
+  bccProcess();
+  toast(`✅ 已從名單匯入 ${bccValidEmails.length} 筆 Email`, 'ok');
+}
+
+// ── 發送頁籤也更新提示 ──
+function updateSendBccNote() {
+  const sel = document.getElementById('send-sel-cnt');
+  const cnt = sel ? parseInt(sel.textContent) || 0 : 0;
+  const note = document.getElementById('bcc-note');
+  if (note) note.style.display = cnt === 0 ? 'block' : 'none';
 }
 
 // Hook crawlOneUrl to show result zone
