@@ -1615,9 +1615,15 @@ function sendOutlook() {
     });
     save(); updateChips(); renderContacts();
 
-    // ── Step 3：開啟空白 Outlook（不帶任何內容）──
-    // 只開 mailto: 讓 Outlook 開新郵件視窗，使用者再自行貼上
-    window.location.href = 'mailto:';
+    // ── Step 3：開啟 Outlook — 帶入收件人、主旨、BCC，內文保持空白讓使用者貼上 ──
+    const bcc = document.getElementById('ef-bcc').value.trim();
+    let mailtoUrl = `mailto:${encodeURIComponent(to)}`;
+    const params = [];
+    if (subject) params.push(`subject=${encodeURIComponent(subject)}`);
+    if (bcc) params.push(`bcc=${encodeURIComponent(bcc)}`);
+    // body 故意留空，讓使用者 Ctrl+V 貼入 HTML 格式內容
+    if (params.length) mailtoUrl += '?' + params.join('&');
+    window.location.href = mailtoUrl;
 
     // 顯示操作提示 Modal
     showSendGuideModal(to, subject);
@@ -1628,32 +1634,56 @@ function sendOutlook() {
 }
 
 function showSendGuideModal(to, subject) {
-  // 動態建立提示 modal（若已存在則移除重建）
+  const bcc = document.getElementById('ef-bcc').value.trim();
   let m = document.getElementById('send-guide-modal');
   if (m) m.remove();
   m = document.createElement('div');
   m.id = 'send-guide-modal';
   m.className = 'modal-ov open';
-  m.innerHTML = `<div class="modal" style="max-width:460px">
-    <div class="modal-head"><h3>✅ HTML 已複製到剪貼簿</h3><button class="modal-x" onclick="document.getElementById('send-guide-modal').remove()">✕</button></div>
-    <div class="modal-body" style="gap:14px">
-      <div style="background:rgba(26,127,55,.07);border:1px solid rgba(26,127,55,.25);border-radius:9px;padding:13px 15px">
-        <div style="font-size:13px;font-weight:700;color:var(--grn);margin-bottom:10px">📋 操作步驟</div>
-        <div style="font-size:12px;color:var(--t1);line-height:2">
-          <b>1.</b> Outlook 新郵件視窗已開啟（或稍後手動開啟）<br>
-          <b>2.</b> 在 <b>收件人（To）</b>欄位填入：<code style="background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:11px">${e(to)}</code><br>
-          <b>3.</b> 在 <b>主旨</b>欄位填入：<code style="background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:11px">${e(subject)}</code><br>
-          <b>4.</b> 點擊 <b>內文區域</b>，按 <kbd style="display:inline-block;padding:1px 7px;border:1px solid var(--bd2);border-radius:4px;background:var(--bg2);font-size:12px">Ctrl</kbd> + <kbd style="display:inline-block;padding:1px 7px;border:1px solid var(--bd2);border-radius:4px;background:var(--bg2);font-size:12px">V</kbd> 貼上 HTML 內容<br>
-          <b>5.</b> 確認格式無誤後送出
+  m.innerHTML = `<div class="modal" style="max-width:480px">
+    <div class="modal-head">
+      <h3>✅ HTML 已複製・Outlook 已開啟</h3>
+      <button class="modal-x" onclick="document.getElementById('send-guide-modal').remove()">✕</button>
+    </div>
+    <div class="modal-body" style="gap:12px">
+
+      <!-- 已自動帶入資訊 -->
+      <div style="background:var(--abg);border:1px solid rgba(37,99,235,.2);border-radius:9px;padding:12px 14px">
+        <div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">📤 已自動帶入 Outlook</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div style="display:flex;gap:8px;font-size:12px">
+            <span style="color:var(--t2);min-width:48px;flex-shrink:0">收件人</span>
+            <span style="color:var(--t1);font-weight:600;word-break:break-all">${e(to)}</span>
+          </div>
+          <div style="display:flex;gap:8px;font-size:12px">
+            <span style="color:var(--t2);min-width:48px;flex-shrink:0">主旨</span>
+            <span style="color:var(--t1);font-weight:600">${e(subject)}</span>
+          </div>
+          ${bcc ? `<div style="display:flex;gap:8px;font-size:12px">
+            <span style="color:var(--t2);min-width:48px;flex-shrink:0">BCC</span>
+            <span style="color:var(--t1);font-weight:600;word-break:break-all">${e(bcc)}</span>
+          </div>` : ''}
         </div>
       </div>
+
+      <!-- 操作步驟 -->
+      <div style="background:rgba(26,127,55,.06);border:1px solid rgba(26,127,55,.2);border-radius:9px;padding:12px 14px">
+        <div style="font-size:11px;font-weight:700;color:var(--grn);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">📋 還需要做的步驟</div>
+        <div style="font-size:12px;color:var(--t1);line-height:2.1">
+          <b>1.</b> 切換到 <b>Outlook 新郵件視窗</b><br>
+          <b>2.</b> 點擊 <b>內文區域</b>（空白處）<br>
+          <b>3.</b> 按 <kbd style="display:inline-block;padding:1px 7px;border:1px solid var(--bd2);border-radius:4px;background:var(--bg2);font-size:12px;font-family:monospace">Ctrl</kbd> + <kbd style="display:inline-block;padding:1px 7px;border:1px solid var(--bd2);border-radius:4px;background:var(--bg2);font-size:12px;font-family:monospace">V</kbd> 貼上 HTML 內容<br>
+          <b>4.</b> 確認格式無誤後 <b>送出</b>
+        </div>
+      </div>
+
       <div style="font-size:11px;color:var(--t2);padding:8px 10px;background:var(--bg2);border-radius:7px;border:1px solid var(--bd)">
-        💡 若 Outlook 沒有自動開啟，請手動開啟 Outlook → 點「新郵件」→ 依上方步驟操作
+        💡 若 Outlook 沒有自動開啟，請手動開啟 Outlook → 點「新郵件」→ 收件人和主旨已複製到步驟說明，再到內文按 Ctrl+V 貼上
       </div>
     </div>
     <div class="modal-foot">
       <button class="btn" onclick="recopyHtml()">🔄 重新複製 HTML</button>
-      <button class="btn p" onclick="document.getElementById('send-guide-modal').remove()">✅ 已了解</button>
+      <button class="btn p" onclick="document.getElementById('send-guide-modal').remove()">✅ 已了解，去貼上</button>
     </div>
   </div>`;
   document.body.appendChild(m);
