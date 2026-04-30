@@ -39,6 +39,8 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .btn.w{background:rgba(210,153,34,.15);color:var(--ylw);border-color:var(--ylw)}
 .btn.d{background:rgba(248,81,73,.15);color:var(--red);border-color:var(--red)}.btn.d:hover{background:rgba(248,81,73,.25)}
 .btn.sm{font-size:11px;padding:4px 10px}.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* URL input */
 .url-input-wrap{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:20px}
 .url-input-wrap h3{font-size:14px;font-weight:700;margin-bottom:14px}
 .url-modes{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
@@ -59,13 +61,23 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .batch-progress{margin-top:10px;display:none}
 .batch-bar-wrap{background:var(--bg3);border-radius:4px;height:6px;margin:6px 0}
 .batch-bar{background:var(--ac);height:6px;border-radius:4px;width:0%;transition:width .3s}
+
+/* Stats */
 .srow{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
 .sc{background:var(--bg1);border:1px solid var(--bd);border-radius:10px;padding:12px 18px;display:flex;align-items:center;gap:12px;min-width:110px}
 .sc .si{font-size:22px}.sc .sn{font-size:22px;font-weight:900;line-height:1}
 .sc .sl{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
 .sc.total .sn{color:var(--ac)}.sc.sent .sn{color:var(--grn)}.sc.pending .sn{color:var(--ylw)}
 .list-toolbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
-.list-toolbar-r{margin-left:auto;display:flex;gap:8px}
+.list-toolbar-r{margin-left:auto;display:flex;gap:8px;align-items:center}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;border:1px solid var(--bd2);border-radius:6px;overflow:hidden}
+.vt-btn{padding:5px 10px;background:var(--bg2);color:var(--t3);border:none;cursor:pointer;font-size:15px;transition:.15s;line-height:1;font-family:inherit}
+.vt-btn:hover{color:var(--t2);background:var(--bg3)}
+.vt-btn.on{background:var(--ac);color:#fff}
+
+/* CARD VIEW */
 .cust-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:4px}
 .cust-card{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden;transition:.15s}
 .cust-card:hover{border-color:var(--bd2);box-shadow:var(--sh)}
@@ -87,6 +99,33 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .empty-state .ei{font-size:48px;margin-bottom:12px}
 .empty-state .et{font-size:15px;font-weight:600;color:var(--t2);margin-bottom:4px}
 .empty-state .es{font-size:13px}
+
+/* LIST VIEW */
+.list-view-wrap{border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.list-table{width:100%;border-collapse:collapse}
+.list-table th{padding:10px 12px;font-size:11px;color:var(--t2);text-transform:uppercase;letter-spacing:.05em;text-align:left;border-bottom:1px solid var(--bd);background:var(--bg2);white-space:nowrap;user-select:none}
+.list-table th.sortable{cursor:pointer}
+.list-table th.sortable:hover{color:var(--t1)}
+.list-table th.sorted{color:var(--ac)}
+.list-table .sort-icon{margin-left:3px;font-size:9px;opacity:.5}
+.list-table th.sorted .sort-icon{opacity:1}
+.list-table td{padding:11px 12px;font-size:12px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.list-table tr:last-child td{border-bottom:none}
+.list-table tr:hover td{background:rgba(255,255,255,.025)}
+.list-table tr.row-checked td{background:rgba(37,99,235,.06)}
+.lt-name{font-weight:600;color:var(--t1)}.lt-sub{font-size:11px;color:var(--t2)}
+.row-check{width:14px;height:14px;border-radius:3px;border:2px solid var(--bd2);cursor:pointer;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;transition:.15s}
+.row-check.on{background:var(--ac);border-color:var(--ac)}.row-check.on::after{content:'✓';font-size:9px;color:#fff}
+
+/* PAGINATION */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:16px;flex-wrap:wrap}
+.pg-btn{min-width:30px;height:30px;padding:0 8px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t2);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;font-weight:600;font-family:inherit}
+.pg-btn:hover{border-color:var(--ac);color:var(--ac)}
+.pg-btn.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.pg-btn:disabled{opacity:.3;cursor:not-allowed}
+.pg-info{font-size:11px;color:var(--t2);padding:0 4px}
+
+/* Email panel */
 .email-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:20px;align-items:start}
 @media(max-width:768px){.email-layout{grid-template-columns:1fr}}
 .email-left{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
@@ -116,6 +155,8 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .ai-loading{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);padding:6px 0}
 .ai-spin{width:14px;height:14px;border:2px solid var(--bd2);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* Rich editor */
 .editor-toolbar{display:flex;gap:4px;padding:8px 12px;background:var(--bg2);border:1px solid var(--bd2);border-radius:8px 8px 0 0;flex-wrap:wrap;align-items:center}
 .et-btn{background:var(--bg3);border:1px solid var(--bd2);color:var(--t1);font-size:12px;padding:3px 8px;border-radius:4px;cursor:pointer;font-family:inherit;transition:.1s}
 .et-btn:hover{background:var(--bd2)}.et-btn.on{background:var(--ac);color:#fff;border-color:var(--ac)}
@@ -123,6 +164,8 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .editor-body{min-height:200px;padding:12px;border:1px solid var(--bd2);border-top:none;border-radius:0 0 8px 8px;background:var(--bg2);color:var(--t1);font-size:13px;line-height:1.7;outline:none;overflow-y:auto}
 .editor-body:focus{border-color:var(--ac)}
 .editor-body img{max-width:100%;border-radius:4px;margin:4px 0}
+
+/* Settings */
 .settings-box{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:20px}
 .settings-box h3{font-size:13px;font-weight:700;margin-bottom:12px}
 .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -140,19 +183,70 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .tpl-actions{display:flex;gap:6px;flex-shrink:0}
 .tpl-editor-body{padding:20px;display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow-y:auto}
 .tpl-img-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.log-table-wrap{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
-.log-head{padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
-.log-head h3{font-size:13px;font-weight:700}
-.log-table{width:100%;border-collapse:collapse}
-.log-table th{padding:10px 14px;font-size:11px;color:var(--t2);text-transform:uppercase;text-align:left;border-bottom:1px solid var(--bd);background:var(--bg2)}
-.log-table td{padding:12px 14px;font-size:12px;border-bottom:1px solid var(--bd)}
+
+/* ===== LOG / SEND RECORD ===== */
+.log-section-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.log-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.log-stat-card{background:var(--bg1);border:1px solid var(--bd);border-radius:8px;padding:11px 14px}
+.log-stat-card .sv{font-size:20px;font-weight:900;line-height:1}
+.log-stat-card .sl{font-size:10px;color:var(--t2);margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
+.log-stat-card.a .sv{color:var(--ac)}.log-stat-card.g .sv{color:var(--grn)}
+.log-stat-card.y .sv{color:var(--ylw)}.log-stat-card.r .sv{color:var(--red)}
+
+/* month filter pills */
+.month-filter{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.mf-btn{padding:3px 10px;border-radius:12px;border:1px solid var(--bd2);background:transparent;color:var(--t2);font-size:11px;cursor:pointer;font-weight:600;transition:.12s;font-family:inherit}
+.mf-btn:hover{border-color:var(--ac);color:var(--ac)}
+.mf-btn.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+
+/* log table */
+.log-tbl-wrap{border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.log-table{width:100%;border-collapse:collapse;min-width:1000px}
+.log-table thead tr.lth-main th{
+  padding:9px 8px 4px;font-size:10px;color:var(--t2);text-transform:uppercase;
+  letter-spacing:.05em;background:var(--bg2);white-space:nowrap;user-select:none
+}
+.log-table thead tr.lth-main th.sortable{cursor:pointer}
+.log-table thead tr.lth-main th.sortable:hover{color:var(--t1)}
+.log-table thead tr.lth-main th.sorted{color:var(--ac)}
+.log-table thead tr.lth-main th.sorted .sort-icon{opacity:1;color:var(--ac)}
+.log-table thead tr.lth-sel th{padding:2px 8px 6px;background:var(--bg2);border-bottom:1px solid var(--bd);text-align:center}
+.log-table td{padding:9px 8px;font-size:12px;border-bottom:1px solid var(--bd);vertical-align:middle;text-align:center}
+.log-table td:nth-child(2),.log-table td:nth-child(3),.log-table td:nth-child(4),.log-table td:nth-child(5){text-align:left}
 .log-table tr:last-child td{border-bottom:none}
-.log-table tr:hover td{background:var(--bg2)}
-.lt-name{font-weight:600;color:var(--t1)}.lt-email{color:var(--t2)}.lt-time{color:var(--t3)}
+.log-table tr:hover td{background:rgba(255,255,255,.025)}
+.col-sel-btn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;border:1px solid var(--bd2);background:var(--bg3);cursor:pointer;font-size:9px;color:var(--t3);transition:.15s}
+.col-sel-btn:hover{border-color:var(--ac);color:var(--ac)}
+.col-sel-btn.all-on{background:var(--ac);border-color:var(--ac);color:#fff}
+.month-dot{width:17px;height:17px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin:0 auto;border:1px solid var(--bd2);opacity:.3}
+.month-dot.has{background:rgba(63,185,80,.18);border-color:rgba(63,185,80,.5);cursor:pointer;opacity:1;transition:.13s}
+.month-dot.has:hover{border-color:var(--grn)}
+.month-dot.checked{background:var(--grn);border-color:var(--grn);opacity:1}
+.log-export-bar{display:flex;gap:8px;align-items:center;padding:9px 14px;background:rgba(37,99,235,.08);border-top:1px solid rgba(37,99,235,.2);border-radius:0 0 12px 12px}
+.log-export-bar span{font-size:11px;color:var(--ac)}
+
+/* dashboard */
+.dashboard{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+@media(max-width:700px){.dashboard{grid-template-columns:1fr}}
+.db-card{background:var(--bg1);border:1px solid var(--bd);border-radius:10px;padding:14px}
+.db-title{font-size:10px;font-weight:700;color:var(--t2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em}
+.db-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.db-bar-label{font-size:10px;color:var(--t2);min-width:90px;text-align:right}
+.db-bar-track{flex:1;height:7px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.db-bar-fill{height:7px;border-radius:4px;background:var(--ac)}
+.db-bar-val{font-size:10px;color:var(--t1);min-width:16px}
+.m-bar-wrap{display:flex;align-items:flex-end;gap:3px;height:70px}
+.m-col{display:flex;flex-direction:column;align-items:center;flex:1}
+.m-bar{width:100%;border-radius:2px 2px 0 0;min-height:2px}
+.m-lbl{font-size:8px;color:var(--t3);margin-top:2px}
+
+/* Toast */
 #toasts{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:7px;z-index:9999}
 .toast{padding:9px 16px;border-radius:8px;font-size:12px;background:var(--bg3);border:1px solid var(--bd2);animation:tin .2s ease;max-width:300px}
 .toast.ok{background:#0d2a14;border-color:var(--grn);color:var(--grn)}.toast.err{background:#2d0000;border-color:var(--red);color:var(--red)}
 @keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Modal */
 .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-ov.open{display:flex}
 .modal{background:var(--bg1);border:1px solid var(--bd2);border-radius:16px;width:100%;max-width:560px;overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
@@ -165,23 +259,23 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .mf-input{padding:9px 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:13px;font-family:inherit;outline:none}
 .mf-input:focus{border-color:var(--ac)}
 .modal-foot{padding:14px 20px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
-/* BCC 產生器專用 */
-.bcc-stat-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;background:var(--bg2);border:1px solid var(--bd2);font-size:12px;color:var(--t2);margin:2px}
-.bcc-invalid-tag{font-size:11px;color:var(--red);background:rgba(248,81,73,.1);padding:2px 7px;border-radius:4px;margin:2px;display:inline-block}
 </style>
 </head>
 <body>
 <div id="toasts"></div>
+
 <div id="topbar">
   <div class="logo"><div class="logo-box">📧</div>實威國際<div class="logo-sep"></div><span class="logo-sub">客戶開發系統</span></div>
-  <div class="tr"><button class="tbtn" onclick="toggleTheme()" id="themeBtn">🌙 暗色</button><span class="vbg">v3.0</span></div>
+  <div class="tr"><button class="tbtn" onclick="toggleTheme()" id="themeBtn">🌙 暗色</button><span class="vbg">v4.0</span></div>
 </div>
+
 <div id="navtab">
   <div class="ntab" onclick="location.href='tab-home.html'">🏠 首頁</div>
   <div class="ntab" onclick="location.href='tab-daily.html'">📰 每日焦點</div>
   <div class="ntab" onclick="location.href='tab-sample.html'">📦 3D列印</div>
   <div class="ntab on">📧 客戶開發</div>
 </div>
+
 <div class="stitle">
   <h2>客戶開發<em> Email 系統</em></h2>
   <p>自動擷取客戶資料・AI 生成 Email・HTML 範本・一鍵 Outlook 發送</p>
@@ -197,7 +291,6 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
     <button class="ctab on" onclick="swCP('contacts',this)">👥 名單管理</button>
     <button class="ctab" onclick="swCP('send',this)">✉️ Email 發送</button>
     <button class="ctab" onclick="swCP('log',this)">📋 發送紀錄</button>
-    <button class="ctab" onclick="swCP('bcc',this)">📨 BCC 產生器</button>
     <button class="ctab" onclick="swCP('settings',this)">⚙️ 設定</button>
   </div>
 
@@ -223,13 +316,10 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
             <option value="20">20 頁</option><option value="50">50 頁</option>
           </select>
         </div>
-        <div class="url-note" style="margin-top:10px">
-          💡 輸入單一網址自動擷取聯絡資料。勾選「自動偵測分頁」可連續抓多頁（適合會員名單等網站）。<br>
-          ⚠️ 僅限公開網頁，需先在「⚙️ 設定」填入 Groq API Key。
-        </div>
+        <div class="url-note" style="margin-top:10px">💡 輸入單一網址自動擷取聯絡資料。<br>⚠️ 僅限公開網頁，需先在「⚙️ 設定」填入 Groq API Key。</div>
       </div>
       <div class="url-panel" id="url-batch">
-        <textarea class="url-textarea" id="batchInp" placeholder="每行貼一個網址，例如：&#10;https://www.forging.org.tw/...?pageno=1&#10;https://www.forging.org.tw/...?pageno=2&#10;https://www.forging.org.tw/...?pageno=3"></textarea>
+        <textarea class="url-textarea" id="batchInp" placeholder="每行貼一個網址…"></textarea>
         <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center">
           <button class="btn p" id="batchBtn" onclick="crawlBatch()">🔍 批次擷取全部</button>
           <span id="batch-status" style="font-size:12px;color:var(--t2)"></span>
@@ -238,34 +328,38 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
           <div style="font-size:11px;color:var(--t2);margin-bottom:4px" id="batch-prog-text">處理中…</div>
           <div class="batch-bar-wrap"><div class="batch-bar" id="batch-bar"></div></div>
         </div>
-        <div class="url-note-blue" style="margin-top:10px">
-          💡 適合有分頁的名單網站，把每一頁的網址各貼一行，系統會依序自動抓取並合併加入名單。
-        </div>
+        <div class="url-note-blue" style="margin-top:10px">💡 把每一頁的網址各貼一行，系統會依序自動抓取並合併加入名單。</div>
       </div>
       <div id="crawl-loading" style="display:none;margin-top:10px">
         <div class="ai-loading"><div class="ai-spin"></div><span id="crawl-loading-text">正在讀取網頁…</span></div>
       </div>
     </div>
+
     <div class="srow">
       <div class="sc total"><div class="si">👥</div><div><div class="sn" id="st-total">0</div><div class="sl">總名單</div></div></div>
       <div class="sc sent"><div class="si">✅</div><div><div class="sn" id="st-sent">0</div><div class="sl">已發送</div></div></div>
       <div class="sc pending"><div class="si">⏳</div><div><div class="sn" id="st-pending">0</div><div class="sl">待發送</div></div></div>
     </div>
+
     <div class="list-toolbar">
       <button class="btn sm" onclick="selectAll()">☑ 全選</button>
       <button class="btn sm" onclick="clearSel()">☐ 取消</button>
       <span id="sel-count-label" style="font-size:12px;color:var(--t2)"></span>
       <div class="list-toolbar-r">
+        <!-- 檢視切換 -->
+        <div class="view-toggle">
+          <button class="vt-btn on" id="vt-card" onclick="setContactView('card')" title="卡片檢視">⊞</button>
+          <button class="vt-btn" id="vt-list" onclick="setContactView('list')" title="列表檢視">☰</button>
+        </div>
         <button class="btn sm g" onclick="exportExcel()">📊 匯出 Excel</button>
         <button class="btn sm d" onclick="deleteSelected()">🗑 刪除選取</button>
       </div>
     </div>
-    <div class="cust-grid" id="cust-grid">
-      <div class="empty-state" id="empty-contacts" style="grid-column:1/-1">
-        <div class="ei">📋</div><div class="et">尚無客戶名單</div>
-        <div class="es">輸入網址自動擷取，或點「手動新增」</div>
-      </div>
-    </div>
+
+    <!-- 名單內容區 -->
+    <div id="contact-view-area"></div>
+    <!-- 分頁 -->
+    <div class="pagination" id="contact-pagination"></div>
   </div>
 
   <!-- ══ P2: Email 發送 ══ -->
@@ -310,20 +404,20 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
             <div class="ef-row">
               <div class="ef-label">內文（HTML 格式）</div>
               <div class="editor-toolbar" id="editor-toolbar">
-                <button class="et-btn" onclick="fmt('bold')" title="粗體"><b>B</b></button>
-                <button class="et-btn" onclick="fmt('italic')" title="斜體"><i>I</i></button>
-                <button class="et-btn" onclick="fmt('underline')" title="底線"><u>U</u></button>
+                <button class="et-btn" onclick="fmt('bold')"><b>B</b></button>
+                <button class="et-btn" onclick="fmt('italic')"><i>I</i></button>
+                <button class="et-btn" onclick="fmt('underline')"><u>U</u></button>
                 <div class="et-sep"></div>
-                <button class="et-btn" onclick="fmt('fontSize','4')" title="大字">大</button>
-                <button class="et-btn" onclick="fmt('fontSize','2')" title="小字">小</button>
+                <button class="et-btn" onclick="fmt('fontSize','4')">大</button>
+                <button class="et-btn" onclick="fmt('fontSize','2')">小</button>
                 <div class="et-sep"></div>
                 <button class="et-btn" onclick="fmt('foreColor','#2563EB')" style="color:#2563EB">A</button>
                 <button class="et-btn" onclick="fmt('foreColor','#f85149')" style="color:#f85149">A</button>
                 <button class="et-btn" onclick="fmt('foreColor','#3fb950')" style="color:#3fb950">A</button>
                 <button class="et-btn" onclick="fmt('foreColor','#000000')" style="color:#888">A</button>
                 <div class="et-sep"></div>
-                <button class="et-btn" onclick="insertImg()" title="插入圖片">🖼</button>
-                <button class="et-btn" onclick="insertImgUrl()" title="圖片網址">🔗🖼</button>
+                <button class="et-btn" onclick="insertImg()">🖼</button>
+                <button class="et-btn" onclick="insertImgUrl()">🔗🖼</button>
                 <div class="et-sep"></div>
                 <button class="et-btn" onclick="fmt('insertUnorderedList')">• 清單</button>
                 <button class="et-btn" onclick="fmt('justifyLeft')">⬅</button>
@@ -346,7 +440,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
             <button class="btn" onclick="clearCompose()">🗑 清除</button>
           </div>
           <div style="padding:0 16px 14px;font-size:11px;color:var(--t2);line-height:1.7">
-            💡 <b>批次發送流程：</b>選取多位客戶 → 編好內文 → 點「📦 批次發送清單」下載 JSON → 執行 <b>實威發信機.ahk</b> 自動逐封發送
+            💡 <b>批次發送流程：</b>選取多位客戶 → 編好內文 → 點「📦 批次發送清單」下載 JSON → 執行 <b>實威發信機.ahk</b>
           </div>
         </div>
       </div>
@@ -355,53 +449,79 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 
   <!-- ══ P3: 發送紀錄 ══ -->
   <div class="cpanel" id="cp-log">
-    <div class="log-table-wrap">
-      <div class="log-head">
-        <h3>📋 發送紀錄</h3>
-        <div style="display:flex;gap:8px">
-          <button class="btn sm g" onclick="exportLogExcel()">📊 匯出</button>
-          <button class="btn sm d" onclick="clearLog()">清除</button>
-        </div>
+    <!-- 統計卡 -->
+    <div class="log-stat-row">
+      <div class="log-stat-card a"><div class="sv" id="ls-total">0</div><div class="sl">總紀錄</div></div>
+      <div class="log-stat-card g"><div class="sv" id="ls-contacts">0</div><div class="sl">客戶數</div></div>
+      <div class="log-stat-card y"><div class="sv" id="ls-months">0</div><div class="sl">活躍月份</div></div>
+      <div class="log-stat-card r"><div class="sv" id="ls-subjects">0</div><div class="sl">主旨種類</div></div>
+    </div>
+
+    <!-- 月份篩選 -->
+    <div style="font-size:10px;color:var(--t3);margin-bottom:6px">▼ 依月份篩選（只顯示當月有發送的客戶）</div>
+    <div class="month-filter" id="log-month-filter">
+      <button class="mf-btn on" data-m="all">全部</button>
+      <button class="mf-btn" data-m="1">1月</button><button class="mf-btn" data-m="2">2月</button>
+      <button class="mf-btn" data-m="3">3月</button><button class="mf-btn" data-m="4">4月</button>
+      <button class="mf-btn" data-m="5">5月</button><button class="mf-btn" data-m="6">6月</button>
+      <button class="mf-btn" data-m="7">7月</button><button class="mf-btn" data-m="8">8月</button>
+      <button class="mf-btn" data-m="9">9月</button><button class="mf-btn" data-m="10">10月</button>
+      <button class="mf-btn" data-m="11">11月</button><button class="mf-btn" data-m="12">12月</button>
+    </div>
+
+    <!-- 工具列 -->
+    <div class="list-toolbar">
+      <button class="btn sm" onclick="logClearChecked()">☐ 全部取消</button>
+      <span id="log-checked-label" style="font-size:12px;color:var(--t2)"></span>
+      <div class="list-toolbar-r">
+        <button class="btn sm g" onclick="exportLogChecked()">📊 匯出勾選 Email</button>
+        <button class="btn sm g" onclick="exportLogExcel()">📊 匯出全部紀錄</button>
+        <button class="btn sm d" onclick="clearLog()">清除紀錄</button>
       </div>
+    </div>
+
+    <!-- 發送紀錄表 -->
+    <div class="log-tbl-wrap">
       <div style="overflow-x:auto">
-        <table class="log-table">
-          <thead><tr><th>名稱</th><th>公司</th><th>Email</th><th>主旨</th><th>時間</th><th>狀態</th></tr></thead>
-          <tbody id="log-tbody"><tr><td colspan="6" style="text-align:center;padding:40px;color:var(--t3)">尚無紀錄</td></tr></tbody>
+        <table class="log-table" id="main-log-table">
+          <thead>
+            <tr class="lth-main" id="log-thead-main">
+              <th style="width:30px;text-align:center"></th>
+              <th class="sortable" data-key="name" style="width:100px">名稱<span class="sort-icon">⇅</span></th>
+              <th class="sortable" data-key="company" style="width:100px">公司<span class="sort-icon">⇅</span></th>
+              <th class="sortable" data-key="email" style="width:150px">Email<span class="sort-icon">⇅</span></th>
+              <th class="sortable" data-key="subject" style="width:120px">主旨<span class="sort-icon">⇅</span></th>
+              <th>1月</th><th>2月</th><th>3月</th><th>4月</th><th>5月</th><th>6月</th>
+              <th>7月</th><th>8月</th><th>9月</th><th>10月</th><th>11月</th><th>12月</th>
+            </tr>
+            <tr class="lth-sel" id="log-thead-sel">
+              <th></th><th></th><th></th><th></th>
+              <th style="font-size:9px;color:var(--t3);text-align:left;padding-left:4px">▼ 月份全選</th>
+            </tr>
+          </thead>
+          <tbody id="log-tbody"></tbody>
         </table>
       </div>
+      <div class="log-export-bar" id="log-export-bar" style="display:none">
+        <span>已勾選 <b id="log-export-count">0</b> 筆，可匯出再次發送名單</span>
+        <button class="btn sm g" onclick="exportLogChecked()">📊 匯出</button>
+      </div>
     </div>
-  </div>
 
-  <!-- ══ P4: BCC 產生器 ══ -->
-  <div class="cpanel" id="cp-bcc">
-    <div class="url-input-wrap" style="max-width:680px;margin:0 auto">
-      <h3>📨 BCC Email 產生器</h3>
-      <div class="url-note-blue" style="margin-bottom:12px">
-        貼入 Email 清單 → 自動過濾重複與無效格式 → 一鍵複製 → 貼到 Outlook BCC 欄位批次發送
+    <!-- 儀表板 -->
+    <div class="dashboard">
+      <div class="db-card">
+        <div class="db-title">依主旨統計發送次數</div>
+        <div id="db-subject-chart"></div>
       </div>
-      <div style="background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2);border-radius:8px;padding:9px 14px;font-size:12px;color:var(--grn);margin-bottom:16px;line-height:1.8">
-        📋 操作流程：名單管理匯出 CSV → 複製 Email 欄 → 貼入下方 → 點「產生」→ 點「複製」→ 開 Outlook 新信 → 貼到 BCC → 送出
-      </div>
-      <div style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">貼入 Email 清單</div>
-      <textarea class="url-textarea" id="bcc-inp" style="min-height:180px" placeholder="每行一個 Email，例如：&#10;john@company.com&#10;mary@example.com&#10;sales@firm.com&#10;&#10;也支援逗號、分號分隔格式"></textarea>
-      <div style="font-size:11px;color:var(--t3);margin:6px 0 14px">支援每行一個 / 逗號 / 分號 / 空格，自動去除重複與無效格式</div>
-      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-        <button class="btn p" onclick="bccProcess()">產生 BCC 清單</button>
-        <button class="btn" onclick="bccClear()">清除</button>
-      </div>
-      <div id="bcc-result-wrap" style="display:none">
-        <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap" id="bcc-stats"></div>
-        <div style="font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">BCC 貼上內容</div>
-        <div id="bcc-result-box" style="background:var(--bg2);border:1px solid var(--bd2);border-radius:8px;padding:12px;font-size:12px;color:var(--t1);word-break:break-all;line-height:1.7;min-height:60px;margin-bottom:10px"></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn g" id="bcc-copy-btn" onclick="bccCopy()">複製 → 貼到 Outlook BCC</button>
-        </div>
-        <div id="bcc-invalid-wrap" style="margin-top:12px"></div>
+      <div class="db-card">
+        <div class="db-title">依月份發送量</div>
+        <div class="m-bar-wrap" id="db-month-chart"></div>
       </div>
     </div>
   </div>
 
-  <!-- ══ P5: 設定 ══ -->
+  <!-- ══ P4: 設定 ══ -->
   <div class="cpanel" id="cp-settings">
     <div class="settings-box">
       <h3>🤖 Groq API 設定</h3>
@@ -471,7 +591,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
   <div class="modal" style="max-width:680px">
     <div class="modal-head"><h3 id="tpl-modal-title">📝 新增範本</h3><button class="modal-x" onclick="closeModal('modal-tpl')">✕</button></div>
     <div class="tpl-editor-body">
-      <div class="mf-row"><div class="mf-label">範本名稱 *</div><input class="mf-input" id="tpl-name" placeholder="例如：3D列印開發信、產品促銷信"/></div>
+      <div class="mf-row"><div class="mf-label">範本名稱 *</div><input class="mf-input" id="tpl-name" placeholder="例如：3D列印開發信"/></div>
       <div class="mf-row"><div class="mf-label">預設主旨</div><input class="mf-input" id="tpl-subject" placeholder="例如：【實威國際】3D列印快速打樣服務介紹"/></div>
       <div class="mf-row">
         <div class="mf-label" style="margin-bottom:6px">插入圖片</div>
@@ -507,7 +627,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
     </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('modal-tpl')">取消</button>
-      <button class="btn p" id="tpl-confirm-btn" onclick="saveTpl()">💾 儲存範本</button>
+      <button class="btn p" onclick="saveTpl()">💾 儲存範本</button>
     </div>
   </div>
 </div>
@@ -527,534 +647,815 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 
 <script>
 // ══ DATA ══
-let customers=JSON.parse(localStorage.getItem('cus_list')||'[]');
-let sendLog=JSON.parse(localStorage.getItem('cus_log')||'[]');
-let cfg=JSON.parse(localStorage.getItem('cus_cfg')||'{}');
-let templates=JSON.parse(localStorage.getItem('cus_tpl')||'[]');
-let selectedIds=new Set();
-let editingId=null;
-let editingTplId=null;
+let customers = JSON.parse(localStorage.getItem('cus_list') || '[]');
+let sendLog = JSON.parse(localStorage.getItem('cus_log') || '[]');
+let cfg = JSON.parse(localStorage.getItem('cus_cfg') || '{}');
+let templates = JSON.parse(localStorage.getItem('cus_tpl') || '[]');
+let selectedIds = new Set();
+let editingId = null;
+let editingTplId = null;
 
-function init(){loadSettingsUI();renderContacts();renderSelectList();renderLog();updateChips();renderTplList();renderTplSelect();}
+// 名單管理狀態
+const CONTACTS_PER_PAGE = 24;
+let contactView = 'card'; // 'card' | 'list'
+let contactPage = 1;
+let contactSortKey = '';
+let contactSortDir = 1;
+
+// 發送紀錄狀態
+let logCheckedSet = new Set();
+let logFilterMonth = 'all';
+let logSortKey = '';
+let logSortDir = 1;
+
+function init() {
+  loadSettingsUI();
+  renderContacts();
+  renderSelectList();
+  renderLog();
+  updateChips();
+  renderTplList();
+  renderTplSelect();
+}
+
+// ══ HELPERS ══
+function e(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(msg, type) {
+  const d = document.createElement('div');
+  d.className = 'toast' + (type ? ' '+type : '');
+  d.textContent = msg;
+  document.getElementById('toasts').appendChild(d);
+  setTimeout(() => d.remove(), 3000);
+}
+function save() { localStorage.setItem('cus_list', JSON.stringify(customers)); }
+function saveTplStore() { localStorage.setItem('cus_tpl', JSON.stringify(templates)); }
+function updateChips() {
+  document.getElementById('chip-total').textContent = customers.length;
+  document.getElementById('chip-sent').textContent = customers.filter(c => c.status === 'sent').length;
+}
 
 // ══ THEME ══
-function toggleTheme(){document.body.classList.toggle('lm');document.getElementById('themeBtn').textContent=document.body.classList.contains('lm')?'🌑 暗色':'🌙 暗色';}
+function toggleTheme() {
+  document.body.classList.toggle('lm');
+  document.getElementById('themeBtn').textContent = document.body.classList.contains('lm') ? '🌑 暗色' : '🌙 暗色';
+}
 
 // ══ TABS ══
-function swCP(name,btn){
-  document.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));
-  document.querySelectorAll('.cpanel').forEach(p=>p.classList.remove('on'));
-  if(btn&&btn.classList)btn.classList.add('on');
-  const p=document.getElementById('cp-'+name);if(p)p.classList.add('on');
-  if(name==='send'){renderSelectList();renderTplSelect();}
-  if(name==='log')renderLog();
+function swCP(name, btn) {
+  document.querySelectorAll('.ctab').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.cpanel').forEach(p => p.classList.remove('on'));
+  if (btn && btn.classList) btn.classList.add('on');
+  const p = document.getElementById('cp-' + name);
+  if (p) p.classList.add('on');
+  if (name === 'send') { renderSelectList(); renderTplSelect(); }
+  if (name === 'log') renderLog();
 }
-function swMode(mode,btn){
-  document.querySelectorAll('.url-mode-btn').forEach(b=>b.classList.remove('on'));
-  document.querySelectorAll('.url-panel').forEach(p=>p.classList.remove('on'));
-  if(btn)btn.classList.add('on');
-  const p=document.getElementById('url-'+mode);if(p)p.classList.add('on');
+function swMode(mode, btn) {
+  document.querySelectorAll('.url-mode-btn').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.url-panel').forEach(p => p.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  const p = document.getElementById('url-' + mode);
+  if (p) p.classList.add('on');
 }
 
 // ══ MODAL ══
-function openManualAdd(){
-  editingId=null;
-  ['m-name','m-company','m-email','m-phone','m-url'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('modal-title').textContent='＋ 新增客戶';
-  document.getElementById('modal-confirm-btn').textContent='確認新增';
+function openManualAdd() {
+  editingId = null;
+  ['m-name','m-company','m-email','m-phone','m-url'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('modal-title').textContent = '＋ 新增客戶';
+  document.getElementById('modal-confirm-btn').textContent = '確認新增';
   document.getElementById('modal-add').classList.add('open');
 }
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-
-function confirmAddCustomer(){
-  const name=document.getElementById('m-name').value.trim();
-  const email=document.getElementById('m-email').value.trim();
-  if(!name){toast('⚠️ 請填寫名稱');return;}
-  if(!email){toast('⚠️ 請填寫 Email');return;}
-  if(editingId){
-    const c=customers.find(x=>x.id===editingId);
-    if(c){c.name=name;c.company=document.getElementById('m-company').value.trim();c.email=email;c.phone=document.getElementById('m-phone').value.trim();c.url=document.getElementById('m-url').value.trim();}
-    toast('✅ 已更新','ok');
-  }else{
-    customers.unshift({id:Date.now(),name,email,company:document.getElementById('m-company').value.trim(),phone:document.getElementById('m-phone').value.trim(),url:document.getElementById('m-url').value.trim(),status:'unsent',createdAt:new Date().toLocaleDateString('zh-TW')});
-    toast('✅ 已新增：'+name,'ok');
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function confirmAddCustomer() {
+  const name = document.getElementById('m-name').value.trim();
+  const email = document.getElementById('m-email').value.trim();
+  if (!name) { toast('⚠️ 請填寫名稱'); return; }
+  if (!email) { toast('⚠️ 請填寫 Email'); return; }
+  if (editingId) {
+    const c = customers.find(x => x.id === editingId);
+    if (c) { c.name = name; c.company = document.getElementById('m-company').value.trim(); c.email = email; c.phone = document.getElementById('m-phone').value.trim(); c.url = document.getElementById('m-url').value.trim(); }
+    toast('✅ 已更新', 'ok');
+  } else {
+    customers.unshift({ id: Date.now(), name, email, company: document.getElementById('m-company').value.trim(), phone: document.getElementById('m-phone').value.trim(), url: document.getElementById('m-url').value.trim(), status: 'unsent', createdAt: new Date().toLocaleDateString('zh-TW') });
+    toast('✅ 已新增：' + name, 'ok');
   }
-  save();closeModal('modal-add');renderContacts();renderSelectList();updateChips();
+  save(); closeModal('modal-add'); renderContacts(); renderSelectList(); updateChips();
 }
 
 // ══ CRAWL ══
-async function crawlSingle(){
-  const url=document.getElementById('urlInp').value.trim();
-  if(!url||!url.startsWith('http')){toast('⚠️ 請輸入完整網址（含 https://）');return;}
-  const autoPager=document.getElementById('autopager').checked;
-  const maxPages=parseInt(document.getElementById('maxPages').value)||10;
-  document.getElementById('crawlBtn').disabled=true;
-  let totalAdded=0;
-  const loadingEl=document.getElementById('crawl-loading');
-  const loadingText=document.getElementById('crawl-loading-text');
-  if(autoPager){
-    let currentUrl=url;let page=1;
-    loadingEl.style.display='block';
-    while(currentUrl&&page<=maxPages){
-      loadingText.textContent=`自動分頁：第 ${page} 頁`;
-      const result=await crawlOneUrl(currentUrl,true);
-      totalAdded+=result.added;currentUrl=result.nextUrl||'';page++;
-      if(currentUrl)await new Promise(r=>setTimeout(r,800));
+async function crawlSingle() {
+  const url = document.getElementById('urlInp').value.trim();
+  if (!url || !url.startsWith('http')) { toast('⚠️ 請輸入完整網址（含 https://）'); return; }
+  const autoPager = document.getElementById('autopager').checked;
+  const maxPages = parseInt(document.getElementById('maxPages').value) || 10;
+  document.getElementById('crawlBtn').disabled = true;
+  let totalAdded = 0;
+  const loadingEl = document.getElementById('crawl-loading');
+  const loadingText = document.getElementById('crawl-loading-text');
+  if (autoPager) {
+    let currentUrl = url, page = 1;
+    loadingEl.style.display = 'block';
+    while (currentUrl && page <= maxPages) {
+      loadingText.textContent = `自動分頁：第 ${page} 頁`;
+      const result = await crawlOneUrl(currentUrl, true);
+      totalAdded += result.added;
+      currentUrl = result.nextUrl || '';
+      page++;
+      if (currentUrl) await new Promise(r => setTimeout(r, 800));
     }
-    loadingEl.style.display='none';
-    toast(`✅ 共抓取 ${page-1} 頁，擷取 ${totalAdded} 筆資料`,'ok');
-  }else{
-    const result=await crawlOneUrl(url,false);
-    totalAdded=result.added;
-    if(totalAdded>0)toast('✅ 已擷取 '+totalAdded+' 筆資料','ok');
+    loadingEl.style.display = 'none';
+    toast(`✅ 共抓取 ${page-1} 頁，擷取 ${totalAdded} 筆資料`, 'ok');
+  } else {
+    const result = await crawlOneUrl(url, false);
+    totalAdded = result.added;
+    if (totalAdded > 0) toast('✅ 已擷取 ' + totalAdded + ' 筆資料', 'ok');
   }
-  document.getElementById('urlInp').value='';
-  document.getElementById('crawlBtn').disabled=false;
+  document.getElementById('urlInp').value = '';
+  document.getElementById('crawlBtn').disabled = false;
 }
 
-async function crawlBatch(){
-  const raw=document.getElementById('batchInp').value.trim();
-  if(!raw){toast('⚠️ 請輸入網址');return;}
-  const urls=raw.split('\n').map(u=>u.trim()).filter(u=>u.startsWith('http'));
-  if(!urls.length){toast('⚠️ 請每行輸入完整網址');return;}
-  document.getElementById('batchBtn').disabled=true;
-  document.getElementById('batch-progress').style.display='block';
-  let totalAdded=0;
-  for(let i=0;i<urls.length;i++){
-    document.getElementById('batch-bar').style.width=Math.round((i/urls.length)*100)+'%';
-    document.getElementById('batch-prog-text').textContent=`第 ${i+1}/${urls.length} 頁：${urls[i]}`;
-    document.getElementById('batch-status').textContent=`${i+1}/${urls.length}`;
-    const r=await crawlOneUrl(urls[i],false);
-    totalAdded+=r.added;
-    await new Promise(r=>setTimeout(r,800));
+async function crawlBatch() {
+  const raw = document.getElementById('batchInp').value.trim();
+  if (!raw) { toast('⚠️ 請輸入網址'); return; }
+  const urls = raw.split('\n').map(u => u.trim()).filter(u => u.startsWith('http'));
+  if (!urls.length) { toast('⚠️ 請每行輸入完整網址'); return; }
+  document.getElementById('batchBtn').disabled = true;
+  document.getElementById('batch-progress').style.display = 'block';
+  let totalAdded = 0;
+  for (let i = 0; i < urls.length; i++) {
+    document.getElementById('batch-bar').style.width = Math.round((i / urls.length) * 100) + '%';
+    document.getElementById('batch-prog-text').textContent = `第 ${i+1}/${urls.length} 頁：${urls[i]}`;
+    document.getElementById('batch-status').textContent = `${i+1}/${urls.length}`;
+    const r = await crawlOneUrl(urls[i], false);
+    totalAdded += r.added;
+    await new Promise(r => setTimeout(r, 800));
   }
-  document.getElementById('batch-bar').style.width='100%';
-  document.getElementById('batch-prog-text').textContent=`完成！共擷取 ${totalAdded} 筆`;
-  document.getElementById('batchBtn').disabled=false;
-  document.getElementById('batch-status').textContent='';
-  toast('✅ 批次完成，共擷取 '+totalAdded+' 筆','ok');
+  document.getElementById('batch-bar').style.width = '100%';
+  document.getElementById('batch-prog-text').textContent = `完成！共擷取 ${totalAdded} 筆`;
+  document.getElementById('batchBtn').disabled = false;
+  document.getElementById('batch-status').textContent = '';
+  toast('✅ 批次完成，共擷取 ' + totalAdded + ' 筆', 'ok');
 }
 
-async function crawlOneUrl(url,detectNext){
-  const apiKey=cfg.apikey||'';
-  if(!apiKey){toast('⚠️ 請先在「設定」填入 Groq API Key');return{added:0,nextUrl:''};}
-  const crawlerUrl=(cfg.crawlerUrl||'https://sales.barry00000000.workers.dev').replace(/\/$/,'');
-  document.getElementById('crawl-loading').style.display='block';
-  document.getElementById('crawl-loading-text').textContent='讀取：'+url;
-  try{
-    const apiRes=await fetch(crawlerUrl+'?url='+encodeURIComponent(url));
-    if(!apiRes.ok)throw new Error('爬蟲 API 錯誤（'+apiRes.status+'）');
-    const apiData=await apiRes.json();
-    if(apiData.error)throw new Error(apiData.error);
-    const snippet=(apiData.text||'').slice(0,5000);
-    if(!snippet)throw new Error('網頁內容為空');
-    const nextInstruct=detectNext?'\n另外請找出「下一頁」的連結URL（完整網址），放在 next_url 欄位，找不到填空字串。':'';
-    const prompt=`以下是一個網頁的文字內容，找出所有公司或聯絡人的資訊。\n\n網頁文字：\n${snippet}\n\n找出所有 Email、電話、公司名稱。name 欄位填聯絡人姓名，沒有就填公司名稱。${nextInstruct}\n\n只輸出純 JSON，格式如下，不要任何說明：\n{"contacts":[{"name":"","company":"","email":"","phone":""}]${detectNext?',"next_url":""':''}}`;
-    const groqRes=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],temperature:0.1,max_tokens:2048})
+async function crawlOneUrl(url, detectNext) {
+  const apiKey = cfg.apikey || '';
+  if (!apiKey) { toast('⚠️ 請先在「設定」填入 Groq API Key'); return { added: 0, nextUrl: '' }; }
+  const crawlerUrl = (cfg.crawlerUrl || 'https://sales.barry00000000.workers.dev').replace(/\/$/, '');
+  document.getElementById('crawl-loading').style.display = 'block';
+  document.getElementById('crawl-loading-text').textContent = '讀取：' + url;
+  try {
+    const apiRes = await fetch(crawlerUrl + '?url=' + encodeURIComponent(url));
+    if (!apiRes.ok) throw new Error('爬蟲 API 錯誤（' + apiRes.status + '）');
+    const apiData = await apiRes.json();
+    if (apiData.error) throw new Error(apiData.error);
+    const snippet = (apiData.text || '').slice(0, 5000);
+    if (!snippet) throw new Error('網頁內容為空');
+    const nextInstruct = detectNext ? '\n另外請找出「下一頁」的連結URL（完整網址），放在 next_url 欄位，找不到填空字串。' : '';
+    const prompt = `以下是一個網頁的文字內容，找出所有公司或聯絡人的資訊。\n網頁文字：\n${snippet}\n找出所有 Email、電話、公司名稱。name 欄位填聯絡人姓名，沒有就填公司名稱。${nextInstruct}\n只輸出純 JSON，格式如下，不要任何說明：\n{"contacts":[{"name":"","company":"","email":"","phone":""}]${detectNext ? ',"next_url":""' : ''}}`;
+    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+      body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: prompt }], temperature: 0.1, max_tokens: 2048 })
     });
-    const groqData=await groqRes.json();
-    if(groqData.error)throw new Error('Groq：'+groqData.error.message);
-    let raw=groqData.choices?.[0]?.message?.content||'{}';
-    raw=raw.replace(/```json|```/g,'').trim();
-    const start=raw.indexOf('{');if(start>0)raw=raw.slice(start);
-    const parsed=JSON.parse(raw);
-    const contacts=parsed.contacts||[];
-    let nextUrl=parsed.next_url||'';
-    if(nextUrl&&!nextUrl.startsWith('http')){try{const base=new URL(url);nextUrl=base.origin+nextUrl;}catch(e){nextUrl='';}}
-    if(nextUrl===url)nextUrl='';
-    let added=0;
-    contacts.forEach(ct=>{
-      if(!ct.name&&!ct.email&&!ct.company)return;
-      customers.unshift({id:Date.now()+Math.random(),name:ct.name||ct.company||'（未知）',company:ct.company||'',email:ct.email||'',phone:ct.phone||'',url:url,status:'unsent',createdAt:new Date().toLocaleDateString('zh-TW')});
+    const groqData = await groqRes.json();
+    if (groqData.error) throw new Error('Groq：' + groqData.error.message);
+    let raw = groqData.choices?.[0]?.message?.content || '{}';
+    raw = raw.replace(/```json|```/g, '').trim();
+    const start = raw.indexOf('{'); if (start > 0) raw = raw.slice(start);
+    const parsed = JSON.parse(raw);
+    const contacts = parsed.contacts || [];
+    let nextUrl = parsed.next_url || '';
+    if (nextUrl && !nextUrl.startsWith('http')) { try { const base = new URL(url); nextUrl = base.origin + nextUrl; } catch (e) { nextUrl = ''; } }
+    if (nextUrl === url) nextUrl = '';
+    let added = 0;
+    contacts.forEach(ct => {
+      if (!ct.name && !ct.email && !ct.company) return;
+      customers.unshift({ id: Date.now() + Math.random(), name: ct.name || ct.company || '（未知）', company: ct.company || '', email: ct.email || '', phone: ct.phone || '', url: url, status: 'unsent', createdAt: new Date().toLocaleDateString('zh-TW') });
       added++;
     });
-    if(added>0){save();renderContacts();renderSelectList();updateChips();}
-    else if(!contacts.length)toast('⚠️ 未找到聯絡資料：'+url);
-    return{added,nextUrl};
-  }catch(err){toast('❌ '+err.message,'err');console.error(err);return{added:0,nextUrl:''};}
-  finally{document.getElementById('crawl-loading').style.display='none';}
+    if (added > 0) { save(); renderContacts(); renderSelectList(); updateChips(); }
+    else if (!contacts.length) toast('⚠️ 未找到聯絡資料：' + url);
+    return { added, nextUrl };
+  } catch (err) { toast('❌ ' + err.message, 'err'); console.error(err); return { added: 0, nextUrl: '' }; }
+  finally { document.getElementById('crawl-loading').style.display = 'none'; }
+}
+
+// ══ 名單管理：檢視切換 ══
+function setContactView(mode) {
+  contactView = mode;
+  contactPage = 1;
+  document.getElementById('vt-card').classList.toggle('on', mode === 'card');
+  document.getElementById('vt-list').classList.toggle('on', mode === 'list');
+  renderContacts();
+}
+
+// ══ 名單管理：取得分頁資料 ══
+function getContactPageData() {
+  let data = [...customers];
+  if (contactSortKey) {
+    data.sort((a, b) => {
+      const av = String(a[contactSortKey] || ''), bv = String(b[contactSortKey] || '');
+      return av.localeCompare(bv, 'zh-TW') * contactSortDir;
+    });
+  }
+  const total = data.length;
+  const pages = Math.ceil(total / CONTACTS_PER_PAGE) || 1;
+  if (contactPage > pages) contactPage = pages;
+  const start = (contactPage - 1) * CONTACTS_PER_PAGE;
+  return { data: data.slice(start, start + CONTACTS_PER_PAGE), total, pages };
 }
 
 // ══ RENDER CONTACTS ══
-function renderContacts(){
-  const grid=document.getElementById('cust-grid');
-  const n=selectedIds.size;
-  document.getElementById('sel-count-label').textContent=n?`已選 ${n} 筆`:'';
-  if(!customers.length){
-    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="ei">📋</div><div class="et">尚無客戶名單</div><div class="es">輸入網址自動擷取，或點「手動新增」</div></div>`;
+function renderContacts() {
+  const { data, total, pages } = getContactPageData();
+  // stats
+  document.getElementById('st-total').textContent = customers.length;
+  document.getElementById('st-sent').textContent = customers.filter(c => c.status === 'sent').length;
+  document.getElementById('st-pending').textContent = customers.filter(c => c.status === 'unsent').length;
+  const n = selectedIds.size;
+  document.getElementById('sel-count-label').textContent = n ? `已選 ${n} 筆` : '';
+
+  if (!customers.length) {
+    document.getElementById('contact-view-area').innerHTML = `<div class="empty-state"><div class="ei">📋</div><div class="et">尚無客戶名單</div><div class="es">輸入網址自動擷取，或點「手動新增」</div></div>`;
+    document.getElementById('contact-pagination').innerHTML = '';
     return;
   }
-  grid.innerHTML=customers.map(c=>{
-    const chk=selectedIds.has(c.id);
-    return`<div class="cust-card${chk?' checked':''}" id="cc-${c.id}">
+
+  if (contactView === 'card') renderContactCard(data);
+  else renderContactList(data);
+  renderContactPagination(pages, total);
+}
+
+function renderContactCard(data) {
+  document.getElementById('contact-view-area').innerHTML = `<div class="cust-grid">${data.map(c => {
+    const chk = selectedIds.has(c.id);
+    return `<div class="cust-card${chk ? ' checked' : ''}" id="cc-${c.id}">
       <div class="cust-card-head">
         <div style="display:flex;align-items:center;gap:8px;min-width:0">
-          <div class="card-check${chk?' on':''}" onclick="toggleCard(${c.id})"></div>
-          <div><div class="cust-name">${e(c.name)}</div><div class="cust-company">${e(c.company||'')}</div></div>
+          <div class="card-check${chk ? ' on' : ''}" onclick="toggleCard(${c.id})"></div>
+          <div><div class="cust-name">${e(c.name)}</div><div class="cust-company">${e(c.company || '')}</div></div>
         </div>
-        <span class="status-badge ${c.status}">${c.status==='sent'?'✅ 已發送':'📭 待發送'}</span>
+        <span class="status-badge ${c.status}">${c.status === 'sent' ? '✅ 已發送' : '📭 待發送'}</span>
       </div>
       <div class="cust-fields">
-        <div class="cust-field"><span>📧</span><span class="val">${e(c.email||'—')}</span></div>
-        <div class="cust-field"><span>📞</span><span class="val">${e(c.phone||'—')}</span></div>
+        <div class="cust-field"><span>📧</span><span class="val">${e(c.email || '—')}</span></div>
+        <div class="cust-field"><span>📞</span><span class="val">${e(c.phone || '—')}</span></div>
+        <div class="cust-field"><span>📅</span><span class="val">${e(c.createdAt || '—')}</span></div>
       </div>
-      ${c.url?`<div class="src-url">🌐 ${e(c.url)}</div>`:''}
+      ${c.url ? `<div class="src-url">🌐 ${e(c.url)}</div>` : ''}
       <div class="cust-actions">
         <button class="btn sm p" onclick="quickSend(${c.id})">✉️ 發送</button>
         <button class="btn sm" onclick="editCustomer(${c.id})">✏️ 編輯</button>
         <button class="btn sm d" onclick="deleteCustomer(${c.id})">🗑</button>
       </div>
     </div>`;
-  }).join('');
+  }).join('')}</div>`;
 }
 
-function toggleCard(id){if(selectedIds.has(id))selectedIds.delete(id);else selectedIds.add(id);renderContacts();}
-function selectAll(){customers.forEach(c=>selectedIds.add(c.id));renderContacts();}
-function clearSel(){selectedIds.clear();renderContacts();}
-function deleteSelected(){
-  if(!selectedIds.size){toast('⚠️ 請先選取');return;}
-  if(!confirm('確定刪除 '+selectedIds.size+' 筆？'))return;
-  customers=customers.filter(c=>!selectedIds.has(c.id));
-  selectedIds.clear();save();renderContacts();renderSelectList();updateChips();toast('🗑 已刪除');
-}
-function exportExcel(){
-  if(!customers.length){toast('⚠️ 名單為空');return;}
-  csvDownload([['名稱','公司','Email','電話','來源網址','狀態','日期'],...customers.map(c=>[c.name,c.company,c.email,c.phone,c.url,c.status,c.createdAt])],'客戶名單.csv');
-  toast('✅ 已匯出','ok');
-}
-function exportLogExcel(){
-  if(!sendLog.length){toast('⚠️ 無紀錄');return;}
-  csvDownload([['名稱','公司','Email','主旨','時間'],...sendLog.map(l=>[l.name,l.company,l.email,l.subject,l.time])],'發送紀錄.csv');
-  toast('✅ 已匯出','ok');
-}
-function csvDownload(rows,filename){
-  const bom='\uFEFF';
-  const csv=bom+rows.map(r=>r.map(v=>'"'+(String(v||'').replace(/"/g,'""'))+'"').join(',')).join('\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=filename;a.click();
+function renderContactList(data) {
+  const si = (key) => `<span class="sort-icon">${contactSortKey === key ? (contactSortDir === 1 ? '▲' : '▼') : '⇅'}</span>`;
+  const sc = (key) => contactSortKey === key ? 'sorted' : '';
+  document.getElementById('contact-view-area').innerHTML = `<div class="list-view-wrap"><table class="list-table">
+    <thead><tr>
+      <th style="width:32px"></th>
+      <th class="sortable ${sc('name')}" data-key="name">名稱${si('name')}</th>
+      <th class="sortable ${sc('company')}" data-key="company">公司${si('company')}</th>
+      <th class="sortable ${sc('email')}" data-key="email">Email${si('email')}</th>
+      <th>電話</th>
+      <th class="sortable ${sc('status')}" data-key="status">狀態${si('status')}</th>
+      <th class="sortable ${sc('createdAt')}" data-key="createdAt">建立日期${si('createdAt')}</th>
+      <th>操作</th>
+    </tr></thead>
+    <tbody>${data.map(c => {
+      const chk = selectedIds.has(c.id);
+      return `<tr class="${chk ? 'row-checked' : ''}">
+        <td><div class="row-check${chk ? ' on' : ''}" onclick="toggleCard(${c.id})"></div></td>
+        <td><div class="lt-name">${e(c.name)}</div></td>
+        <td><div class="lt-sub">${e(c.company || '—')}</div></td>
+        <td style="font-size:11px;color:var(--t2)">${e(c.email || '—')}</td>
+        <td style="font-size:11px;color:var(--t2)">${e(c.phone || '—')}</td>
+        <td><span class="status-badge ${c.status}">${c.status === 'sent' ? '✅ 已發送' : '📭 待發送'}</span></td>
+        <td style="font-size:11px;color:var(--t3)">${e(c.createdAt || '—')}</td>
+        <td><div style="display:flex;gap:4px">
+          <button class="btn sm p" onclick="quickSend(${c.id})">✉️</button>
+          <button class="btn sm" onclick="editCustomer(${c.id})">✏️</button>
+          <button class="btn sm d" onclick="deleteCustomer(${c.id})">🗑</button>
+        </div></td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+
+  // 排序事件
+  document.querySelector('#contact-view-area .list-table thead').addEventListener('click', ev => {
+    const th = ev.target.closest('th.sortable');
+    if (!th) return;
+    const key = th.dataset.key;
+    if (contactSortKey === key) contactSortDir *= -1;
+    else { contactSortKey = key; contactSortDir = 1; }
+    contactPage = 1;
+    renderContacts();
+  });
 }
 
-// ══ SELECT LIST ══
-function renderSelectList(){
-  const list=document.getElementById('cust-select-list');
-  if(!customers.length){list.innerHTML='<div style="padding:30px;text-align:center;color:var(--t3);font-size:13px">尚無客戶</div>';return;}
-  list.innerHTML=customers.map(c=>{
-    const on=selectedIds.has(c.id);
-    return`<div class="cust-select-item${on?' sel':''}" onclick="toggleSel(${c.id})">
-      <div class="sel-check${on?' on':''}"></div>
-      <div class="cust-avatar">${(c.name||'?')[0]}</div>
-      <div><div class="cn">${e(c.name)}</div><div class="ce">${e(c.email||'無 Email')}</div></div>
+function renderContactPagination(pages, total) {
+  const pg = document.getElementById('contact-pagination');
+  if (pages <= 1) { pg.innerHTML = ''; return; }
+  let html = `<button class="pg-btn" onclick="goContactPage(${contactPage - 1})" ${contactPage === 1 ? 'disabled' : ''}>‹</button>`;
+  for (let i = 1; i <= pages; i++) {
+    if (pages > 7 && i > 2 && i < pages - 1 && Math.abs(i - contactPage) > 1) {
+      if (i === 3 || i === pages - 2) html += `<span class="pg-info">…</span>`;
+      continue;
+    }
+    html += `<button class="pg-btn${contactPage === i ? ' on' : ''}" onclick="goContactPage(${i})">${i}</button>`;
+  }
+  html += `<button class="pg-btn" onclick="goContactPage(${contactPage + 1})" ${contactPage === pages ? 'disabled' : ''}>›</button>`;
+  html += `<span class="pg-info">共 ${total} 筆 / 第 ${contactPage}/${pages} 頁</span>`;
+  pg.innerHTML = html;
+}
+
+function goContactPage(p) {
+  const pages = Math.ceil(customers.length / CONTACTS_PER_PAGE) || 1;
+  if (p < 1 || p > pages) return;
+  contactPage = p;
+  renderContacts();
+}
+
+function toggleCard(id) { if (selectedIds.has(id)) selectedIds.delete(id); else selectedIds.add(id); renderContacts(); }
+function selectAll() { getContactPageData().data.forEach(c => selectedIds.add(c.id)); renderContacts(); }
+function clearSel() { selectedIds.clear(); renderContacts(); }
+
+function editCustomer(id) {
+  const c = customers.find(x => x.id === id); if (!c) return;
+  editingId = id;
+  document.getElementById('m-name').value = c.name || '';
+  document.getElementById('m-company').value = c.company || '';
+  document.getElementById('m-email').value = c.email || '';
+  document.getElementById('m-phone').value = c.phone || '';
+  document.getElementById('m-url').value = c.url || '';
+  document.getElementById('modal-title').textContent = '✏️ 編輯客戶';
+  document.getElementById('modal-confirm-btn').textContent = '確認更新';
+  document.getElementById('modal-add').classList.add('open');
+}
+
+function deleteCustomer(id) {
+  if (!confirm('確定刪除此客戶？')) return;
+  customers = customers.filter(c => c.id !== id);
+  selectedIds.delete(id);
+  save(); renderContacts(); renderSelectList(); updateChips(); toast('🗑 已刪除');
+}
+
+function deleteSelected() {
+  if (!selectedIds.size) { toast('⚠️ 請先選取'); return; }
+  if (!confirm('確定刪除 ' + selectedIds.size + ' 筆？')) return;
+  customers = customers.filter(c => !selectedIds.has(c.id));
+  selectedIds.clear(); save(); renderContacts(); renderSelectList(); updateChips(); toast('🗑 已刪除');
+}
+
+function exportExcel() {
+  if (!customers.length) { toast('⚠️ 名單為空'); return; }
+  csvDownload([['名稱','公司','Email','電話','來源網址','狀態','日期'], ...customers.map(c => [c.name, c.company, c.email, c.phone, c.url, c.status, c.createdAt])], '客戶名單.csv');
+  toast('✅ 已匯出', 'ok');
+}
+
+function csvDownload(rows, filename) {
+  const bom = '\uFEFF';
+  const csv = bom + rows.map(r => r.map(v => '"' + (String(v || '').replace(/"/g, '""')) + '"').join(',')).join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = filename; a.click();
+}
+
+// ══ SELECT LIST (Email 發送) ══
+function renderSelectList() {
+  const list = document.getElementById('cust-select-list');
+  if (!customers.length) { list.innerHTML = '<div style="padding:30px;text-align:center;color:var(--t3);font-size:13px">尚無客戶</div>'; return; }
+  list.innerHTML = customers.map(c => {
+    const on = selectedIds.has(c.id);
+    return `<div class="cust-select-item${on ? ' sel' : ''}" onclick="toggleSel(${c.id})">
+      <div class="sel-check${on ? ' on' : ''}"></div>
+      <div class="cust-avatar">${(c.name || '?')[0]}</div>
+      <div><div class="cn">${e(c.name)}</div><div class="ce">${e(c.email || '無 Email')}</div></div>
     </div>`;
   }).join('');
   updateToField();
 }
-function toggleSel(id){
-  if(selectedIds.has(id))selectedIds.delete(id);else selectedIds.add(id);
+
+function toggleSel(id) {
+  if (selectedIds.has(id)) selectedIds.delete(id); else selectedIds.add(id);
   renderSelectList();
-  document.getElementById('sel-count').textContent=selectedIds.size?`已選 ${selectedIds.size} 位`:'未選取';
+  document.getElementById('sel-count').textContent = selectedIds.size ? `已選 ${selectedIds.size} 位` : '未選取';
 }
-function selAll(){customers.forEach(c=>selectedIds.add(c.id));renderSelectList();document.getElementById('sel-count').textContent=`已選 ${selectedIds.size} 位`;}
-function selNone(){selectedIds.clear();renderSelectList();document.getElementById('sel-count').textContent='未選取';}
-function updateToField(){
-  const emails=customers.filter(c=>selectedIds.has(c.id)&&c.email).map(c=>c.email);
-  if(emails.length)document.getElementById('ef-to').value=emails.join(', ');
+function selAll() { customers.forEach(c => selectedIds.add(c.id)); renderSelectList(); document.getElementById('sel-count').textContent = `已選 ${selectedIds.size} 位`; }
+function selNone() { selectedIds.clear(); renderSelectList(); document.getElementById('sel-count').textContent = '未選取'; }
+function updateToField() {
+  const emails = customers.filter(c => selectedIds.has(c.id) && c.email).map(c => c.email);
+  if (emails.length) document.getElementById('ef-to').value = emails.join(', ');
 }
-function quickSend(id){selectedIds.clear();selectedIds.add(id);swCP('send',document.querySelectorAll('.ctab')[1]);}
+function quickSend(id) { selectedIds.clear(); selectedIds.add(id); swCP('send', document.querySelector('.ctab:nth-child(2)')); }
 
 // ══ RICH EDITOR ══
-function fmt(cmd,val){document.getElementById('editor-body').focus();document.execCommand(cmd,false,val||null);}
-function clearEditor(){document.getElementById('editor-body').innerHTML='';}
-function insertImg(){
-  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
-  inp.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{document.getElementById('editor-body').focus();document.execCommand('insertHTML',false,`<img src="${ev.target.result}" style="max-width:100%"/>`);}; r.readAsDataURL(f);};inp.click();
+function fmt(cmd, val) { document.getElementById('editor-body').focus(); document.execCommand(cmd, false, val || null); }
+function clearEditor() { document.getElementById('editor-body').innerHTML = ''; }
+function insertImg() {
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = ev => { const f = ev.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = e => { document.getElementById('editor-body').focus(); document.execCommand('insertHTML', false, `<img src="${e.target.result}" style="max-width:100%"/>`); }; r.readAsDataURL(f); };
+  inp.click();
 }
-function insertImgUrl(){const url=prompt('請輸入圖片網址：');if(url){document.getElementById('editor-body').focus();document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%"/>`);};}
+function insertImgUrl() { const url = prompt('請輸入圖片網址：'); if (url) { document.getElementById('editor-body').focus(); document.execCommand('insertHTML', false, `<img src="${url}" style="max-width:100%"/>`); } }
 
 // ══ TEMPLATE ══
-function renderTplList(){
-  const list=document.getElementById('tpl-list');
-  if(!templates.length){list.innerHTML='<div style="color:var(--t3);font-size:13px;padding:8px 0">尚未建立任何範本</div>';return;}
-  list.innerHTML=templates.map(t=>`<div class="tpl-item"><div><div class="tpl-name">${e(t.name)}</div><div class="tpl-sub">${e(t.subject||'（無預設主旨）')}</div></div><div class="tpl-actions"><button class="btn sm" onclick="editTpl(${t.id})">✏️ 編輯</button><button class="btn sm d" onclick="deleteTpl(${t.id})">🗑</button></div></div>`).join('');
+function renderTplList() {
+  const list = document.getElementById('tpl-list');
+  if (!templates.length) { list.innerHTML = '<div style="color:var(--t3);font-size:13px;padding:8px 0">尚未建立任何範本</div>'; return; }
+  list.innerHTML = templates.map(t => `<div class="tpl-item">
+    <div><div class="tpl-name">${e(t.name)}</div><div class="tpl-sub">${e(t.subject || '（無預設主旨）')}</div></div>
+    <div class="tpl-actions"><button class="btn sm" onclick="editTpl(${t.id})">✏️ 編輯</button><button class="btn sm d" onclick="deleteTpl(${t.id})">🗑</button></div>
+  </div>`).join('');
 }
-function renderTplSelect(){
-  const sel=document.getElementById('ef-tpl');
-  sel.innerHTML='<option value="">— 不套用範本（手動撰寫）—</option>';
-  templates.forEach(t=>sel.innerHTML+=`<option value="${t.id}">${e(t.name)}</option>`);
+function renderTplSelect() {
+  const sel = document.getElementById('ef-tpl');
+  sel.innerHTML = '<option value="">— 不套用範本（手動撰寫）—</option>';
+  templates.forEach(t => sel.innerHTML += `<option value="${t.id}">${e(t.name)}</option>`);
 }
-function applyTemplate(){
-  const id=parseInt(document.getElementById('ef-tpl').value);if(!id)return;
-  const t=templates.find(x=>x.id===id);if(!t)return;
-  const c=customers.find(x=>selectedIds.has(x.id));
-  const name=c?c.name:'{{name}}';const company=c?c.company:'{{company}}';
-  let body=t.body||'';
-  body=body.replace(/{{name}}/g,name).replace(/{{company}}/g,company);
-  document.getElementById('ef-subject').value=(t.subject||'').replace(/{{name}}/g,name).replace(/{{company}}/g,company);
-  document.getElementById('editor-body').innerHTML=body;
-  toast('✅ 已套用範本：'+t.name,'ok');
+function applyTemplate() {
+  const id = parseInt(document.getElementById('ef-tpl').value); if (!id) return;
+  const t = templates.find(x => x.id === id); if (!t) return;
+  const c = customers.find(x => selectedIds.has(x.id));
+  const name = c ? c.name : '{{name}}', company = c ? c.company : '{{company}}';
+  let body = (t.body || '').replace(/{{name}}/g, name).replace(/{{company}}/g, company);
+  document.getElementById('ef-subject').value = (t.subject || '').replace(/{{name}}/g, name).replace(/{{company}}/g, company);
+  document.getElementById('editor-body').innerHTML = body;
+  toast('✅ 已套用範本：' + t.name, 'ok');
 }
-function openTplEditor(){
-  editingTplId=null;
-  document.getElementById('tpl-name').value='';
-  document.getElementById('tpl-subject').value='';
-  document.getElementById('tpl-body').innerHTML='';
-  document.getElementById('tpl-modal-title').textContent='📝 新增範本';
+function openTplEditor() {
+  editingTplId = null;
+  document.getElementById('tpl-name').value = ''; document.getElementById('tpl-subject').value = ''; document.getElementById('tpl-body').innerHTML = '';
+  document.getElementById('tpl-modal-title').textContent = '📝 新增範本';
   document.getElementById('modal-tpl').classList.add('open');
 }
-function editTpl(id){
-  const t=templates.find(x=>x.id===id);if(!t)return;
-  editingTplId=id;
-  document.getElementById('tpl-name').value=t.name;
-  document.getElementById('tpl-subject').value=t.subject||'';
-  document.getElementById('tpl-body').innerHTML=t.body||'';
-  document.getElementById('tpl-modal-title').textContent='✏️ 編輯範本：'+t.name;
+function editTpl(id) {
+  const t = templates.find(x => x.id === id); if (!t) return;
+  editingTplId = id;
+  document.getElementById('tpl-name').value = t.name; document.getElementById('tpl-subject').value = t.subject || ''; document.getElementById('tpl-body').innerHTML = t.body || '';
+  document.getElementById('tpl-modal-title').textContent = '✏️ 編輯範本：' + t.name;
   document.getElementById('modal-tpl').classList.add('open');
 }
-function saveTpl(){
-  const name=document.getElementById('tpl-name').value.trim();
-  if(!name){toast('⚠️ 請填寫範本名稱');return;}
-  const tpl={id:editingTplId||Date.now(),name,subject:document.getElementById('tpl-subject').value.trim(),body:document.getElementById('tpl-body').innerHTML};
-  if(editingTplId){const i=templates.findIndex(x=>x.id===editingTplId);if(i>=0)templates[i]=tpl;}else templates.push(tpl);
-  saveTplStore();renderTplList();renderTplSelect();closeModal('modal-tpl');toast('✅ 範本已儲存','ok');
+function saveTpl() {
+  const name = document.getElementById('tpl-name').value.trim();
+  if (!name) { toast('⚠️ 請填寫範本名稱'); return; }
+  const tpl = { id: editingTplId || Date.now(), name, subject: document.getElementById('tpl-subject').value.trim(), body: document.getElementById('tpl-body').innerHTML };
+  if (editingTplId) { const i = templates.findIndex(x => x.id === editingTplId); if (i >= 0) templates[i] = tpl; }
+  else templates.push(tpl);
+  saveTplStore(); renderTplList(); renderTplSelect(); closeModal('modal-tpl'); toast('✅ 範本已儲存', 'ok');
 }
-function deleteTpl(id){if(!confirm('確定刪除此範本？'))return;templates=templates.filter(x=>x.id!==id);saveTplStore();renderTplList();renderTplSelect();toast('🗑 已刪除');}
-function saveTplStore(){localStorage.setItem('cus_tpl',JSON.stringify(templates));}
-function tplFmt(cmd,val){document.getElementById('tpl-body').focus();document.execCommand(cmd,false,val||null);}
-function tplInsertImgFile(){document.getElementById('tpl-img-file').click();}
-function tplHandleImgFile(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{document.getElementById('tpl-body').focus();document.execCommand('insertHTML',false,`<img src="${ev.target.result}" style="max-width:100%;border-radius:4px;margin:6px 0"/>`);}; r.readAsDataURL(f);}
-function tplInsertImgUrl(){const url=prompt('請輸入圖片網址：');if(url){document.getElementById('tpl-body').focus();document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%;border-radius:4px;margin:6px 0"/>`);};}
+function deleteTpl(id) {
+  if (!confirm('確定刪除此範本？')) return;
+  templates = templates.filter(x => x.id !== id);
+  saveTplStore(); renderTplList(); renderTplSelect(); toast('🗑 已刪除');
+}
+function tplFmt(cmd, val) { document.getElementById('tpl-body').focus(); document.execCommand(cmd, false, val || null); }
+function tplInsertImgFile() { document.getElementById('tpl-img-file').click(); }
+function tplHandleImgFile(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader(); r.onload = ev => { document.getElementById('tpl-body').focus(); document.execCommand('insertHTML', false, `<img src="${ev.target.result}" style="max-width:100%;border-radius:4px;margin:6px 0"/>`); }; r.readAsDataURL(f);
+}
+function tplInsertImgUrl() { const url = prompt('請輸入圖片網址：'); if (url) { document.getElementById('tpl-body').focus(); document.execCommand('insertHTML', false, `<img src="${url}" style="max-width:100%;border-radius:4px;margin:6px 0"/>`); } }
 
 // ══ AI GENERATE ══
-async function aiGenerateEmail(){
-  const apiKey=cfg.apikey||'';
-  if(!apiKey){toast('⚠️ 請先填入 Groq API Key');swCP('settings',document.querySelectorAll('.ctab')[4]);return;}
-  const toEmails=document.getElementById('ef-to').value.trim();
-  const selList=customers.filter(c=>selectedIds.has(c.id));
-  if(!toEmails&&!selList.length){toast('⚠️ 請選取收件人');return;}
-  const c=selList[0]||{name:'客戶',company:'',email:toEmails};
-  const productName=cfg.productName||'3D 列印服務';
-  const productDesc=cfg.productDesc||'專業 3D 列印服務';
-  const senderName=cfg.senderName||'業務';
-  const senderTitle=cfg.senderTitle||'業務代表';
-  const company=cfg.company||'實威國際';
-  const styleMap={professional:'專業正式',friendly:'親切友善',concise:'簡短精要'};
-  const emailStyle=styleMap[cfg.emailStyle||'professional'];
-  document.getElementById('ai-loading-row').style.display='block';
-  document.getElementById('editor-body').innerHTML='<span style="color:#888">生成中…</span>';
-  const prompt=`你是專業業務，請撰寫一封 HTML 格式的開發信 Email。\n\n客戶：${c.name}，公司：${c.company||'未知'}\n產品：${productName}\n產品描述：${productDesc}\n寄件人：${senderName}，${senderTitle}，${company}\n風格：${emailStyle}\n\n請輸出純 JSON，格式如下，body 為 HTML 字串，不要 markdown：\n{"subject":"主旨（30字內）","body":"<p>HTML 內文...</p>"}`;
-  try{
-    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],temperature:0.7,max_tokens:1500})
-    });
-    const data=await res.json();
-    if(data.error)throw new Error(data.error.message);
-    let text=data.choices?.[0]?.message?.content||'{}';
-    text=text.replace(/```json|```/g,'').trim();
-    const start=text.indexOf('{');if(start>0)text=text.slice(start);
-    const parsed=JSON.parse(text);
-    document.getElementById('ef-subject').value=parsed.subject||'';
-    document.getElementById('editor-body').innerHTML=parsed.body||'';
-    if(!document.getElementById('ef-to').value.trim())updateToField();
-    toast('✅ AI Email 已生成','ok');
-  }catch(err){document.getElementById('editor-body').innerHTML='';toast('❌ AI 生成失敗：'+err.message,'err');console.error(err);}
-  finally{document.getElementById('ai-loading-row').style.display='none';}
+async function aiGenerateEmail() {
+  const apiKey = cfg.apikey || '';
+  if (!apiKey) { toast('⚠️ 請先填入 Groq API Key'); swCP('settings', document.querySelector('.ctab:nth-child(4)')); return; }
+  const toEmails = document.getElementById('ef-to').value.trim();
+  const selList = customers.filter(c => selectedIds.has(c.id));
+  if (!toEmails && !selList.length) { toast('⚠️ 請選取收件人'); return; }
+  const c = selList[0] || { name: '客戶', company: '', email: toEmails };
+  const productName = cfg.productName || '3D 列印服務';
+  const productDesc = cfg.productDesc || '專業 3D 列印服務';
+  const senderName = cfg.senderName || '業務';
+  const senderTitle = cfg.senderTitle || '業務代表';
+  const company = cfg.company || '實威國際';
+  const styleMap = { professional: '專業正式', friendly: '親切友善', concise: '簡短精要' };
+  const emailStyle = styleMap[cfg.emailStyle || 'professional'];
+  document.getElementById('ai-loading-row').style.display = 'block';
+  document.getElementById('editor-body').innerHTML = '<span style="color:#888">生成中…</span>';
+  const prompt = `你是專業業務，請撰寫一封 HTML 格式的開發信 Email。\n客戶：${c.name}，公司：${c.company || '未知'}\n產品：${productName}\n產品描述：${productDesc}\n寄件人：${senderName}，${senderTitle}，${company}\n風格：${emailStyle}\n請輸出純 JSON，格式如下，body 為 HTML 字串（可用 <b>、<p>、<br>、<ul><li> 等標籤），不要 markdown：\n{"subject":"主旨（30字內）","body":"<p>HTML 內文...</p>"}`;
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey }, body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 1500 }) });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    let text = data.choices?.[0]?.message?.content || '{}';
+    text = text.replace(/```json|```/g, '').trim();
+    const start = text.indexOf('{'); if (start > 0) text = text.slice(start);
+    const parsed = JSON.parse(text);
+    document.getElementById('ef-subject').value = parsed.subject || '';
+    document.getElementById('editor-body').innerHTML = parsed.body || '';
+    if (!document.getElementById('ef-to').value.trim()) updateToField();
+    toast('✅ AI Email 已生成', 'ok');
+  } catch (err) { document.getElementById('editor-body').innerHTML = ''; toast('❌ AI 生成失敗：' + err.message, 'err'); }
+  finally { document.getElementById('ai-loading-row').style.display = 'none'; }
 }
 
 // ══ PREVIEW ══
-function previewEmail(){
-  const subject=document.getElementById('ef-subject').value;
-  const to=document.getElementById('ef-to').value;
-  const body=document.getElementById('editor-body').innerHTML;
-  document.getElementById('preview-subject').textContent=subject||'（無主旨）';
-  document.getElementById('preview-to').textContent=to||'（無收件人）';
-  document.getElementById('preview-body').innerHTML=body||'（無內文）';
+function previewEmail() {
+  document.getElementById('preview-subject').textContent = document.getElementById('ef-subject').value || '（無主旨）';
+  document.getElementById('preview-to').textContent = document.getElementById('ef-to').value || '（無收件人）';
+  document.getElementById('preview-body').innerHTML = document.getElementById('editor-body').innerHTML || '（無內文）';
   document.getElementById('modal-preview').classList.add('open');
 }
+function clearCompose() { document.getElementById('ef-to').value = ''; document.getElementById('ef-bcc').value = ''; document.getElementById('ef-subject').value = ''; document.getElementById('editor-body').innerHTML = ''; }
 
-// ══ EXPORT SEND LIST ══
-function exportSendList(){
-  const subject=document.getElementById('ef-subject').value.trim();
-  const bodyHtml=document.getElementById('editor-body').innerHTML;
-  const bodyText=document.getElementById('editor-body').innerText;
-  if(!subject){toast('⚠️ 請填寫主旨');return;}
-  if(!bodyText.trim()){toast('⚠️ 請填寫內文');return;}
-  const bcc=document.getElementById('ef-bcc').value.trim();
-  const manualTo=document.getElementById('ef-to').value.trim();
-  const selList=customers.filter(c=>selectedIds.has(c.id)&&c.email);
-  let list=[];
-  if(selList.length){
-    list=selList.map(c=>({to:c.email,bcc,subject:subject.replace(/{{name}}/g,c.name).replace(/{{company}}/g,c.company||''),bodyHtml:bodyHtml.replace(/{{name}}/g,e(c.name)).replace(/{{company}}/g,e(c.company||'')),name:c.name,company:c.company||''}));
-  }else if(manualTo){
-    const emails=manualTo.split(',').map(s=>s.trim()).filter(s=>s);
-    list=emails.map(email=>({to:email,bcc,subject,bodyHtml,name:email,company:''}));
+// ══ SEND ══
+function sendOutlook() {
+  const to = document.getElementById('ef-to').value.trim();
+  const subject = document.getElementById('ef-subject').value.trim();
+  const body = document.getElementById('editor-body').innerText;
+  if (!to) { toast('⚠️ 請填寫收件人'); return; }
+  if (!subject) { toast('⚠️ 請填寫主旨'); return; }
+  // 記錄發送（依月份）
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const timeStr = now.toLocaleString('zh-TW');
+  const selList = customers.filter(c => selectedIds.has(c.id) && c.email);
+  const targets = selList.length ? selList : [{ name: to, company: '', email: to }];
+  targets.forEach(c => {
+    addToLog(c, subject, timeStr, month);
+    const cust = customers.find(x => x.id === c.id);
+    if (cust) cust.status = 'sent';
+  });
+  save(); updateChips(); renderContacts();
+  window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  toast('✅ 已開啟 Outlook', 'ok');
+}
+
+function addToLog(c, subject, timeStr, month) {
+  // 找是否已有這個客戶在 sendLog 中
+  let entry = sendLog.find(l => l.email === c.email);
+  if (entry) {
+    if (!entry.months) entry.months = [];
+    if (!entry.months.includes(month)) entry.months.push(month);
+    if (!entry.subjects) entry.subjects = [];
+    if (!entry.subjects.includes(subject)) entry.subjects.push(subject);
+    entry.subject = subject;
+    entry.time = timeStr;
+  } else {
+    sendLog.unshift({ id: Date.now() + Math.random(), name: c.name || '', company: c.company || '', email: c.email || '', subject: subject, months: [month], subjects: [subject], time: timeStr });
   }
-  if(!list.length){toast('⚠️ 請選取客戶或在收件人欄位輸入 Email');return;}
-  const payload={generated:new Date().toLocaleString('zh-TW'),count:list.length,mails:list};
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='批次發送清單_'+new Date().toISOString().slice(0,10)+'.json';a.click();
-  selList.forEach(c=>c.status='sent');
-  const logName=selList.map(c=>c.name).join('、');
-  sendLog.unshift({id:Date.now(),name:logName,company:selList.map(c=>c.company||'').join('、'),email:selList.map(c=>c.email).join(', '),subject,time:new Date().toLocaleString('zh-TW')});
-  save();renderContacts();updateChips();renderLog();
-  toast('✅ 已下載批次發送清單（'+list.length+' 封）','ok');
+  localStorage.setItem('cus_log', JSON.stringify(sendLog));
 }
 
-// ══ SEND OUTLOOK ══
-async function sendOutlook(){
-  const to=document.getElementById('ef-to').value.trim();
-  const bcc=document.getElementById('ef-bcc').value.trim();
-  const subject=document.getElementById('ef-subject').value.trim();
-  const bodyHtml=document.getElementById('editor-body').innerHTML;
-  const bodyText=document.getElementById('editor-body').innerText;
-  if(!to){toast('⚠️ 請填寫收件人');return;}
-  if(!subject){toast('⚠️ 請填寫主旨');return;}
-  if(!bodyText.trim()){toast('⚠️ 請填寫內文');return;}
-  try{
-    const blob=new Blob([bodyHtml],{type:'text/html'});
-    const textBlob=new Blob([bodyText],{type:'text/plain'});
-    const item=new ClipboardItem({'text/html':blob,'text/plain':textBlob});
-    await navigator.clipboard.write([item]);
-    toast('✅ 內文已複製到剪貼簿','ok');
-  }catch(err){
-    try{await navigator.clipboard.writeText(bodyText);toast('⚠️ 已複製純文字');}
-    catch(e){toast('⚠️ 無法自動複製，請手動複製內文');}
+function exportSendList() {
+  const subject = document.getElementById('ef-subject').value.trim();
+  const bodyHtml = document.getElementById('editor-body').innerHTML;
+  const bodyText = document.getElementById('editor-body').innerText;
+  if (!subject) { toast('⚠️ 請填寫主旨'); return; }
+  if (!bodyText.trim()) { toast('⚠️ 請填寫內文'); return; }
+  const bcc = document.getElementById('ef-bcc').value.trim();
+  const manualTo = document.getElementById('ef-to').value.trim();
+  const selList = customers.filter(c => selectedIds.has(c.id) && c.email);
+  let list = [];
+  if (selList.length) {
+    list = selList.map(c => ({ to: c.email, bcc, subject: subject.replace(/{{name}}/g, c.name).replace(/{{company}}/g, c.company || ''), bodyHtml: bodyHtml.replace(/{{name}}/g, e(c.name)).replace(/{{company}}/g, e(c.company || '')), name: c.name, company: c.company || '' }));
+  } else if (manualTo) {
+    list = manualTo.split(',').map(s => s.trim()).filter(s => s).map(email => ({ to: email, bcc, subject, bodyHtml, name: email, company: '' }));
   }
-  await new Promise(r=>setTimeout(r,400));
-  let mailto=`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}`;
-  if(bcc)mailto+=`&bcc=${encodeURIComponent(bcc)}`;
-  window.location.href=mailto;
-  setTimeout(()=>{toast('📋 請在 Outlook 內文處按 Ctrl+V 貼上','ok');},1200);
-  const selList=customers.filter(c=>selectedIds.has(c.id));
-  selList.forEach(c=>c.status='sent');
-  const logName=selList.length?selList.map(c=>c.name).join('、'):to;
-  sendLog.unshift({id:Date.now(),name:logName,company:selList.map(c=>c.company||'').join('、'),email:to,subject,time:new Date().toLocaleString('zh-TW')});
-  save();renderContacts();updateChips();renderLog();
+  if (!list.length) { toast('⚠️ 請選取客戶或在收件人欄位輸入 Email'); return; }
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const timeStr = now.toLocaleString('zh-TW');
+  list.forEach(item => {
+    const c = customers.find(x => x.email === item.to);
+    addToLog({ name: item.name, company: item.company, email: item.to, id: c ? c.id : null }, subject, timeStr, month);
+    if (c) { c.status = 'sent'; }
+  });
+  save(); updateChips(); renderContacts();
+  const payload = { generated: timeStr, count: list.length, mails: list };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = '批次發送清單_' + now.toISOString().slice(0, 10) + '.json'; a.click();
+  toast('✅ 已匯出批次清單，共 ' + list.length + ' 封', 'ok');
 }
 
-function clearCompose(){
-  ['ef-to','ef-bcc','ef-subject'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('editor-body').innerHTML='';
-  document.getElementById('ef-tpl').value='';
-  selectedIds.clear();
-  document.getElementById('sel-count').textContent='未選取';
-  renderSelectList();
+// ══ 發送紀錄 ══
+function getLogFiltered() {
+  if (logFilterMonth === 'all') return sendLog;
+  const m = parseInt(logFilterMonth);
+  return sendLog.filter(r => r.months && r.months.includes(m));
 }
 
-// ══ LOG ══
-function renderLog(){
-  const tbody=document.getElementById('log-tbody');
-  if(!sendLog.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--t3)">尚無紀錄</td></tr>';return;}
-  tbody.innerHTML=sendLog.map(l=>`<tr><td class="lt-name">${e(l.name)}</td><td>${e(l.company)}</td><td class="lt-email">${e(l.email)}</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e(l.subject)}</td><td class="lt-time">${e(l.time)}</td><td><span class="status-badge sent">✅ 已發送</span></td></tr>`).join('');
+function getLogSorted(data) {
+  if (!logSortKey) return data;
+  return [...data].sort((a, b) => {
+    if (logSortKey === 'months') return ((a.months || []).length - (b.months || []).length) * logSortDir;
+    const av = String(a[logSortKey] || ''), bv = String(b[logSortKey] || '');
+    return av.localeCompare(bv, 'zh-TW') * logSortDir;
+  });
 }
-function clearLog(){if(!confirm('確定清除？'))return;sendLog=[];save();renderLog();toast('🗑 已清除');}
 
-// ══ EDIT/DELETE ══
-function editCustomer(id){
-  editingId=id;const c=customers.find(x=>x.id===id);if(!c)return;
-  document.getElementById('m-name').value=c.name;
-  document.getElementById('m-company').value=c.company||'';
-  document.getElementById('m-email').value=c.email;
-  document.getElementById('m-phone').value=c.phone||'';
-  document.getElementById('m-url').value=c.url||'';
-  document.getElementById('modal-title').textContent='✏️ 編輯客戶';
-  document.getElementById('modal-confirm-btn').textContent='確認更新';
-  document.getElementById('modal-add').classList.add('open');
+function renderLog() {
+  const filtered = getLogFiltered();
+  const data = getLogSorted(filtered);
+  buildLogSortHeaders();
+  buildLogColSelRow();
+
+  const tbody = document.getElementById('log-tbody');
+  if (!sendLog.length) {
+    tbody.innerHTML = '<tr><td colspan="17" style="text-align:center;padding:40px;color:var(--t3)">尚無發送紀錄</td></tr>';
+    updateLogStats(filtered); return;
+  }
+
+  tbody.innerHTML = '';
+  data.forEach(row => {
+    const tr = document.createElement('tr');
+    const subShort = (row.subject || '').length > 9 ? (row.subject || '').slice(0, 9) + '…' : (row.subject || '');
+    const rowMonths = row.months || [];
+    // 列全選：檢查此列所有有發送月份是否都已勾選
+    const rowAllOn = rowMonths.length > 0 && rowMonths.every(m => logCheckedSet.has(row.id + '-' + m));
+    let cells = `
+      <td><div class="row-check${rowAllOn ? ' on' : ''}" onclick="logToggleRowAll('${row.id}')" title="此列全選"></div></td>
+      <td style="font-weight:600;font-size:12px">${e(row.name)}</td>
+      <td style="font-size:11px;color:var(--t2)">${e(row.company || '—')}</td>
+      <td style="font-size:11px;color:var(--t2)">${e(row.email || '—')}</td>
+      <td style="font-size:10px;color:var(--t2);max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${e(row.subject || '')}">${e(subShort)}</td>
+    `;
+    for (let m = 1; m <= 12; m++) {
+      const has = rowMonths.includes(m);
+      const chk = logCheckedSet.has(row.id + '-' + m);
+      if (has) {
+        cells += `<td><div class="month-dot has${chk ? ' checked' : ''}" onclick="logToggleDot('${row.id}',${m})" title="${m}月有發送">
+          ${chk ? `<svg width="9" height="9" viewBox="0 0 10 10"><polyline points="2,5 4,7.5 8,2.5" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>` : ''}
+        </div></td>`;
+      } else {
+        cells += `<td><div class="month-dot"></div></td>`;
+      }
+    }
+    tr.innerHTML = cells;
+    tbody.appendChild(tr);
+  });
+
+  updateLogStats(filtered);
 }
-function deleteCustomer(id){
-  if(!confirm('確定刪除？'))return;
-  customers=customers.filter(x=>x.id!==id);
-  selectedIds.delete(id);save();renderContacts();renderSelectList();updateChips();toast('🗑 已刪除');
+
+function buildLogSortHeaders() {
+  const tr = document.getElementById('log-thead-main');
+  const sortables = tr.querySelectorAll('th.sortable');
+  const labels = { name: '名稱', company: '公司', email: 'Email', subject: '主旨', months: '月份數' };
+  sortables.forEach(th => {
+    const key = th.dataset.key;
+    const isSorted = logSortKey === key;
+    const icon = isSorted ? (logSortDir === 1 ? '▲' : '▼') : '⇅';
+    th.innerHTML = `${labels[key] || key}<span class="sort-icon">${icon}</span>`;
+    th.classList.toggle('sorted', isSorted);
+  });
 }
+
+function buildLogColSelRow() {
+  const tr = document.getElementById('log-thead-sel');
+  while (tr.children.length > 5) tr.removeChild(tr.lastChild);
+  for (let m = 1; m <= 12; m++) {
+    const th = document.createElement('th');
+    const filtered = getLogFiltered();
+    const eligible = filtered.filter(r => r.months && r.months.includes(m));
+    const allOn = eligible.length > 0 && eligible.every(r => logCheckedSet.has(r.id + '-' + m));
+    th.innerHTML = `<div class="col-sel-btn${allOn ? ' all-on' : ''}" title="${m}月全選" onclick="logToggleColAll(${m})">${allOn ? '✓' : '+'}</div>`;
+    tr.appendChild(th);
+  }
+}
+
+function logToggleDot(id, m) {
+  const key = id + '-' + m;
+  if (logCheckedSet.has(key)) logCheckedSet.delete(key); else logCheckedSet.add(key);
+  renderLog(); updateLogExportBar();
+}
+
+function logToggleRowAll(id) {
+  const row = sendLog.find(r => String(r.id) === String(id)); if (!row) return;
+  const rowMonths = row.months || [];
+  const allOn = rowMonths.every(m => logCheckedSet.has(id + '-' + m));
+  rowMonths.forEach(m => { const key = id + '-' + m; if (allOn) logCheckedSet.delete(key); else logCheckedSet.add(key); });
+  renderLog(); updateLogExportBar();
+}
+
+function logToggleColAll(m) {
+  const filtered = getLogFiltered();
+  const eligible = filtered.filter(r => r.months && r.months.includes(m));
+  const allOn = eligible.every(r => logCheckedSet.has(r.id + '-' + m));
+  eligible.forEach(r => { const key = r.id + '-' + m; if (allOn) logCheckedSet.delete(key); else logCheckedSet.add(key); });
+  renderLog(); updateLogExportBar();
+}
+
+function logClearChecked() { logCheckedSet.clear(); renderLog(); updateLogExportBar(); }
+
+function updateLogExportBar() {
+  const cnt = logCheckedSet.size;
+  document.getElementById('log-checked-label').textContent = cnt ? `已勾選 ${cnt} 筆` : '';
+  const bar = document.getElementById('log-export-bar');
+  bar.style.display = cnt ? 'flex' : 'none';
+  if (cnt) document.getElementById('log-export-count').textContent = cnt;
+}
+
+function exportLogChecked() {
+  if (!logCheckedSet.size) { toast('⚠️ 請先勾選要匯出的月份'); return; }
+  const rows = [['名稱', '公司', 'Email', '月份']];
+  logCheckedSet.forEach(key => {
+    const [id, m] = key.split('-');
+    const row = sendLog.find(r => String(r.id) === String(id));
+    if (row) rows.push([row.name, row.company, row.email, m + '月']);
+  });
+  csvDownload(rows, '再次發送名單_' + new Date().toISOString().slice(0, 10) + '.csv');
+  toast('✅ 已匯出', 'ok');
+}
+
+function exportLogExcel() {
+  if (!sendLog.length) { toast('⚠️ 無紀錄'); return; }
+  csvDownload([['名稱', '公司', 'Email', '主旨', '發送月份', '最後發送時間'], ...sendLog.map(l => [l.name, l.company, l.email, l.subject, (l.months || []).join(','), l.time])], '發送紀錄.csv');
+  toast('✅ 已匯出', 'ok');
+}
+
+function clearLog() {
+  if (!confirm('確定清除所有發送紀錄？')) return;
+  sendLog = []; logCheckedSet.clear();
+  localStorage.setItem('cus_log', '[]');
+  renderLog(); updateLogExportBar(); toast('🗑 已清除紀錄');
+}
+
+function updateLogStats(data) {
+  document.getElementById('ls-total').textContent = data.reduce((a, r) => a + (r.months || []).length, 0);
+  document.getElementById('ls-contacts').textContent = data.length;
+  document.getElementById('ls-months').textContent = new Set(data.flatMap(r => r.months || [])).size;
+  document.getElementById('ls-subjects').textContent = new Set(data.map(r => r.subject)).size;
+  renderDbSubjectChart(data);
+  renderDbMonthChart(data);
+}
+
+function renderDbSubjectChart(data) {
+  const counts = {};
+  data.forEach(r => { counts[r.subject] = (counts[r.subject] || 0) + (r.months || []).length; });
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const max = sorted[0]?.[1] || 1;
+  document.getElementById('db-subject-chart').innerHTML = sorted.map(([lbl, val]) => `
+    <div class="db-bar-row">
+      <div class="db-bar-label">${lbl.length > 9 ? lbl.slice(0, 9) + '…' : lbl}</div>
+      <div class="db-bar-track"><div class="db-bar-fill" style="width:${Math.round(val / max * 100)}%"></div></div>
+      <div class="db-bar-val">${val}</div>
+    </div>`).join('') || '<div style="color:var(--t3);font-size:12px">無資料</div>';
+}
+
+function renderDbMonthChart(data) {
+  const counts = Array(12).fill(0);
+  data.forEach(r => (r.months || []).forEach(m => counts[m - 1]++));
+  const max = Math.max(...counts, 1);
+  document.getElementById('db-month-chart').innerHTML = counts.map((c, i) => `
+    <div class="m-col">
+      <div style="font-size:8px;color:var(--t2);margin-bottom:1px">${c || ''}</div>
+      <div class="m-bar" style="height:${c ? Math.max(5, Math.round(c / max * 56)) : 2}px;background:${logFilterMonth !== 'all' && parseInt(logFilterMonth) === i + 1 ? 'var(--grn)' : 'var(--ac)'}"></div>
+      <div class="m-lbl">${i + 1}</div>
+    </div>`).join('');
+}
+
+// 發送紀錄排序事件
+document.getElementById('log-thead-main').addEventListener('click', ev => {
+  const th = ev.target.closest('th.sortable');
+  if (!th) return;
+  const key = th.dataset.key;
+  if (logSortKey === key) logSortDir *= -1; else { logSortKey = key; logSortDir = 1; }
+  renderLog();
+});
+
+// 月份篩選事件
+document.getElementById('log-month-filter').addEventListener('click', ev => {
+  const btn = ev.target.closest('[data-m]'); if (!btn) return;
+  document.querySelectorAll('#log-month-filter .mf-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  logFilterMonth = btn.dataset.m;
+  renderLog();
+});
 
 // ══ SETTINGS ══
-function loadSettingsUI(){
-  document.getElementById('cfg-apikey').value=cfg.apikey||'';
-  document.getElementById('cfg-crawler-url').value=cfg.crawlerUrl||'https://sales.barry00000000.workers.dev';
-  document.getElementById('cfg-sender-name').value=cfg.senderName||'';
-  document.getElementById('cfg-sender-title').value=cfg.senderTitle||'';
-  document.getElementById('cfg-company').value=cfg.company||'';
-  document.getElementById('cfg-phone').value=cfg.phone||'';
-  document.getElementById('cfg-product-name').value=cfg.productName||'';
-  document.getElementById('cfg-product-desc').value=cfg.productDesc||'';
-  document.getElementById('cfg-email-style').value=cfg.emailStyle||'professional';
+function loadSettingsUI() {
+  document.getElementById('cfg-apikey').value = cfg.apikey || '';
+  document.getElementById('cfg-crawler-url').value = cfg.crawlerUrl || '';
+  document.getElementById('cfg-sender-name').value = cfg.senderName || '';
+  document.getElementById('cfg-sender-title').value = cfg.senderTitle || '';
+  document.getElementById('cfg-company').value = cfg.company || '';
+  document.getElementById('cfg-phone').value = cfg.phone || '';
+  document.getElementById('cfg-product-name').value = cfg.productName || '';
+  document.getElementById('cfg-product-desc').value = cfg.productDesc || '';
+  document.getElementById('cfg-email-style').value = cfg.emailStyle || 'professional';
 }
-function saveSettings(){
-  cfg.apikey=document.getElementById('cfg-apikey').value.trim();
-  cfg.crawlerUrl=document.getElementById('cfg-crawler-url').value.trim()||'https://sales.barry00000000.workers.dev';
-  cfg.senderName=document.getElementById('cfg-sender-name').value.trim();
-  cfg.senderTitle=document.getElementById('cfg-sender-title').value.trim();
-  cfg.company=document.getElementById('cfg-company').value.trim();
-  cfg.phone=document.getElementById('cfg-phone').value.trim();
-  cfg.productName=document.getElementById('cfg-product-name').value.trim();
-  cfg.productDesc=document.getElementById('cfg-product-desc').value.trim();
-  cfg.emailStyle=document.getElementById('cfg-email-style').value;
-  save();toast('✅ 設定已儲存','ok');
-}
-
-// ══ BCC 產生器 ══
-let _bccResult='';
-function bccProcess(){
-  const raw=document.getElementById('bcc-inp').value.trim();
-  if(!raw)return;
-  const tokens=raw.split(/[\n,;　 ]+/).map(s=>s.trim()).filter(Boolean);
-  const re=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const valid=[],invalid=[],seen=new Set();
-  tokens.forEach(t=>{
-    if(re.test(t)){const l=t.toLowerCase();if(!seen.has(l)){seen.add(l);valid.push(t);}}
-    else if(t.length)invalid.push(t);
-  });
-  const wrap=document.getElementById('bcc-result-wrap');
-  if(!valid.length){toast('沒有找到有效的 Email，請確認格式','err');wrap.style.display='none';return;}
-  _bccResult=valid.join(', ');
-  wrap.style.display='block';
-  document.getElementById('bcc-result-box').textContent=_bccResult;
-  const dupes=tokens.filter(t=>re.test(t)).length-valid.length;
-  document.getElementById('bcc-stats').innerHTML=
-    `<span class="bcc-stat-chip">✅ 有效 <b>${valid.length}</b> 筆</span>`+
-    (dupes>0?`<span class="bcc-stat-chip" style="color:var(--ylw);border-color:var(--ylw)">⚠️ 去除重複 <b>${dupes}</b> 筆</span>`:'')+
-    (invalid.length?`<span class="bcc-stat-chip" style="color:var(--red);border-color:var(--red)">❌ 無效 <b>${invalid.length}</b> 筆</span>`:'');
-  document.getElementById('bcc-invalid-wrap').innerHTML=invalid.length
-    ?'<div style="font-size:11px;color:var(--t3);margin-bottom:6px">無效格式（已略過）</div>'+invalid.map(v=>`<span class="bcc-invalid-tag">${e(v)}</span>`).join(''):'';
-  const btn=document.getElementById('bcc-copy-btn');
-  btn.textContent='複製 → 貼到 Outlook BCC';
-}
-function bccCopy(){
-  if(!_bccResult)return;
-  navigator.clipboard.writeText(_bccResult).then(()=>{
-    const btn=document.getElementById('bcc-copy-btn');
-    btn.textContent='✓ 已複製！開啟 Outlook 貼到 BCC 欄位';
-    toast('✅ 已複製 '+_bccResult.split(',').length+' 個 Email！','ok');
-    setTimeout(()=>{btn.textContent='複製 → 貼到 Outlook BCC';},3000);
-  });
-}
-function bccClear(){
-  document.getElementById('bcc-inp').value='';
-  document.getElementById('bcc-result-wrap').style.display='none';
-  _bccResult='';
+function saveSettings() {
+  cfg = {
+    apikey: document.getElementById('cfg-apikey').value.trim(),
+    crawlerUrl: document.getElementById('cfg-crawler-url').value.trim(),
+    senderName: document.getElementById('cfg-sender-name').value.trim(),
+    senderTitle: document.getElementById('cfg-sender-title').value.trim(),
+    company: document.getElementById('cfg-company').value.trim(),
+    phone: document.getElementById('cfg-phone').value.trim(),
+    productName: document.getElementById('cfg-product-name').value.trim(),
+    productDesc: document.getElementById('cfg-product-desc').value.trim(),
+    emailStyle: document.getElementById('cfg-email-style').value,
+  };
+  localStorage.setItem('cus_cfg', JSON.stringify(cfg));
+  toast('✅ 設定已儲存', 'ok');
 }
 
-// ══ UTILS ══
-function updateChips(){
-  const total=customers.length,sent=customers.filter(c=>c.status==='sent').length;
-  document.getElementById('chip-total').textContent=total;
-  document.getElementById('chip-sent').textContent=sent;
-  document.getElementById('st-total').textContent=total;
-  document.getElementById('st-sent').textContent=sent;
-  document.getElementById('st-pending').textContent=total-sent;
-}
-function save(){
-  localStorage.setItem('cus_list',JSON.stringify(customers));
-  localStorage.setItem('cus_log',JSON.stringify(sendLog));
-  localStorage.setItem('cus_cfg',JSON.stringify(cfg));
-}
-function e(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function toast(msg,type=''){
-  const t=document.createElement('div');t.className='toast'+(type?' '+type:'');
-  t.textContent=msg;document.getElementById('toasts').appendChild(t);
-  setTimeout(()=>t.remove(),3500);
-}
 init();
 </script>
 </body>
