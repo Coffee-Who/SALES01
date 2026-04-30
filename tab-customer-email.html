@@ -260,6 +260,8 @@ body.dm .stg-row:hover{background:rgba(255,255,255,.02)}
 .ocr-field-lbl{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
 .ocr-field-inp{padding:6px 10px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg1);color:var(--t1);font-size:12px;outline:none;font-family:inherit;transition:.15s;width:100%}
 .ocr-field-inp:focus{border-color:var(--ac);box-shadow:0 0 0 2px rgba(37,99,235,.12)}
+.ocr-field-sel{padding:5px 8px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg1);color:var(--t1);font-size:11px;outline:none;width:100%;font-family:inherit;transition:.15s}
+.ocr-field-sel:focus{border-color:var(--ac)}
 .excel-preview-tbl{width:100%;border-collapse:collapse;font-size:11px}
 .excel-preview-tbl th{padding:6px 9px;background:var(--bg2);border-bottom:1px solid var(--bd);font-weight:700;color:var(--t2);text-align:left;white-space:nowrap}
 .excel-preview-tbl td{padding:6px 9px;border-bottom:1px solid var(--bd);color:var(--t1);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -1566,46 +1568,110 @@ function clearCompose() { document.getElementById('ef-to').value = ''; document.
 // ══ SEND ══
 function sendOutlook() {
   const to = document.getElementById('ef-to').value.trim();
-  const bcc = document.getElementById('ef-bcc').value.trim();
   const subject = document.getElementById('ef-subject').value.trim();
   const bodyHtml = document.getElementById('editor-body').innerHTML;
   const bodyText = document.getElementById('editor-body').innerText;
   if (!to) { toast('⚠️ 請填寫收件人'); return; }
   if (!subject) { toast('⚠️ 請填寫主旨'); return; }
+  if (!bodyText.trim()) { toast('⚠️ 請填寫內文'); return; }
 
-  // ── 複製 HTML 內容到剪貼簿（供 Outlook 直接貼上）──
-  try {
+  // ── Step 1：將 HTML 內容複製到剪貼簿 ──
+  const copyHtml = () => {
     if (navigator.clipboard && window.ClipboardItem) {
-      const htmlBlob = new Blob([bodyHtml], { type: 'text/html' });
-      const textBlob = new Blob([bodyText], { type: 'text/plain' });
-      navigator.clipboard.write([new ClipboardItem({ 'text/html': htmlBlob, 'text/plain': textBlob })]);
+      return navigator.clipboard.write([
+        new ClipboardItem({
+          'text/html': new Blob([bodyHtml], { type: 'text/html' }),
+          'text/plain': new Blob([bodyText], { type: 'text/plain' })
+        })
+      ]);
     } else {
-      // 舊版備援
-      const ta = document.createElement('textarea'); ta.value = bodyHtml;
-      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      // 舊版 fallback：用隱藏 div 選取複製
+      const div = document.createElement('div');
+      div.innerHTML = bodyHtml;
+      div.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+      document.body.appendChild(div);
+      const range = document.createRange();
+      range.selectNodeContents(div);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      document.body.removeChild(div);
+      return Promise.resolve();
     }
-  } catch(err) { console.warn('剪貼簿複製失敗:', err); }
+  };
 
-  // 記錄發送
-  const now = new Date();
-  const month = now.getMonth() + 1;
-  const timeStr = now.toLocaleString('zh-TW');
-  const selList = customers.filter(c => selectedIds.has(c.id) && c.email);
-  const targets = selList.length ? selList : [{ name: to, company: '', email: to }];
-  targets.forEach(c => {
-    addToLog(c, subject, timeStr, month);
-    const cust = customers.find(x => x.id === c.id);
-    if (cust) cust.status = 'sent';
+  copyHtml().then(() => {
+    // ── Step 2：記錄發送 ──
+    const now = new Date();
+    const month = now.getMonth() + 1;
+    const timeStr = now.toLocaleString('zh-TW');
+    const selList = customers.filter(c => selectedIds.has(c.id) && c.email);
+    const targets = selList.length ? selList : [{ name: to, company: '', email: to }];
+    targets.forEach(c => {
+      addToLog(c, subject, timeStr, month);
+      const cust = customers.find(x => x.id === c.id);
+      if (cust) cust.status = 'sent';
+    });
+    save(); updateChips(); renderContacts();
+
+    // ── Step 3：開啟空白 Outlook（不帶任何內容）──
+    // 只開 mailto: 讓 Outlook 開新郵件視窗，使用者再自行貼上
+    window.location.href = 'mailto:';
+
+    // 顯示操作提示 Modal
+    showSendGuideModal(to, subject);
+  }).catch(err => {
+    console.warn('剪貼簿失敗:', err);
+    toast('⚠️ 剪貼簿複製失敗，請手動複製內文', 'err');
   });
-  save(); updateChips(); renderContacts();
+}
 
-  // 開啟 Outlook（mailto）
-  let mailtoUrl = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}`;
-  if (bcc) mailtoUrl += `&bcc=${encodeURIComponent(bcc)}`;
-  mailtoUrl += `&body=${encodeURIComponent('【請貼上剪貼簿中的 HTML 內容】\n\n' + bodyText)}`;
-  window.location.href = mailtoUrl;
+function showSendGuideModal(to, subject) {
+  // 動態建立提示 modal（若已存在則移除重建）
+  let m = document.getElementById('send-guide-modal');
+  if (m) m.remove();
+  m = document.createElement('div');
+  m.id = 'send-guide-modal';
+  m.className = 'modal-ov open';
+  m.innerHTML = `<div class="modal" style="max-width:460px">
+    <div class="modal-head"><h3>✅ HTML 已複製到剪貼簿</h3><button class="modal-x" onclick="document.getElementById('send-guide-modal').remove()">✕</button></div>
+    <div class="modal-body" style="gap:14px">
+      <div style="background:rgba(26,127,55,.07);border:1px solid rgba(26,127,55,.25);border-radius:9px;padding:13px 15px">
+        <div style="font-size:13px;font-weight:700;color:var(--grn);margin-bottom:10px">📋 操作步驟</div>
+        <div style="font-size:12px;color:var(--t1);line-height:2">
+          <b>1.</b> Outlook 新郵件視窗已開啟（或稍後手動開啟）<br>
+          <b>2.</b> 在 <b>收件人（To）</b>欄位填入：<code style="background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:11px">${e(to)}</code><br>
+          <b>3.</b> 在 <b>主旨</b>欄位填入：<code style="background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:11px">${e(subject)}</code><br>
+          <b>4.</b> 點擊 <b>內文區域</b>，按 <kbd style="display:inline-block;padding:1px 7px;border:1px solid var(--bd2);border-radius:4px;background:var(--bg2);font-size:12px">Ctrl</kbd> + <kbd style="display:inline-block;padding:1px 7px;border:1px solid var(--bd2);border-radius:4px;background:var(--bg2);font-size:12px">V</kbd> 貼上 HTML 內容<br>
+          <b>5.</b> 確認格式無誤後送出
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--t2);padding:8px 10px;background:var(--bg2);border-radius:7px;border:1px solid var(--bd)">
+        💡 若 Outlook 沒有自動開啟，請手動開啟 Outlook → 點「新郵件」→ 依上方步驟操作
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="recopyHtml()">🔄 重新複製 HTML</button>
+      <button class="btn p" onclick="document.getElementById('send-guide-modal').remove()">✅ 已了解</button>
+    </div>
+  </div>`;
+  document.body.appendChild(m);
+}
 
-  toast('✅ HTML 已複製到剪貼簿！Outlook 開啟後，在內文區按 Ctrl+V 貼上', 'ok');
+// 重新複製 HTML（供使用者再次複製）
+function recopyHtml() {
+  const bodyHtml = document.getElementById('editor-body').innerHTML;
+  const bodyText = document.getElementById('editor-body').innerText;
+  if (!bodyHtml) { toast('⚠️ 內文為空'); return; }
+  if (navigator.clipboard && window.ClipboardItem) {
+    navigator.clipboard.write([
+      new ClipboardItem({
+        'text/html': new Blob([bodyHtml], { type: 'text/html' }),
+        'text/plain': new Blob([bodyText], { type: 'text/plain' })
+      })
+    ]).then(() => toast('✅ HTML 已重新複製到剪貼簿！', 'ok'));
+  }
 }
 
 function addToLog(c, subject, timeStr, month) {
@@ -2232,15 +2298,15 @@ async function processImgFile(file) {
   const apiKey = cfg.apikey || '';
   if (!apiKey) { toast('⚠️ 請先在「⚙️ 設定」填入 Groq API Key'); return; }
 
-  // show preview
   const reader = new FileReader();
   reader.onload = async (ev) => {
-    const base64 = ev.target.result; // data:image/...;base64,...
+    const base64 = ev.target.result;
     const b64data = base64.split(',')[1];
     const mimeType = file.type || 'image/jpeg';
 
+    // 顯示預覽區
     const thumb = document.getElementById('img-preview-thumb');
-    if (thumb) { thumb.src = base64; }
+    if (thumb) thumb.src = base64;
     const zone = document.getElementById('img-preview-zone');
     if (zone) zone.style.display = 'block';
     const ocrLoad = document.getElementById('ocr-loading');
@@ -2252,7 +2318,8 @@ async function processImgFile(file) {
     ocrParsed = {};
 
     try {
-      const prompt = `請從這張圖片中辨識所有聯絡資料（名片、截圖或文件皆可）。\n只輸出純 JSON，格式如下，找不到的欄位填空字串：\n{"company":"公司名稱","name":"聯絡人姓名","email":"email@example.com","phone":"電話號碼","title":"職稱","address":"地址"}`;
+      const prompt = `請從這張圖片中辨識所有聯絡資料（名片、截圖、清單或任何文件皆可）。\n辨識出的資料可能有多種欄位名稱，請盡量辨識所有可見的文字欄位和對應的值。\n只輸出純 JSON，格式如下（找不到的欄位填空字串，多餘的欄位可自行加入）：\n{"company":"公司名稱","name":"聯絡人姓名","email":"email@example.com","phone":"電話號碼","title":"職稱","address":"地址","website":"網站","fax":"傳真","extra":"其他資訊"}`;
+
       const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
@@ -2265,58 +2332,136 @@ async function processImgFile(file) {
               { type: 'text', text: prompt }
             ]
           }],
-          temperature: 0.1, max_tokens: 512
+          temperature: 0.1, max_tokens: 800
         })
       });
+
       const data = await res.json();
       if (data.error) throw new Error(data.error.message);
       let raw = data.choices?.[0]?.message?.content || '{}';
-      raw = raw.replace(/```json|```/g,'').trim();
-      const start = raw.indexOf('{'); if(start > 0) raw = raw.slice(start);
+      raw = raw.replace(/```json|```/g, '').trim();
+      const start = raw.indexOf('{'); if (start > 0) raw = raw.slice(start);
       ocrParsed = JSON.parse(raw);
     } catch(err) {
-      // fallback: show empty editable fields
-      ocrParsed = { company:'', name:'', email:'', phone:'', title:'', address:'' };
-      toast('⚠️ AI 辨識失敗，請手動填寫：' + err.message);
+      ocrParsed = {};
+      toast('⚠️ AI 辨識失敗：' + err.message + '，可手動填入');
     } finally {
       if (ocrLoad) ocrLoad.style.display = 'none';
     }
 
-    // Render editable result fields
-    const fieldDefs = [
-      { key:'company', lbl:'公司名稱' }, { key:'name', lbl:'聯絡人' },
-      { key:'title',   lbl:'職稱'   }, { key:'email', lbl:'Email' },
-      { key:'phone',   lbl:'電話'   }, { key:'address', lbl:'地址' },
-    ];
+    // ── 渲染：左邊辨識值（可編輯）+ 右邊對應欄位下拉 ──
+    const destFields = ['（不匯入）', '公司名稱', '聯絡人', 'Email', '電話', '職稱', '地址', '備註'];
+    const autoMap = {
+      company:'公司名稱', name:'聯絡人', email:'Email', phone:'電話',
+      title:'職稱', address:'地址', website:'備註', fax:'（不匯入）', extra:'備註'
+    };
+
+    // 取出所有有值的欄位（包含 AI 辨識到的額外欄位）
+    const allKeys = Object.keys(ocrParsed).filter(k => String(ocrParsed[k]||'').trim());
+    // 若全空，顯示預設欄位讓使用者手動填
+    const displayKeys = allKeys.length > 0 ? allKeys : ['company','name','email','phone','title','address'];
+
+    const keyLabels = {
+      company:'公司名稱', name:'聯絡人', email:'Email', phone:'電話',
+      title:'職稱', address:'地址', website:'網站', fax:'傳真', extra:'其他資訊'
+    };
+
     if (resFields) {
-      resFields.innerHTML = fieldDefs.map(f => `
-        <div class="ocr-field-row">
-          <div class="ocr-field-lbl">${e(f.lbl)}</div>
-          <input class="ocr-field-inp" id="ocrf-${f.key}" value="${e(ocrParsed[f.key]||'')}" placeholder="${e(f.lbl)}…"/>
-        </div>`).join('');
+      resFields.innerHTML = `
+        <div style="display:grid;grid-template-columns:auto 1fr auto 1fr;gap:7px 10px;align-items:center;margin-bottom:4px">
+          <div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em">辨識欄位</div>
+          <div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em">辨識內容（可修改）</div>
+          <div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em">對應到</div>
+          <div></div>
+        </div>
+        ${displayKeys.map(k => `
+          <div style="display:grid;grid-template-columns:auto 1fr auto 1fr;gap:7px 10px;align-items:center">
+            <div style="font-size:11px;color:var(--t2);white-space:nowrap;padding:0 4px">${e(keyLabels[k]||k)}</div>
+            <input class="ocr-field-inp" id="ocrf-val-${k}" value="${e(ocrParsed[k]||'')}" placeholder="（手動填入）"/>
+            <div style="font-size:12px;color:var(--ac)">→</div>
+            <select class="ocr-field-sel" id="ocrf-dest-${k}">
+              ${destFields.map(d => `<option value="${e(d)}" ${(autoMap[k]||'（不匯入）')===d?'selected':''}>${e(d)}</option>`).join('')}
+            </select>
+          </div>`).join('')}
+        <div style="margin-top:6px;display:flex;gap:5px">
+          <button class="btn sm" onclick="ocrAddRow()">＋ 手動新增欄位</button>
+        </div>`;
     }
     if (confirmBtn) confirmBtn.style.display = 'inline-flex';
   };
   reader.readAsDataURL(file);
 }
 
+// 手動新增 OCR 欄位列
+let ocrExtraCount = 0;
+function ocrAddRow() {
+  ocrExtraCount++;
+  const k = `extra_${ocrExtraCount}`;
+  const destFields = ['（不匯入）','公司名稱','聯絡人','Email','電話','職稱','地址','備註'];
+  const container = document.getElementById('ocr-result-fields');
+  if (!container) return;
+  // 找到最後的 add 按鈕前插入
+  const addBtn = container.querySelector('div:last-child');
+  const row = document.createElement('div');
+  row.style.cssText = 'display:grid;grid-template-columns:auto 1fr auto 1fr;gap:7px 10px;align-items:center';
+  row.innerHTML = `
+    <div style="font-size:11px;color:var(--t2);padding:0 4px">自訂</div>
+    <input class="ocr-field-inp" id="ocrf-val-${k}" placeholder="輸入值…"/>
+    <div style="font-size:12px;color:var(--ac)">→</div>
+    <select class="ocr-field-sel" id="ocrf-dest-${k}">
+      ${destFields.map(d=>`<option value="${e(d)}">${e(d)}</option>`).join('')}
+    </select>`;
+  container.insertBefore(row, addBtn);
+}
+
 function confirmOcrImport() {
-  const company = (document.getElementById('ocrf-company')||{}).value?.trim() || '';
-  const name    = (document.getElementById('ocrf-name')||{}).value?.trim() || '';
-  const email   = (document.getElementById('ocrf-email')||{}).value?.trim() || '';
-  const phone   = (document.getElementById('ocrf-phone')||{}).value?.trim() || '';
-  if (!company && !email) { toast('⚠️ 至少需要公司名稱或 Email'); return; }
-  const entry = { id: Date.now() + Math.random(), company, name, email, phone, status: 'unsent', _inCustList: false, createdAt: new Date().toLocaleDateString('zh-TW') };
+  // 收集所有欄位
+  const result = { company:'', name:'', email:'', phone:'', title:'', address:'', note:'' };
+
+  // 找所有 ocrf-val-* 和對應的 ocrf-dest-*
+  const valInputs = document.querySelectorAll('[id^="ocrf-val-"]');
+  valInputs.forEach(inp => {
+    const k = inp.id.replace('ocrf-val-', '');
+    const val = (inp.value || '').trim();
+    if (!val) return;
+    const destSel = document.getElementById('ocrf-dest-' + k);
+    const dest = destSel ? destSel.value : '（不匯入）';
+    if (dest === '公司名稱') result.company = result.company || val;
+    else if (dest === '聯絡人') result.name = result.name || val;
+    else if (dest === 'Email') result.email = result.email || val;
+    else if (dest === '電話') result.phone = result.phone || val;
+    else if (dest === '職稱') result.title = result.title || val;
+    else if (dest === '地址') result.address = result.address || val;
+    else if (dest === '備註') result.note += (result.note ? '；' : '') + val;
+  });
+
+  if (!result.company && !result.email) {
+    toast('⚠️ 至少需要「公司名稱」或「Email」欄位'); return;
+  }
+
+  const entry = {
+    id: Date.now() + Math.random(),
+    company: result.company,
+    name: result.name,
+    email: result.email,
+    phone: result.phone,
+    status: 'unsent',
+    _inCustList: false,
+    createdAt: new Date().toLocaleDateString('zh-TW')
+  };
+
   customers.unshift(entry);
   save(); renderContacts(); updateChips();
-  showCrawlResult([entry], '圖片辨識匯入');
-  toast(`✅ 已辨識並加入暫存名單：${company || email}`, 'ok');
+  showCrawlResult([entry], `圖片辨識匯入（${result.company || result.email}）`);
+  toast(`✅ 已辨識並加入暫存名單：${result.company || result.email}`, 'ok');
   cancelOcrImport();
 }
+
 function cancelOcrImport() {
-  const zone = document.getElementById('img-preview-zone'); if(zone) zone.style.display = 'none';
-  const fi = document.getElementById('img-file-inp'); if(fi) fi.value = '';
+  const zone = document.getElementById('img-preview-zone'); if (zone) zone.style.display = 'none';
+  const fi = document.getElementById('img-file-inp'); if (fi) fi.value = '';
   ocrParsed = {};
+  ocrExtraCount = 0;
 }
 
 // ══ BCC 產生器 ══
