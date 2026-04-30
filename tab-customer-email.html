@@ -5,8 +5,10 @@
 <title>客戶開發 · 實威國際</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,700&display=swap" rel="stylesheet">
 <style>
-:root{--bg0:#000;--bg1:#0d1117;--bg2:#161b22;--bg3:#21262d;--bd:#21262d;--bd2:#30363d;--t1:#e6edf3;--t2:#8b949e;--t3:#484f58;--ac:#2563EB;--ac2:#1d4ed8;--abg:#0d1433;--red:#f85149;--grn:#3fb950;--ylw:#d29922;--sh:0 2px 12px rgba(0,0,0,.4)}
-body.lm{--bg0:#f4f5f8;--bg1:#fff;--bg2:#f6f8fa;--bg3:#e1e4e8;--bd:#d0d7de;--bd2:#b1bac4;--t1:#1f2328;--t2:#656d76;--t3:#8c959f;--abg:#EFF4FF;--sh:0 2px 12px rgba(0,0,0,.08)}
+/* ── 預設：亮色模式 ── */
+:root{--bg0:#f0f2f5;--bg1:#ffffff;--bg2:#f6f8fa;--bg3:#eaedf0;--bd:#d0d7de;--bd2:#b1bac4;--t1:#1f2328;--t2:#57606a;--t3:#8c959f;--ac:#2563EB;--ac2:#1d4ed8;--abg:#EFF4FF;--red:#cf222e;--grn:#1a7f37;--ylw:#9a6700;--sh:0 2px 12px rgba(0,0,0,.08)}
+/* 暗色模式 */
+body.dm{--bg0:#000;--bg1:#0d1117;--bg2:#161b22;--bg3:#21262d;--bd:#21262d;--bd2:#30363d;--t1:#e6edf3;--t2:#8b949e;--t3:#484f58;--abg:#0d1433;--red:#f85149;--grn:#3fb950;--ylw:#d29922;--sh:0 2px 12px rgba(0,0,0,.4)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:var(--bg0);min-height:100vh}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
@@ -83,10 +85,11 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .cust-card:hover{border-color:var(--bd2);box-shadow:var(--sh)}
 .cust-card.checked{border-color:var(--ac);box-shadow:0 0 0 2px rgba(37,99,235,.2)}
 .cust-card-head{padding:14px 16px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.cust-name{font-size:14px;font-weight:700}.cust-company{font-size:11px;color:var(--t2);margin-top:2px}
+.cust-name{font-size:11px;color:var(--t2);margin-top:2px}
+.cust-company{font-size:14px;font-weight:800;color:var(--t1)}
 .status-badge{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap}
 .status-badge.unsent{background:rgba(139,148,158,.15);color:var(--t2);border:1px solid var(--bd2)}
-.status-badge.sent{background:rgba(63,185,80,.15);color:var(--grn);border:1px solid rgba(63,185,80,.3)}
+.status-badge.sent{background:rgba(26,127,55,.12);color:var(--grn);border:1px solid rgba(26,127,55,.25)}
 .cust-fields{padding:0 16px 10px;display:flex;flex-direction:column;gap:5px}
 .cust-field{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t2)}
 .cust-field span:first-child{width:14px;text-align:center;flex-shrink:0}
@@ -99,6 +102,47 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .empty-state .ei{font-size:48px;margin-bottom:12px}
 .empty-state .et{font-size:15px;font-weight:600;color:var(--t2);margin-bottom:4px}
 .empty-state .es{font-size:13px}
+
+/* ── 客戶名單頁籤 ── */
+.custlist-layout{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:start}
+@media(max-width:700px){.custlist-layout{grid-template-columns:1fr}}
+.folder-panel{background:var(--bg1);border:1px solid var(--bd);border-radius:12px;overflow:hidden;position:sticky;top:110px}
+.fp-head{padding:11px 13px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:6px}
+.fp-head h3{font-size:12px;font-weight:700}
+.fp-add-form{padding:10px 13px;border-bottom:1px solid var(--bd);background:var(--bg2)}
+.fp-lbl{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.fp-inp{width:100%;padding:6px 9px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg1);color:var(--t1);font-size:12px;outline:none;font-family:inherit;margin-bottom:0;transition:.15s}
+.fp-inp:focus{border-color:var(--ac);box-shadow:0 0 0 2px rgba(37,99,235,.12)}
+.ftree{padding:4px 0}
+.fi{display:flex;align-items:center;padding:6px 12px;cursor:pointer;border-left:3px solid transparent;transition:.12s;gap:6px;user-select:none;position:relative}
+.fi:hover{background:var(--bg2)}.fi.on{background:var(--abg);border-left-color:var(--ac)}
+.fi.sub{padding-left:24px}.fi.sub2{padding-left:38px}
+.fi-icon{font-size:12px;flex-shrink:0}
+.fi-name{font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fi.on .fi-name{color:var(--ac);font-weight:600}
+.fi-cnt{font-size:10px;padding:1px 6px;border-radius:8px;background:var(--bg3);color:var(--t3);flex-shrink:0}
+.fi.on .fi-cnt{background:rgba(37,99,235,.12);color:var(--ac)}
+.fi-acts{display:none;gap:2px;flex-shrink:0}
+.fi:hover .fi-acts{display:flex}
+.fa-btn{width:20px;height:20px;border-radius:4px;border:1px solid var(--bd2);background:var(--bg3);color:var(--t2);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;transition:.1s;padding:0;font-family:inherit}
+.fa-btn:hover{background:var(--bd2);color:var(--t1)}
+.fa-btn.del:hover{background:rgba(207,34,46,.1);color:var(--red);border-color:rgba(207,34,46,.3)}
+.fi-rename-inp{font-size:12px;padding:2px 6px;border-radius:4px;border:1px solid var(--ac);background:var(--bg1);color:var(--t1);outline:none;width:100%;font-family:inherit}
+/* simple list */
+.simple-list{border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+.sl-grid{display:grid;grid-template-columns:28px 1.4fr 1fr 1.4fr 1fr 90px 78px;align-items:center}
+.sl-head .sl-grid{background:var(--bg2);border-bottom:1px solid var(--bd)}
+.sl-th{padding:8px 10px;font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.sl-row-wrap{border-bottom:1px solid var(--bd);transition:.1s}
+.sl-row-wrap:last-child{border-bottom:none}
+.sl-row-wrap:hover{background:rgba(0,0,0,.025)}
+body.dm .sl-row-wrap:hover{background:rgba(255,255,255,.025)}
+.sl-row-wrap.ck{background:rgba(37,99,235,.05)}
+.sl-td{padding:9px 10px;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sl-td.co{font-weight:700;color:var(--t1)}.sl-td.em{color:var(--t2);font-size:11px}
+.sl-td.acts{display:flex;gap:3px;justify-content:flex-end;padding-right:8px}
+/* folder move modal */
+#modal-cl-move .mf-input{background:var(--bg1)}
 
 /* LIST VIEW */
 .list-view-wrap{border:1px solid var(--bd);border-radius:12px;overflow:hidden}
@@ -256,7 +300,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 .modal-body{padding:20px;display:flex;flex-direction:column;gap:12px;overflow-y:auto}
 .mf-row{display:flex;flex-direction:column;gap:4px}
 .mf-label{font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
-.mf-input{padding:9px 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:13px;font-family:inherit;outline:none}
+.mf-input{padding:9px 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg1);color:var(--t1);font-size:13px;font-family:inherit;outline:none;width:100%}
 .mf-input:focus{border-color:var(--ac)}
 .modal-foot{padding:14px 20px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
 </style>
@@ -266,7 +310,7 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 
 <div id="topbar">
   <div class="logo"><div class="logo-box">📧</div>實威國際<div class="logo-sep"></div><span class="logo-sub">客戶開發系統</span></div>
-  <div class="tr"><button class="tbtn" onclick="toggleTheme()" id="themeBtn">🌙 暗色</button><span class="vbg">v4.0</span></div>
+  <div class="tr"><button class="tbtn" onclick="toggleTheme()" id="themeBtn">🌙 暗色模式</button><span class="vbg">v5.0</span></div>
 </div>
 
 <div id="navtab">
@@ -288,9 +332,10 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
 
 <div class="sp">
   <div class="ctabs">
-    <button class="ctab on" onclick="swCP('contacts',this)">👥 名單管理</button>
+    <button class="ctab on" onclick="swCP('contacts',this)">📋 名單管理</button>
+    <button class="ctab" onclick="swCP('custlist',this)">👥 客戶名單 <span id="ctab-cust-badge" style="font-size:10px;padding:1px 6px;border-radius:8px;background:rgba(37,99,235,.15);color:var(--ac);font-weight:700;margin-left:2px">0</span></button>
     <button class="ctab" onclick="swCP('send',this)">✉️ Email 發送</button>
-    <button class="ctab" onclick="swCP('log',this)">📋 發送紀錄</button>
+    <button class="ctab" onclick="swCP('log',this)">📊 發送紀錄</button>
     <button class="ctab" onclick="swCP('settings',this)">⚙️ 設定</button>
   </div>
 
@@ -362,7 +407,55 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
     <div class="pagination" id="contact-pagination"></div>
   </div>
 
-  <!-- ══ P2: Email 發送 ══ -->
+  <!-- ══ P2: 客戶名單 ══ -->
+  <div class="cpanel" id="cp-custlist">
+    <div class="custlist-layout">
+      <!-- 左側：資料夾樹 -->
+      <div class="folder-panel" id="folder-panel">
+        <div class="fp-head">
+          <h3>📂 資料夾管理</h3>
+          <button class="btn sm p" onclick="toggleFolderForm()">＋ 新增</button>
+        </div>
+        <div class="fp-add-form" id="fp-add-form" style="display:none">
+          <div style="margin-bottom:7px">
+            <div class="fp-lbl">資料夾名稱</div>
+            <input class="fp-inp" id="nf-name" placeholder="例如：北部客戶"/>
+          </div>
+          <div style="margin-bottom:8px">
+            <div class="fp-lbl">上層資料夾</div>
+            <select class="fp-inp" id="nf-parent"></select>
+          </div>
+          <div style="display:flex;gap:5px">
+            <button class="btn sm p" style="flex:1;justify-content:center" onclick="confirmAddFolder()">新增</button>
+            <button class="btn sm" style="flex:1;justify-content:center" onclick="toggleFolderForm()">取消</button>
+          </div>
+        </div>
+        <div class="ftree" id="ftree"></div>
+      </div>
+      <!-- 右側：客戶 -->
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:7px" id="cl-title">📋 全部客戶</div>
+        <div class="list-toolbar">
+          <button class="btn sm" onclick="clSelAll()">☑ 全選</button>
+          <button class="btn sm" onclick="clSelNone()">☐ 取消</button>
+          <span style="font-size:12px;color:var(--t2)" id="cl-sel-lbl"></span>
+          <div class="list-toolbar-r">
+            <div class="view-toggle">
+              <button class="vt-btn on" id="cl-vt-simple" onclick="setClView('simple')" title="簡易列表">☰</button>
+              <button class="vt-btn" id="cl-vt-card" onclick="setClView('card')" title="卡片">⊞</button>
+            </div>
+            <button class="btn sm" style="background:rgba(167,139,250,.12);color:#a78bfa;border-color:rgba(167,139,250,.3)" onclick="openClMove()">📁 歸檔</button>
+            <button class="btn sm g" onclick="exportExcel()">📊 匯出</button>
+            <button class="btn sm d" onclick="clDeleteSel()">🗑 刪除</button>
+          </div>
+        </div>
+        <div id="cl-view-area"></div>
+        <div class="pagination" id="cl-pagination"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ P3: Email 發送 ══ -->
   <div class="cpanel" id="cp-send">
     <div class="email-layout">
       <div class="email-left">
@@ -573,8 +666,8 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
   <div class="modal">
     <div class="modal-head"><h3 id="modal-title">＋ 新增客戶</h3><button class="modal-x" onclick="closeModal('modal-add')">✕</button></div>
     <div class="modal-body">
-      <div class="mf-row"><div class="mf-label">名稱 *</div><input class="mf-input" id="m-name" placeholder="聯絡人或公司名稱"/></div>
-      <div class="mf-row"><div class="mf-label">公司</div><input class="mf-input" id="m-company" placeholder="公司名稱"/></div>
+      <div class="mf-row"><div class="mf-label">公司名稱 *</div><input class="mf-input" id="m-company" placeholder="公司名稱"/></div>
+      <div class="mf-row"><div class="mf-label">聯絡人</div><input class="mf-input" id="m-name" placeholder="聯絡人姓名"/></div>
       <div class="mf-row"><div class="mf-label">Email *</div><input class="mf-input" id="m-email" type="email" placeholder="example@company.com"/></div>
       <div class="mf-row"><div class="mf-label">電話</div><input class="mf-input" id="m-phone" placeholder="02-1234-5678"/></div>
       <div class="mf-row"><div class="mf-label">來源網址</div><input class="mf-input" id="m-url" placeholder="https://..."/></div>
@@ -582,6 +675,37 @@ body{font-family:'DM Sans','Noto Sans TC',sans-serif;color:var(--t1);background:
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('modal-add')">取消</button>
       <button class="btn p" id="modal-confirm-btn" onclick="confirmAddCustomer()">確認新增</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 客戶名單 - 歸檔資料夾 -->
+<div class="modal-ov" id="modal-cl-move">
+  <div class="modal">
+    <div class="modal-head"><h3>📁 歸檔到資料夾</h3><button class="modal-x" onclick="closeModal('modal-cl-move')">✕</button></div>
+    <div class="modal-body">
+      <div class="mf-row"><div class="mf-label">選擇目標資料夾</div>
+        <select class="mf-input" id="cl-move-sel" style="width:100%"></select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modal-cl-move')">取消</button>
+      <button class="btn p" onclick="doClMove()">✅ 確認歸檔</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: 刪除資料夾確認 -->
+<div class="modal-ov" id="modal-del-folder">
+  <div class="modal">
+    <div class="modal-head"><h3>🗑 刪除資料夾</h3><button class="modal-x" onclick="closeModal('modal-del-folder')">✕</button></div>
+    <div class="modal-body">
+      <div style="font-size:13px">確定刪除資料夾「<b id="del-folder-name" style="color:var(--red)"></b>」？</div>
+      <div style="font-size:11px;color:var(--t2);padding:8px 10px;background:var(--bg2);border:1px solid var(--bd);border-radius:7px">⚠️ 子資料夾及其客戶將移至上層，不會刪除客戶資料。</div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('modal-del-folder')">取消</button>
+      <button class="btn d" onclick="confirmDelFolder()">確定刪除</button>
     </div>
   </div>
 </div>
@@ -692,12 +816,13 @@ function saveTplStore() { localStorage.setItem('cus_tpl', JSON.stringify(templat
 function updateChips() {
   document.getElementById('chip-total').textContent = customers.length;
   document.getElementById('chip-sent').textContent = customers.filter(c => c.status === 'sent').length;
+  const nb = document.getElementById('ctab-cust-badge'); if(nb) nb.textContent = customers.length;
 }
 
 // ══ THEME ══
 function toggleTheme() {
-  document.body.classList.toggle('lm');
-  document.getElementById('themeBtn').textContent = document.body.classList.contains('lm') ? '🌑 暗色' : '🌙 暗色';
+  document.body.classList.toggle('dm');
+  document.getElementById('themeBtn').textContent = document.body.classList.contains('dm') ? '☀️ 亮色模式' : '🌙 暗色模式';
 }
 
 // ══ TABS ══
@@ -707,6 +832,7 @@ function swCP(name, btn) {
   if (btn && btn.classList) btn.classList.add('on');
   const p = document.getElementById('cp-' + name);
   if (p) p.classList.add('on');
+  if (name === 'custlist') { renderFolderTree(); renderCustList(); }
   if (name === 'send') { renderSelectList(); renderTplSelect(); }
   if (name === 'log') renderLog();
 }
@@ -728,17 +854,18 @@ function openManualAdd() {
 }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function confirmAddCustomer() {
+  const company = document.getElementById('m-company').value.trim();
   const name = document.getElementById('m-name').value.trim();
   const email = document.getElementById('m-email').value.trim();
-  if (!name) { toast('⚠️ 請填寫名稱'); return; }
+  if (!company) { toast('⚠️ 請填寫公司名稱'); return; }
   if (!email) { toast('⚠️ 請填寫 Email'); return; }
   if (editingId) {
     const c = customers.find(x => x.id === editingId);
-    if (c) { c.name = name; c.company = document.getElementById('m-company').value.trim(); c.email = email; c.phone = document.getElementById('m-phone').value.trim(); c.url = document.getElementById('m-url').value.trim(); }
+    if (c) { c.company = company; c.name = name; c.email = email; c.phone = document.getElementById('m-phone').value.trim(); c.url = document.getElementById('m-url').value.trim(); }
     toast('✅ 已更新', 'ok');
   } else {
-    customers.unshift({ id: Date.now(), name, email, company: document.getElementById('m-company').value.trim(), phone: document.getElementById('m-phone').value.trim(), url: document.getElementById('m-url').value.trim(), status: 'unsent', createdAt: new Date().toLocaleDateString('zh-TW') });
-    toast('✅ 已新增：' + name, 'ok');
+    customers.unshift({ id: Date.now(), company, name, email, phone: document.getElementById('m-phone').value.trim(), url: document.getElementById('m-url').value.trim(), folder: 'root', status: 'unsent', createdAt: new Date().toLocaleDateString('zh-TW') });
+    toast('✅ 已新增：' + company, 'ok');
   }
   save(); closeModal('modal-add'); renderContacts(); renderSelectList(); updateChips();
 }
@@ -894,7 +1021,7 @@ function renderContactCard(data) {
       <div class="cust-card-head">
         <div style="display:flex;align-items:center;gap:8px;min-width:0">
           <div class="card-check${chk ? ' on' : ''}" onclick="toggleCard(${c.id})"></div>
-          <div><div class="cust-name">${e(c.name)}</div><div class="cust-company">${e(c.company || '')}</div></div>
+          <div><div class="cust-company">${e(c.company || '（未知公司）')}</div><div class="cust-name">👤 ${e(c.name || '—')}</div></div>
         </div>
         <span class="status-badge ${c.status}">${c.status === 'sent' ? '✅ 已發送' : '📭 待發送'}</span>
       </div>
@@ -1454,6 +1581,235 @@ function saveSettings() {
   };
   localStorage.setItem('cus_cfg', JSON.stringify(cfg));
   toast('✅ 設定已儲存', 'ok');
+}
+
+// ══ 客戶名單 (custlist) ══
+const ICONS_MAP = {'全部':'📋','區域':'🗺️','北部':'📍','南部':'📍','中部':'📍','東部':'📍','產業':'🏭','製造':'⚙️','貿易':'🚢','科技':'💻','服務':'🤝','醫療':'🏥','建設':'🏗️'};
+const CL_PER_PAGE = 24;
+
+let folderList = JSON.parse(localStorage.getItem('cus_folders') || 'null') || [
+  {id:'root',name:'全部',icon:'📋',parent:null,locked:true},
+  {id:'region',name:'區域',icon:'🗺️',parent:null},
+  {id:'north',name:'北部',icon:'📍',parent:'region'},
+  {id:'central',name:'中部',icon:'📍',parent:'region'},
+  {id:'south',name:'南部',icon:'📍',parent:'region'},
+  {id:'industry',name:'產業',icon:'🏭',parent:null},
+  {id:'mfg',name:'製造業',icon:'⚙️',parent:'industry'},
+  {id:'trade',name:'貿易業',icon:'🚢',parent:'industry'},
+];
+let clSelFolder = 'root';
+let clView = 'simple';
+let clSelIds = new Set();
+let clPage = 1;
+let clRenamingId = null;
+let clDelFolderId = null;
+let clMovingIds = [];
+let clShowAddForm = false;
+
+function saveFolders() { localStorage.setItem('cus_folders', JSON.stringify(folderList)); }
+function getIcon(name) { const k = Object.keys(ICONS_MAP).find(k => name.includes(k)); return k ? ICONS_MAP[k] : '📁'; }
+function getDepth(fid, d=0) { const f = folderList.find(x=>x.id===fid); if(!f||!f.parent) return d; return getDepth(f.parent, d+1); }
+function getAllFolderIds(fid) { const ids=[fid]; folderList.filter(f=>f.parent===fid).forEach(f=>ids.push(...getAllFolderIds(f.id))); return ids; }
+function getCustInFolder(fid) { return fid==='root' ? customers : customers.filter(c => getAllFolderIds(fid).includes(c.folder||'root')); }
+
+function renderFolderTree() {
+  const tree = document.getElementById('ftree'); if(!tree) return;
+  let h = '';
+  function renderItem(f) {
+    const depth = getDepth(f.id);
+    const cnt = getCustInFolder(f.id).length;
+    const depthCls = depth===0?'':depth===1?' sub':' sub2';
+    const isRenaming = clRenamingId === f.id;
+    h += `<div class="fi${depthCls}${clSelFolder===f.id?' on':''}" id="fi-${f.id}" onclick="clSelectFolder('${f.id}',event)">
+      <span class="fi-icon">${f.icon}</span>
+      ${isRenaming
+        ? `<input class="fi-rename-inp" id="ri-${f.id}" value="${e(f.name)}" onclick="event.stopPropagation()" onkeydown="clRenameKey('${f.id}',event)" onblur="clRenameBlur('${f.id}',this)"/>`
+        : `<span class="fi-name">${e(f.name)}</span>`
+      }
+      <span class="fi-cnt">${cnt}</span>
+      ${!f.locked ? `<div class="fi-acts" onclick="event.stopPropagation()">
+        <button class="fa-btn" title="更名" onclick="clStartRename('${f.id}')">✏️</button>
+        <button class="fa-btn del" title="刪除" onclick="clAskDel('${f.id}')">🗑</button>
+      </div>` : ''}
+    </div>`;
+    folderList.filter(c=>c.parent===f.id).forEach(c=>renderItem(c));
+  }
+  folderList.filter(f=>!f.parent).forEach(f=>renderItem(f));
+  tree.innerHTML = h;
+  if(clRenamingId) { const inp=document.getElementById('ri-'+clRenamingId); if(inp){inp.focus();inp.select();} }
+}
+
+function clSelectFolder(fid, ev) {
+  if(clRenamingId) return;
+  clSelFolder=fid; clPage=1; clSelIds.clear();
+  const f=folderList.find(x=>x.id===fid)||{name:'全部',icon:'📋'};
+  const el=document.getElementById('cl-title'); if(el) el.textContent=f.icon+' '+f.name;
+  renderFolderTree(); renderCustList();
+}
+
+function clStartRename(fid) { clRenamingId=fid; renderFolderTree(); }
+function clRenameKey(fid, ev) {
+  if(ev.key==='Enter'){ const inp=document.getElementById('ri-'+fid); if(inp) clCommitRename(fid,inp.value.trim()); }
+  if(ev.key==='Escape'){ clRenamingId=null; renderFolderTree(); }
+}
+function clRenameBlur(fid, inp) { if(clRenamingId===fid && inp) clCommitRename(fid, inp.value.trim()); }
+function clCommitRename(fid, name) {
+  if(!name){ toast('⚠️ 名稱不可為空'); clRenamingId=null; renderFolderTree(); return; }
+  const f=folderList.find(x=>x.id===fid); if(!f) return;
+  f.name=name; f.icon=getIcon(name)||f.icon;
+  clRenamingId=null; saveFolders(); renderFolderTree(); renderCustList();
+  toast('✅ 已更名為：'+name, 'ok');
+}
+function clAskDel(fid) {
+  clDelFolderId=fid;
+  const f=folderList.find(x=>x.id===fid);
+  const el=document.getElementById('del-folder-name'); if(el) el.textContent=f?f.name:'';
+  document.getElementById('modal-del-folder').classList.add('open');
+}
+function confirmDelFolder() {
+  if(!clDelFolderId) return;
+  const f=folderList.find(x=>x.id===clDelFolderId); if(!f) return;
+  const parent=f.parent;
+  folderList.filter(c=>c.parent===clDelFolderId).forEach(c=>c.parent=parent);
+  customers.filter(c=>c.folder===clDelFolderId).forEach(c=>c.folder=parent||'root');
+  folderList=folderList.filter(x=>x.id!==clDelFolderId);
+  if(clSelFolder===clDelFolderId) clSelFolder='root';
+  document.getElementById('modal-del-folder').classList.remove('open');
+  clDelFolderId=null; saveFolders(); save(); renderFolderTree(); renderCustList();
+  toast('🗑 資料夾已刪除', 'ok');
+}
+function toggleFolderForm() {
+  clShowAddForm=!clShowAddForm;
+  const form=document.getElementById('fp-add-form'); if(!form) return;
+  form.style.display=clShowAddForm?'block':'none';
+  if(clShowAddForm){
+    const sel=document.getElementById('nf-parent'); if(!sel) return;
+    sel.innerHTML='<option value="">（頂層）</option>'+folderList.filter(f=>f.id!=='root').map(f=>`<option value="${f.id}">${'　'.repeat(getDepth(f.id))}${f.icon} ${e(f.name)}</option>`).join('');
+    const inp=document.getElementById('nf-name'); if(inp){inp.value='';inp.focus();}
+  }
+}
+function confirmAddFolder() {
+  const nameEl=document.getElementById('nf-name'); const name=nameEl?nameEl.value.trim():'';
+  if(!name){toast('⚠️ 請輸入名稱');return;}
+  const parentEl=document.getElementById('nf-parent'); const parent=parentEl?parentEl.value||null:null;
+  folderList.push({id:'f'+Date.now(),name,icon:getIcon(name),parent});
+  clShowAddForm=false; const form=document.getElementById('fp-add-form'); if(form) form.style.display='none';
+  saveFolders(); renderFolderTree(); renderCustList(); toast('✅ 已新增：'+name,'ok');
+}
+
+// render customer list for custlist tab
+function clGetPageData() {
+  const data = getCustInFolder(clSelFolder);
+  const total=data.length, pages=Math.ceil(total/CL_PER_PAGE)||1;
+  if(clPage>pages) clPage=pages;
+  return {data:data.slice((clPage-1)*CL_PER_PAGE, clPage*CL_PER_PAGE), total, pages};
+}
+function setClView(v) {
+  clView=v;
+  document.getElementById('cl-vt-simple').classList.toggle('on',v==='simple');
+  document.getElementById('cl-vt-card').classList.toggle('on',v==='card');
+  renderCustList();
+}
+function renderCustList() {
+  updateCustBadge();
+  const {data,total,pages} = clGetPageData();
+  const lbl=document.getElementById('cl-sel-lbl'); if(lbl) lbl.textContent=clSelIds.size?`已選 ${clSelIds.size} 筆`:'';
+  const area=document.getElementById('cl-view-area'); if(!area) return;
+  if(!data.length){ area.innerHTML=`<div class="empty-state"><div class="ei">👥</div><div class="et">此資料夾尚無客戶</div><div class="es">從名單管理確認加入</div></div>`; document.getElementById('cl-pagination').innerHTML=''; return; }
+  if(clView==='simple') renderClSimple(data);
+  else renderClCard(data);
+  renderClPg(pages,total);
+}
+function updateCustBadge() {
+  const nb=document.getElementById('ctab-cust-badge'); if(nb) nb.textContent=customers.length;
+  updateChips();
+}
+function renderClSimple(data) {
+  const area=document.getElementById('cl-view-area'); if(!area) return;
+  let h=`<div class="simple-list">
+    <div class="sl-head"><div class="sl-grid">
+      <div class="sl-th"><div class="row-check${clSelIds.size?' on':''}" onclick="clToggleAll()" style="width:13px;height:13px;border-radius:3px;border:2px solid var(--bd2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;${clSelIds.size?'background:var(--ac);border-color:var(--ac)':''}"></div></div>
+      <div class="sl-th">公司名稱</div><div class="sl-th">聯絡人</div>
+      <div class="sl-th">Email</div><div class="sl-th">電話</div>
+      <div class="sl-th">狀態</div><div class="sl-th">操作</div>
+    </div></div>`;
+  data.forEach(c => {
+    const ck=clSelIds.has(c.id);
+    const fobj=folderList.find(f=>f.id===c.folder)||{icon:'📂'};
+    h+=`<div class="sl-row-wrap${ck?' ck':''}"><div class="sl-grid">
+      <div class="sl-td"><div class="row-check${ck?' on':''}" onclick="clToggle(${c.id})" style="width:13px;height:13px;border-radius:3px;border:2px solid var(--bd2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:.12s;${ck?'background:var(--ac);border-color:var(--ac)':''}"></div></div>
+      <div class="sl-td co" title="${e(c.company)}">${e(c.company||'—')} <span style="font-size:10px;color:var(--t3)">${fobj.icon}</span></div>
+      <div class="sl-td" style="font-size:11px;color:var(--t2)">👤 ${e(c.name||'—')}</div>
+      <div class="sl-td em" title="${e(c.email)}">${e(c.email||'—')}</div>
+      <div class="sl-td em">${e(c.phone||'—')}</div>
+      <div class="sl-td"><span class="status-badge ${c.status}">${c.status==='sent'?'✅ 已發送':'📭 待發送'}</span></div>
+      <div class="sl-td acts">
+        <button class="btn sm p" onclick="quickSend(${c.id})">✉️</button>
+        <button class="btn sm" style="background:rgba(167,139,250,.12);color:#a78bfa;border-color:rgba(167,139,250,.3)" onclick="openClMoveSingle(${c.id})">📁</button>
+        <button class="btn sm d" onclick="clDelete(${c.id})">🗑</button>
+      </div>
+    </div></div>`;
+  });
+  h+='</div>';
+  area.innerHTML=h;
+}
+function renderClCard(data) {
+  const area=document.getElementById('cl-view-area'); if(!area) return;
+  area.innerHTML=`<div class="cust-grid">${data.map(c=>{
+    const ck=clSelIds.has(c.id);
+    const fobj=folderList.find(f=>f.id===c.folder)||{name:'未分類',icon:'📂'};
+    return`<div class="cust-card${ck?' checked':''}">
+      <div class="cust-card-head">
+        <div style="display:flex;align-items:center;gap:8px;min-width:0">
+          <div class="card-check${ck?' on':''}" onclick="clToggle(${c.id})"></div>
+          <div style="min-width:0">
+            <div class="cust-company">${e(c.company||'（未知公司）')}</div>
+            <div class="cust-name">👤 ${e(c.name||'—')} <span style="font-size:10px;color:var(--t3)">${fobj.icon}${e(fobj.name)}</span></div>
+          </div>
+        </div>
+        <span class="status-badge ${c.status}">${c.status==='sent'?'✅':'📭'}</span>
+      </div>
+      <div class="cust-fields">
+        <div class="cust-field"><span>📧</span><span class="val" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e(c.email||'—')}</span></div>
+        <div class="cust-field"><span>📞</span><span class="val">${e(c.phone||'—')}</span></div>
+      </div>
+      <div class="cust-actions">
+        <button class="btn sm p" onclick="quickSend(${c.id})">✉️ 發送</button>
+        <button class="btn sm" style="background:rgba(167,139,250,.12);color:#a78bfa;border-color:rgba(167,139,250,.3)" onclick="openClMoveSingle(${c.id})">📁 歸檔</button>
+        <button class="btn sm d" onclick="clDelete(${c.id})">🗑</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+function renderClPg(pages,total){
+  const pg=document.getElementById('cl-pagination'); if(!pg) return;
+  if(pages<=1){pg.innerHTML='';return;}
+  let h=`<button class="pg-btn" onclick="clGo(${clPage-1})" ${clPage===1?'disabled':''}>‹</button>`;
+  for(let i=1;i<=pages;i++){
+    if(pages>7&&i>2&&i<pages-1&&Math.abs(i-clPage)>1){if(i===3||i===pages-2)h+=`<span class="pg-info">…</span>`;continue;}
+    h+=`<button class="pg-btn${clPage===i?' on':''}" onclick="clGo(${i})">${i}</button>`;
+  }
+  h+=`<button class="pg-btn" onclick="clGo(${clPage+1})" ${clPage===pages?'disabled':''}>›</button><span class="pg-info">共${total}筆 第${clPage}/${pages}頁</span>`;
+  pg.innerHTML=h;
+}
+function clGo(p){const{pages}=clGetPageData();if(p<1||p>pages)return;clPage=p;renderCustList();}
+function clToggle(id){if(clSelIds.has(id))clSelIds.delete(id);else clSelIds.add(id);renderCustList();}
+function clToggleAll(){const{data}=clGetPageData();const allOn=data.every(c=>clSelIds.has(c.id));data.forEach(c=>allOn?clSelIds.delete(c.id):clSelIds.add(c.id));renderCustList();}
+function clSelAll(){getCustInFolder(clSelFolder).forEach(c=>clSelIds.add(c.id));renderCustList();}
+function clSelNone(){clSelIds.clear();renderCustList();}
+function clDelete(id){if(!confirm('確定刪除此客戶？'))return;customers=customers.filter(c=>c.id!==id);clSelIds.delete(id);save();renderFolderTree();renderCustList();updateChips();toast('🗑 已刪除');}
+function clDeleteSel(){if(!clSelIds.size){toast('⚠️ 請先選取');return;}if(!confirm(`確定刪除 ${clSelIds.size} 筆？`))return;customers=customers.filter(c=>!clSelIds.has(c.id));clSelIds.clear();save();renderFolderTree();renderCustList();updateChips();toast('🗑 已刪除');}
+function openClMove(){if(!clSelIds.size){toast('⚠️ 請先選取');return;}clMovingIds=[...clSelIds];_openClMoveModal();}
+function openClMoveSingle(id){clMovingIds=[id];_openClMoveModal();}
+function _openClMoveModal(){
+  const sel=document.getElementById('cl-move-sel'); if(!sel) return;
+  sel.innerHTML=folderList.filter(f=>f.id!=='root').map(f=>`<option value="${f.id}">${'　'.repeat(getDepth(f.id))}${f.icon} ${e(f.name)}</option>`).join('');
+  document.getElementById('modal-cl-move').classList.add('open');
+}
+function doClMove(){
+  const fid=document.getElementById('cl-move-sel').value;
+  clMovingIds.forEach(id=>{const c=customers.find(x=>x.id===id);if(c)c.folder=fid;});
+  clSelIds.clear(); save(); closeModal('modal-cl-move'); renderFolderTree(); renderCustList(); toast('✅ 已歸檔','ok');
 }
 
 init();
