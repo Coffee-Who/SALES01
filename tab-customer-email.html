@@ -250,6 +250,22 @@ body.dm .stg-row:hover{background:rgba(255,255,255,.02)}
 .ai-loading{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);padding:6px 0}
 .ai-spin{width:14px;height:14px;border:2px solid var(--bd2);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
+/* ── Excel / 圖片匯入 ── */
+.excel-drop-zone{border:2px dashed var(--bd2);border-radius:10px;padding:28px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--bg2)}
+.excel-drop-zone:hover,.excel-drop-zone.drag-over{border-color:var(--ac);background:var(--abg)}
+.edz-icon{font-size:34px;margin-bottom:8px}
+.edz-title{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:4px}
+.edz-sub{font-size:11px;color:var(--t2);line-height:1.7}
+.ocr-field-row{display:flex;flex-direction:column;gap:3px}
+.ocr-field-lbl{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
+.ocr-field-inp{padding:6px 10px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg1);color:var(--t1);font-size:12px;outline:none;font-family:inherit;transition:.15s;width:100%}
+.ocr-field-inp:focus{border-color:var(--ac);box-shadow:0 0 0 2px rgba(37,99,235,.12)}
+.excel-preview-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.excel-preview-tbl th{padding:6px 9px;background:var(--bg2);border-bottom:1px solid var(--bd);font-weight:700;color:var(--t2);text-align:left;white-space:nowrap}
+.excel-preview-tbl td{padding:6px 9px;border-bottom:1px solid var(--bd);color:var(--t1);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.excel-preview-tbl tr:last-child td{border-bottom:none}
+.excel-preview-tbl tr:hover td{background:rgba(0,0,0,.02)}
+body.dm .excel-preview-tbl tr:hover td{background:rgba(255,255,255,.025)}
 
 /* Rich editor */
 .editor-toolbar{display:flex;gap:4px;padding:8px 12px;background:var(--bg2);border:1px solid var(--bd2);border-radius:8px 8px 0 0;flex-wrap:wrap;align-items:center}
@@ -398,6 +414,8 @@ body.dm .stg-row:hover{background:rgba(255,255,255,.02)}
       <div class="url-modes">
         <button class="url-mode-btn on" onclick="swMode('single',this)">🔗 單一網址</button>
         <button class="url-mode-btn" onclick="swMode('batch',this)">📋 批次網址</button>
+        <button class="url-mode-btn" onclick="swMode('excel',this)">📊 Excel 匯入</button>
+        <button class="url-mode-btn" onclick="swMode('imgocr',this)">🖼️ 圖片辨識</button>
         <button class="url-mode-btn" onclick="openManualAdd()">＋ 手動新增</button>
       </div>
       <div class="url-panel on" id="url-single">
@@ -429,6 +447,56 @@ body.dm .stg-row:hover{background:rgba(255,255,255,.02)}
       </div>
       <div id="crawl-loading" style="display:none;margin-top:10px">
         <div class="ai-loading"><div class="ai-spin"></div><span id="crawl-loading-text">正在讀取網頁…</span></div>
+      </div>
+
+      <!-- Excel 匯入 panel -->
+      <div class="url-panel" id="url-excel">
+        <div class="excel-drop-zone" id="excel-drop" onclick="document.getElementById('excel-file-inp').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleExcelDrop(event)">
+          <div class="edz-icon">📊</div>
+          <div class="edz-title">拖曳 Excel / CSV 檔案到此處</div>
+          <div class="edz-sub">或點此選擇檔案（支援 .xlsx、.xls、.csv）</div>
+          <input type="file" id="excel-file-inp" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleExcelFile(event)"/>
+        </div>
+        <!-- Excel 欄位對應區（讀取後出現）-->
+        <div id="excel-map-zone" style="display:none">
+          <div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">🔀 欄位對應（Excel 欄位 → 客戶資料卡）</div>
+          <div class="fm-grid" id="excel-fm-grid"></div>
+          <div style="margin-top:10px;display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+            <span style="font-size:11px;color:var(--t2)">讀取到 <b id="excel-row-cnt" style="color:var(--ac)">0</b> 筆資料</span>
+            <button class="btn sm p" onclick="confirmExcelImport()">✅ 確認匯入到暫存</button>
+            <button class="btn sm d" onclick="cancelExcelImport()">✕ 取消</button>
+          </div>
+          <!-- 預覽表格 -->
+          <div id="excel-preview" style="margin-top:10px;max-height:200px;overflow:auto;border:1px solid var(--bd);border-radius:8px"></div>
+        </div>
+        <div class="url-note" style="margin-top:10px">💡 支援 Excel（.xlsx/.xls）及 CSV 格式。讀取後可對應每個欄位，再匯入暫存名單。</div>
+      </div>
+
+      <!-- 圖片辨識 panel -->
+      <div class="url-panel" id="url-imgocr">
+        <div class="excel-drop-zone" id="img-drop" onclick="document.getElementById('img-file-inp').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event)">
+          <div class="edz-icon">🖼️</div>
+          <div class="edz-title">拖曳圖片到此處</div>
+          <div class="edz-sub">支援名片、截圖、掃描件（.jpg、.png、.webp）<br>透過 Groq Vision AI 自動辨識聯絡資料</div>
+          <input type="file" id="img-file-inp" accept="image/*" style="display:none" onchange="handleImgFile(event)" multiple/>
+        </div>
+        <!-- 圖片預覽 + OCR 結果 -->
+        <div id="img-preview-zone" style="display:none">
+          <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-top:10px">
+            <img id="img-preview-thumb" style="max-height:160px;max-width:240px;border-radius:8px;border:1px solid var(--bd);object-fit:contain;background:var(--bg3)"/>
+            <div style="flex:1;min-width:200px">
+              <div style="font-size:11px;font-weight:700;color:var(--t2);margin-bottom:6px">AI 辨識結果</div>
+              <div id="ocr-loading" style="display:none"><div class="ai-loading"><div class="ai-spin"></div>Groq Vision 辨識中…</div></div>
+              <div id="ocr-result-fields" style="display:flex;flex-direction:column;gap:7px"></div>
+            </div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+            <button class="btn sm p" id="ocr-confirm-btn" onclick="confirmOcrImport()" style="display:none">✅ 加入暫存名單</button>
+            <button class="btn sm" onclick="document.getElementById('img-file-inp').click()">🔄 辨識其他圖片</button>
+            <button class="btn sm d" onclick="cancelOcrImport()">✕ 清除</button>
+          </div>
+        </div>
+        <div class="url-note" style="margin-top:10px">💡 上傳名片或聯絡人截圖，AI 自動辨識公司、聯絡人、Email、電話。需先在「⚙️ 設定」填入 Groq API Key。</div>
       </div>
     </div>
 
@@ -1100,12 +1168,11 @@ function getContactPageData() {
 // ══ RENDER CONTACTS ══
 function renderContacts() {
   const { data, total, pages } = getContactPageData();
-  // stats
-  document.getElementById('st-total').textContent = customers.length;
-  document.getElementById('st-sent').textContent = customers.filter(c => c.status === 'sent').length;
-  document.getElementById('st-pending').textContent = customers.filter(c => c.status === 'unsent').length;
-  const n = selectedIds.size;
-  document.getElementById('sel-count-label').textContent = n ? `已選 ${n} 筆` : '';
+  // staging stats — null-safe, use correct IDs matching HTML
+  const elT = document.getElementById('st-total'); if(elT) elT.textContent = customers.length;
+  const elTr = document.getElementById('st-transferred'); if(elTr) elTr.textContent = customers.filter(c => c._inCustList).length;
+  const elP = document.getElementById('st-pending'); if(elP) elP.textContent = customers.filter(c => !c._inCustList).length;
+  const elSel = document.getElementById('sel-count-label'); if(elSel) elSel.textContent = selectedIds.size ? `已選 ${selectedIds.size} 筆` : '';
 
   if (!customers.length) {
     document.getElementById('contact-view-area').innerHTML = `<div class="empty-state"><div class="ei">📋</div><div class="et">尚無客戶名單</div><div class="es">輸入網址自動擷取，或點「手動新增」</div></div>`;
@@ -1892,6 +1959,241 @@ function updateChips2() {
 
 // Override renderCustList to use custList (not customers)
 function renderCustList() { renderCustListInTab(); }
+
+// ══ EXCEL 匯入 ══
+let excelRawData = []; // [{col1:val,...}, ...]
+let excelHeaders = [];
+
+function handleExcelDrop(ev) {
+  ev.preventDefault();
+  document.getElementById('excel-drop').classList.remove('drag-over');
+  const file = ev.dataTransfer.files[0];
+  if (file) processExcelFile(file);
+}
+function handleExcelFile(ev) {
+  const file = ev.target.files[0];
+  if (file) processExcelFile(file);
+  ev.target.value = '';
+}
+
+async function processExcelFile(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  try {
+    if (ext === 'csv') {
+      const text = await file.text();
+      parseCSV(text);
+    } else {
+      // xlsx/xls — use SheetJS from CDN
+      if (!window.XLSX) {
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
+      }
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+      if (!rows.length) { toast('⚠️ Excel 為空'); return; }
+      excelHeaders = rows[0].map(String);
+      excelRawData = rows.slice(1).filter(r => r.some(v => String(v||'').trim())).map(r => {
+        const obj = {};
+        excelHeaders.forEach((h, i) => obj[h] = String(r[i] || ''));
+        return obj;
+      });
+      renderExcelMapZone();
+    }
+  } catch(err) { toast('❌ 讀取失敗：' + err.message, 'err'); }
+}
+
+function parseCSV(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (!lines.length) { toast('⚠️ CSV 為空'); return; }
+  const parseRow = l => {
+    const res = []; let cur = '', inQ = false;
+    for (let i = 0; i < l.length; i++) {
+      if (l[i] === '"') { inQ = !inQ; }
+      else if (l[i] === ',' && !inQ) { res.push(cur.trim()); cur = ''; }
+      else cur += l[i];
+    }
+    res.push(cur.trim()); return res;
+  };
+  excelHeaders = parseRow(lines[0]).map(h => h.replace(/^"|"$/g,''));
+  excelRawData = lines.slice(1).map(l => {
+    const vals = parseRow(l).map(v => v.replace(/^"|"$/g,''));
+    const obj = {};
+    excelHeaders.forEach((h, i) => obj[h] = vals[i] || '');
+    return obj;
+  }).filter(r => Object.values(r).some(v => v.trim()));
+  renderExcelMapZone();
+}
+
+function renderExcelMapZone() {
+  document.getElementById('excel-map-zone').style.display = 'block';
+  document.getElementById('excel-row-cnt').textContent = excelRawData.length;
+  const destFields = ['（不匯入）', '公司名稱', '聯絡人', 'Email', '電話', '備註'];
+  // 自動推測
+  const autoMap = {};
+  excelHeaders.forEach(h => {
+    const hl = h.toLowerCase();
+    if (/公司|company|corp|firm/.test(hl)) autoMap[h] = '公司名稱';
+    else if (/聯絡|姓名|name|contact|person/.test(hl)) autoMap[h] = '聯絡人';
+    else if (/mail|email|e-mail/.test(hl)) autoMap[h] = 'Email';
+    else if (/電話|phone|tel|mobile|手機/.test(hl)) autoMap[h] = '電話';
+    else autoMap[h] = '（不匯入）';
+  });
+  document.getElementById('excel-fm-grid').innerHTML = excelHeaders.map(h => `
+    <div class="fm-src" title="${e(h)}">${e(h)}</div>
+    <div class="fm-arrow">→</div>
+    <select class="fm-sel" id="exfm-${e(h.replace(/\s/g,'_'))}">
+      ${destFields.map(d => `<option value="${e(d)}" ${autoMap[h]===d?'selected':''}>${e(d)}</option>`).join('')}
+    </select>`).join('');
+  // preview table (first 5 rows)
+  const preview = excelRawData.slice(0, 5);
+  const prevHtml = `<table class="excel-preview-tbl"><thead><tr>${excelHeaders.map(h=>`<th>${e(h)}</th>`).join('')}</tr></thead>
+    <tbody>${preview.map(r=>`<tr>${excelHeaders.map(h=>`<td title="${e(r[h]||'')}">${e(r[h]||'')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  document.getElementById('excel-preview').innerHTML = prevHtml;
+}
+
+function confirmExcelImport() {
+  let added = 0;
+  excelRawData.forEach(row => {
+    const entry = { id: Date.now() + Math.random(), company:'', name:'', email:'', phone:'', status:'unsent', _inCustList: false, createdAt: new Date().toLocaleDateString('zh-TW') };
+    excelHeaders.forEach(h => {
+      const selEl = document.getElementById('exfm-' + h.replace(/\s/g,'_'));
+      if (!selEl) return;
+      const dest = selEl.value;
+      const val = String(row[h] || '').trim();
+      if (dest === '公司名稱') entry.company = val;
+      else if (dest === '聯絡人') entry.name = val;
+      else if (dest === 'Email') entry.email = val;
+      else if (dest === '電話') entry.phone = val;
+    });
+    if (!entry.company && !entry.email) return;
+    customers.unshift(entry); added++;
+  });
+  save(); renderContacts(); updateChips();
+  cancelExcelImport();
+  // show crawl result zone with imported data
+  const imported = customers.slice(0, added);
+  showCrawlResult(imported, `Excel 匯入（${added} 筆）`);
+  toast(`✅ 已從 Excel 匯入 ${added} 筆到暫存名單`, 'ok');
+}
+function cancelExcelImport() {
+  excelRawData = []; excelHeaders = [];
+  const mz = document.getElementById('excel-map-zone'); if(mz) mz.style.display = 'none';
+  const fi = document.getElementById('excel-file-inp'); if(fi) fi.value = '';
+}
+
+function loadScript(src) {
+  return new Promise((res, rej) => {
+    if (document.querySelector(`script[src="${src}"]`)) { res(); return; }
+    const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej;
+    document.head.appendChild(s);
+  });
+}
+
+// ══ 圖片 OCR 辨識 ══
+let ocrParsed = {};
+
+function handleImgDrop(ev) {
+  ev.preventDefault();
+  document.getElementById('img-drop').classList.remove('drag-over');
+  const files = Array.from(ev.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+  if (files.length) processImgFile(files[0]);
+}
+function handleImgFile(ev) {
+  const file = ev.target.files[0];
+  if (file) processImgFile(file);
+}
+
+async function processImgFile(file) {
+  const apiKey = cfg.apikey || '';
+  if (!apiKey) { toast('⚠️ 請先在「⚙️ 設定」填入 Groq API Key'); return; }
+
+  // show preview
+  const reader = new FileReader();
+  reader.onload = async (ev) => {
+    const base64 = ev.target.result; // data:image/...;base64,...
+    const b64data = base64.split(',')[1];
+    const mimeType = file.type || 'image/jpeg';
+
+    const thumb = document.getElementById('img-preview-thumb');
+    if (thumb) { thumb.src = base64; }
+    const zone = document.getElementById('img-preview-zone');
+    if (zone) zone.style.display = 'block';
+    const ocrLoad = document.getElementById('ocr-loading');
+    if (ocrLoad) ocrLoad.style.display = 'flex';
+    const resFields = document.getElementById('ocr-result-fields');
+    if (resFields) resFields.innerHTML = '';
+    const confirmBtn = document.getElementById('ocr-confirm-btn');
+    if (confirmBtn) confirmBtn.style.display = 'none';
+    ocrParsed = {};
+
+    try {
+      const prompt = `請從這張圖片中辨識所有聯絡資料（名片、截圖或文件皆可）。\n只輸出純 JSON，格式如下，找不到的欄位填空字串：\n{"company":"公司名稱","name":"聯絡人姓名","email":"email@example.com","phone":"電話號碼","title":"職稱","address":"地址"}`;
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+        body: JSON.stringify({
+          model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'image_url', image_url: { url: `data:${mimeType};base64,${b64data}` } },
+              { type: 'text', text: prompt }
+            ]
+          }],
+          temperature: 0.1, max_tokens: 512
+        })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      let raw = data.choices?.[0]?.message?.content || '{}';
+      raw = raw.replace(/```json|```/g,'').trim();
+      const start = raw.indexOf('{'); if(start > 0) raw = raw.slice(start);
+      ocrParsed = JSON.parse(raw);
+    } catch(err) {
+      // fallback: show empty editable fields
+      ocrParsed = { company:'', name:'', email:'', phone:'', title:'', address:'' };
+      toast('⚠️ AI 辨識失敗，請手動填寫：' + err.message);
+    } finally {
+      if (ocrLoad) ocrLoad.style.display = 'none';
+    }
+
+    // Render editable result fields
+    const fieldDefs = [
+      { key:'company', lbl:'公司名稱' }, { key:'name', lbl:'聯絡人' },
+      { key:'title',   lbl:'職稱'   }, { key:'email', lbl:'Email' },
+      { key:'phone',   lbl:'電話'   }, { key:'address', lbl:'地址' },
+    ];
+    if (resFields) {
+      resFields.innerHTML = fieldDefs.map(f => `
+        <div class="ocr-field-row">
+          <div class="ocr-field-lbl">${e(f.lbl)}</div>
+          <input class="ocr-field-inp" id="ocrf-${f.key}" value="${e(ocrParsed[f.key]||'')}" placeholder="${e(f.lbl)}…"/>
+        </div>`).join('');
+    }
+    if (confirmBtn) confirmBtn.style.display = 'inline-flex';
+  };
+  reader.readAsDataURL(file);
+}
+
+function confirmOcrImport() {
+  const company = (document.getElementById('ocrf-company')||{}).value?.trim() || '';
+  const name    = (document.getElementById('ocrf-name')||{}).value?.trim() || '';
+  const email   = (document.getElementById('ocrf-email')||{}).value?.trim() || '';
+  const phone   = (document.getElementById('ocrf-phone')||{}).value?.trim() || '';
+  if (!company && !email) { toast('⚠️ 至少需要公司名稱或 Email'); return; }
+  const entry = { id: Date.now() + Math.random(), company, name, email, phone, status: 'unsent', _inCustList: false, createdAt: new Date().toLocaleDateString('zh-TW') };
+  customers.unshift(entry);
+  save(); renderContacts(); updateChips();
+  showCrawlResult([entry], '圖片辨識匯入');
+  toast(`✅ 已辨識並加入暫存名單：${company || email}`, 'ok');
+  cancelOcrImport();
+}
+function cancelOcrImport() {
+  const zone = document.getElementById('img-preview-zone'); if(zone) zone.style.display = 'none';
+  const fi = document.getElementById('img-file-inp'); if(fi) fi.value = '';
+  ocrParsed = {};
+}
 
 // Hook crawlOneUrl to show result zone
 const _origCrawlOneUrl = crawlOneUrl;
