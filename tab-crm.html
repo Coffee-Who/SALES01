@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CRM 客戶管理 · 實威國際</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg0:#000;--bg1:#0d1117;--bg2:#161b22;--bg3:#21262d;
+  --bd:#21262d;--bd2:#30363d;
+  --t1:#e6edf3;--t2:#8b949e;--t3:#484f58;
+  --ac:#2563EB;--ac2:#1d4ed8;
+  --red:#f85149;--grn:#3fb950;--ylw:#d29922;--pur:#a371f7;--teal:#1D9E75;
+  --mono:'Space Mono',monospace;
+}
+body.lm{
+  --bg0:#f4f5f8;--bg1:#fff;--bg2:#f6f8fa;--bg3:#e1e4e8;
+  --bd:#d0d7de;--bd2:#b1bac4;--t1:#1f2328;--t2:#656d76;--t3:#8c959f;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;color:var(--t1);background:var(--bg0);min-height:100vh;font-size:13px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
+
+/* ── Topbar ── */
+#topbar{background:var(--bg1);border-bottom:1px solid var(--bd);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100}
+.logo{font-size:14px;font-weight:700;display:flex;align-items:center;gap:9px}
+.logo-box{width:28px;height:28px;background:var(--ac);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+.logo-sep{width:1px;height:14px;background:var(--bd2)}
+.logo-sub{font-size:11px;color:var(--t2)}
+.tr{display:flex;align-items:center;gap:8px}
+.tbtn{background:var(--bg2);border:1px solid var(--bd);padding:5px 12px;border-radius:20px;cursor:pointer;font-size:12px;color:var(--t2);font-family:inherit;transition:.15s}
+.tbtn:hover{color:var(--t1)}
+.admin-badge{font-size:10px;padding:3px 10px;border-radius:10px;background:rgba(163,113,247,.15);color:var(--pur);border:1px solid rgba(163,113,247,.3);font-weight:700;display:none}
+
+/* ── Navtab ── */
+#navtab{background:var(--bg1);border-bottom:1px solid var(--bd);display:flex;padding:0 16px;overflow-x:auto;position:sticky;top:52px;z-index:99}
+.ntab{padding:12px 16px;font-size:13px;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;font-weight:500}
+.ntab:hover{color:var(--t1)}.ntab.on{color:var(--t1);border-bottom-color:var(--ac)}
+
+/* ── Header ── */
+.stitle{text-align:center;padding:22px 22px 16px;border-bottom:1px solid var(--bd)}
+.stitle h2{font-size:clamp(18px,4vw,28px);font-weight:900;letter-spacing:-.5px}
+.stitle h2 em{font-style:normal;color:var(--ac)}
+.stitle p{font-size:12px;color:var(--t2);margin-top:5px}
+.stitle-meta{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 12px;border-radius:20px;background:var(--bg2);border:1px solid var(--bd2);font-size:11px;color:var(--t2)}
+.dot-g{width:7px;height:7px;border-radius:50%;background:var(--grn);animation:pulse 1.6s infinite;display:inline-block}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── Layout ── */
+.sp{padding:0 20px 60px;max-width:1280px;margin:0 auto}
+.ctabs{display:flex;gap:6px;overflow-x:auto;padding:16px 0 14px;flex-wrap:wrap}
+.ctab{padding:6px 18px;border-radius:20px;border:1px solid var(--bd2);background:transparent;color:var(--t2);font-size:12px;font-family:inherit;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s}
+.ctab:hover{border-color:var(--ac);color:var(--ac)}.ctab.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.ctab.todo-tab.on{background:#d29922;border-color:#d29922;color:#000}
+.cpanel{display:none}.cpanel.on{display:block}
+
+/* ── Buttons ── */
+.btn{font-family:inherit;font-size:12px;font-weight:500;padding:5px 12px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.btn:hover{background:var(--bg3)}.btn.p{background:var(--ac);color:#fff;border-color:var(--ac)}.btn.p:hover{background:var(--ac2)}
+.btn.g{background:rgba(63,185,80,.15);color:var(--grn);border-color:var(--grn)}
+.btn.r{background:rgba(248,81,73,.15);color:var(--red);border-color:var(--red)}
+.btn.w{background:rgba(210,153,34,.15);color:var(--ylw);border-color:var(--ylw)}
+.btn.pu{background:rgba(163,113,247,.15);color:var(--pur);border-color:rgba(163,113,247,.4)}
+.btn.sm{font-size:11px;padding:3px 8px}
+
+/* ── Dashboard ── */
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.metric-card{background:var(--bg1);border:1px solid var(--bd);border-radius:10px;padding:14px 16px}
+.metric-label{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.metric-value{font-size:24px;font-weight:900;line-height:1}
+.metric-sub{font-size:10px;color:var(--t3);margin-top:3px}
+.chart-card{background:var(--bg1);border:1px solid var(--bd);border-radius:10px;padding:14px 16px}
+.chart-title{font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.bar-label{font-size:11px;color:var(--t2);width:76px;flex-shrink:0;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;background:var(--bg3);border-radius:3px;height:18px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding:0 7px;font-size:11px;font-weight:700;min-width:20px}
+.bar-pct{font-size:11px;color:var(--t2);width:28px;text-align:right;flex-shrink:0}
+
+/* ── Customer List (Expandable) ── */
+.list-toolbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.list-toolbar-r{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.search-inp{padding:6px 12px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:12px;font-family:inherit;outline:none;min-width:180px}
+.search-inp:focus{border-color:var(--ac)}
+.filter-sel{padding:6px 10px;border-radius:8px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t1);font-size:12px;font-family:inherit;outline:none}
+
+/* List header with sortable cols */
+.list-hdr{display:grid;grid-template-columns:28px 1fr 88px 140px 96px 62px 28px;gap:8px;padding:7px 14px;font-size:10px;color:var(--t3);font-family:var(--mono);border-bottom:1px solid var(--bd);margin-bottom:4px;align-items:center}
+.sort-col{cursor:pointer;user-select:none;display:flex;align-items:center;gap:3px;transition:.15s}
+.sort-col:hover{color:var(--t1)}.sort-col.asc::after{content:'↑';color:var(--ac)}.sort-col.desc::after{content:'↓';color:var(--ac)}
+
+/* Expandable row */
+.crow{background:var(--bg1);border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin-bottom:4px;transition:border-color .15s}
+.crow:hover{border-color:var(--bd2)}
+.crow-hd{display:grid;grid-template-columns:28px 1fr 88px 140px 96px 62px 28px;gap:8px;padding:11px 14px;cursor:pointer;align-items:center}
+.cnum{font-family:var(--mono);font-size:10px;color:var(--t3)}
+.cname-wrap .cname{font-weight:500;font-size:13px;line-height:1.3}
+.cname-wrap .csub{font-size:10px;color:var(--t2);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px}
+.ctag{display:inline-block;font-size:10px;background:var(--bg3);padding:2px 7px;border-radius:8px;color:var(--t2)}
+.cprod-hw{font-size:11px;color:#60a5fa;font-weight:500}
+.cprod-sw{font-size:10px;color:var(--teal);margin-top:1px}
+.cdate{font-size:11px;font-family:var(--mono);color:var(--t3)}
+.cdate.overdue{color:var(--red);font-weight:700}
+.sdot{width:8px;height:8px;border-radius:50%;margin:0 auto}
+.sd-a{background:var(--grn)}.sd-w{background:var(--ylw)}.sd-c{background:var(--t3)}
+.carr{font-size:10px;color:var(--t3);text-align:right;transition:transform .2s}
+.crow.open .carr{transform:rotate(180deg)}
+
+/* Detail panel */
+.cdetail{display:none;border-top:1px solid var(--bd);background:var(--bg0);padding:14px}
+.crow.open .cdetail{display:block}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+@media(max-width:700px){.dgrid{grid-template-columns:1fr}}
+.dsec{background:var(--bg1);border:1px solid var(--bd);border-radius:8px;padding:12px}
+.dsec-title{font-size:10px;color:var(--ac);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.fr{display:flex;gap:8px;margin-bottom:7px;align-items:flex-start}
+.fl{font-size:10px;color:var(--t3);min-width:64px;padding-top:2px;flex-shrink:0}
+.fv{flex:1;font-size:12px;color:var(--t1)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:3px}
+.pchip{background:var(--bg2);border:1px solid var(--bd2);border-radius:6px;padding:6px 9px}
+.pc-lbl{font-size:9px;color:var(--t3);margin-bottom:2px}
+.pc-hw{font-size:11px;color:#60a5fa;font-weight:500}
+.pc-sw{font-size:11px;color:var(--teal);font-weight:500}
+
+/* Quick date buttons */
+.qbtns{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.qb{font-size:11px;padding:3px 8px;border-radius:4px;border:1px solid var(--bd2);background:var(--bg3);color:var(--t2);cursor:pointer;font-family:inherit;transition:.15s}
+.qb:hover,.qb.on{background:rgba(37,99,235,.15);border-color:var(--ac);color:#60a5fa}
+.custom-date-inp{background:var(--bg3);border:1px solid var(--bd2);border-radius:6px;padding:4px 8px;color:var(--t1);font-size:11px;outline:none;font-family:inherit}
+.custom-date-inp:focus{border-color:var(--ac)}
+
+/* Timeline */
+.tl-item{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
+.tl-item:last-child{border-bottom:none}
+.tl-dot{width:7px;height:7px;border-radius:50%;background:var(--ac);flex-shrink:0;margin-top:4px}
+.tl-date{font-size:10px;color:var(--t3);font-family:var(--mono);min-width:82px;flex-shrink:0}
+.tl-txt{flex:1;font-size:12px;line-height:1.6;color:var(--t1);white-space:pre-wrap;word-break:break-word}
+.tl-del{font-size:10px;color:var(--red);cursor:pointer;opacity:0;transition:.15s;flex-shrink:0}
+.tl-item:hover .tl-del{opacity:1}
+.tl-add{display:flex;gap:6px;margin-top:10px;align-items:center}
+.tl-date-inp{background:var(--bg3);border:1px solid var(--bd2);border-radius:6px;padding:5px 8px;color:var(--t1);font-size:11px;outline:none;width:120px;font-family:inherit}
+.tl-txt-inp{flex:1;background:var(--bg3);border:1px solid var(--bd2);border-radius:6px;padding:5px 8px;color:var(--t1);font-size:11px;outline:none;font-family:inherit}
+.tl-date-inp:focus,.tl-txt-inp:focus{border-color:var(--ac)}
+
+/* Badges */
+.badge{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:700;white-space:nowrap;display:inline-block}
+.badge.contact{background:rgba(37,99,235,.15);color:#60a5fa;border:1px solid rgba(37,99,235,.3)}
+.badge.evaluating{background:rgba(210,153,34,.15);color:var(--ylw);border:1px solid rgba(210,153,34,.3)}
+.badge.prospect{background:rgba(63,185,80,.15);color:var(--grn);border:1px solid rgba(63,185,80,.3)}
+.badge.closed{background:rgba(29,158,117,.2);color:var(--teal);border:1px solid var(--teal)}
+.badge.nope{background:rgba(139,148,158,.12);color:var(--t2);border:1px solid var(--bd2)}
+.badge.old{background:rgba(163,113,247,.15);color:var(--pur);border:1px solid rgba(163,113,247,.3)}
+
+/* Pipeline */
+.srow{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.sc{background:var(--bg1);border:1px solid var(--bd);border-radius:10px;padding:12px 16px;flex:1;min-width:110px}
+.sc .sn{font-size:20px;font-weight:900;line-height:1}.sc .sl{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.pipeline-cols{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.pl-col{background:var(--bg1);border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+.pl-head{padding:9px 11px;border-bottom:1px solid var(--bd);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:space-between}
+.pl-count{font-size:17px;font-weight:900}
+.pl-body{padding:7px;min-height:50px;max-height:360px;overflow-y:auto}
+.pl-card{background:var(--bg2);border:1px solid var(--bd2);border-radius:7px;padding:7px 9px;cursor:pointer;transition:.12s;margin-bottom:5px}
+.pl-card:hover{border-color:var(--ac)}
+.pl-card-name{font-size:12px;font-weight:700}
+.pl-card-sub{font-size:10px;color:var(--t2);margin-top:2px}
+
+/* Todo / Alerts */
+.todo-card{background:var(--bg1);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.todo-card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.alert-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--bg2);border-radius:8px;margin-bottom:7px;border:1px solid var(--bd2)}
+.alert-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.alert-txt{flex:1;font-size:12px;line-height:1.6}
+.alert-sub{font-size:11px;color:var(--t2);margin-top:2px}
+.todo-badge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:700}
+.todo-badge.red{background:var(--red);color:#fff}
+.todo-badge.ylw{background:var(--ylw);color:#000}
+.todo-badge.grn{background:var(--grn);color:#000}
+
+/* Admin */
+.admin-section{background:var(--bg1);border:1px solid rgba(163,113,247,.35);border-radius:10px;padding:14px;margin-bottom:10px}
+.admin-section h3{font-size:11px;font-weight:700;color:var(--pur);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em}
+.opt-list{display:flex;flex-direction:column;gap:5px;margin-bottom:9px;max-height:160px;overflow-y:auto}
+.opt-item{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--bd2);border-radius:6px;padding:6px 10px}
+.opt-item span{font-size:12px}
+.add-opt-row{display:flex;gap:6px}
+.add-opt-inp{flex:1;padding:6px 10px;border-radius:6px;border:1px solid var(--bd2);background:var(--bg3);color:var(--t1);font-size:12px;font-family:inherit;outline:none}
+.add-opt-inp:focus{border-color:var(--pur)}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+/* Modal */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-ov.open{display:flex}
+.modal{background:var(--bg1);border:1px solid var(--bd2);border-radius:14px;width:100%;max-width:640px;overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
+.modal-head{padding:15px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-head h3{font-size:14px;font-weight:700}
+.modal-x{background:none;border:none;color:var(--t2);font-size:20px;cursor:pointer;line-height:1;padding:0}
+.modal-body{padding:18px 20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.modal-foot{padding:13px 20px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
+.mstep-bar{display:flex;border-bottom:1px solid var(--bd)}
+.mstep{padding:9px 15px;font-size:12px;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;font-weight:500}
+.mstep.on{color:var(--t1);border-bottom-color:var(--ac)}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg.full{grid-column:1/-1}
+.fl2{font-size:11px;color:var(--t2);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.fi,.fs,.fta{background:var(--bg2);border:1px solid var(--bd2);border-radius:7px;padding:7px 10px;color:var(--t1);font-size:12px;font-family:inherit;outline:none;width:100%;transition:.15s}
+.fi:focus,.fs:focus,.fta:focus{border-color:var(--ac)}
+.fta{min-height:70px;resize:vertical;line-height:1.5}
+.tag-wrap{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.tag-chip{font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid var(--bd2);color:var(--t2);cursor:pointer;background:var(--bg2);transition:.12s}
+.tag-chip:hover{border-color:var(--ac);color:var(--ac)}
+.tag-chip.on{background:rgba(37,99,235,.15);border-color:var(--ac);color:#60a5fa}
+.prob-row{display:flex;align-items:center;gap:10px}
+.prob-row input[type=range]{flex:1;accent-color:var(--ac)}
+.prob-val{font-size:12px;font-weight:700;min-width:32px;color:var(--t1)}
+
+/* Toast */
+#toasts{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:6px;z-index:9999}
+.toast{padding:8px 14px;border-radius:7px;font-size:12px;background:var(--bg3);border:1px solid var(--bd2);max-width:280px;animation:tin .2s ease}
+.toast.ok{background:#0d2a14;border-color:var(--grn);color:var(--grn)}.toast.err{background:#2d0000;border-color:var(--red);color:var(--red)}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.empty-state{text-align:center;padding:36px 20px;color:var(--t3)}
+</style>
+</head>
+<body>
+<div id="toasts"></div>
+
+<div id="topbar">
+  <div class="logo">
+    <div class="logo-box">👤</div>實威國際
+    <div class="logo-sep"></div><span class="logo-sub">CRM 客戶管理</span>
+  </div>
+  <div class="tr">
+    <span class="admin-badge" id="admin-badge">⚙️ 管理員</span>
+    <button class="tbtn" id="admin-btn" onclick="toggleAdmin()">🔐 管理員</button>
+    <button class="tbtn" id="themeBtn" onclick="toggleTheme()">🌙 暗色</button>
+    <span style="font-size:10px;color:var(--t3);background:var(--bg2);border:1px solid var(--bd);padding:3px 8px;border-radius:4px">v2.0</span>
+  </div>
+</div>
+
+<div id="navtab">
+  <div class="ntab" onclick="location.href='tab-home.html'">🏠 首頁</div>
+  <div class="ntab" onclick="location.href='tab-daily.html'">📰 每日焦點</div>
+  <div class="ntab" onclick="location.href='tab-sample.html'">📦 3D列印</div>
+  <div class="ntab" onclick="location.href='tab-customer-email.html'">📧 客戶開發</div>
+  <div class="ntab on">🧑‍💼 CRM</div>
+</div>
+
+<div class="stitle">
+  <h2>客戶管理<em> CRM</em></h2>
+  <p>360° 客戶視角 · 業務漏斗 · 跟進提醒 · 自動同步 Email 名單</p>
+  <div class="stitle-meta">
+    <div class="chip">🏢 客戶 <b id="chip-total">0</b></div>
+    <div class="chip">🟢 有望 <b id="chip-prospect">0</b></div>
+    <div class="chip">✅ 成交 <b id="chip-closed">0</b></div>
+    <div class="chip"><span class="dot-g"></span> 已同步 Email</div>
+  </div>
+</div>
+
+<div class="sp">
+  <div class="ctabs">
+    <button class="ctab todo-tab on" onclick="swCP('todo',this)">📋 代辦事項</button>
+    <button class="ctab" onclick="swCP('dashboard',this)">📊 總覽</button>
+    <button class="ctab" onclick="swCP('list',this)">👥 客戶列表</button>
+    <button class="ctab" onclick="swCP('pipeline',this)">🔀 業務漏斗</button>
+    <button class="ctab admin-only" id="admin-tab" style="display:none" onclick="swCP('admin',this)">⚙️ 管理員設定</button>
+  </div>
+
+  <!-- ══ 代辦事項 ══ -->
+  <div class="cpanel on" id="cp-todo">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+      <div class="metric-card"><div class="metric-label">逾期未跟進</div><div class="metric-value" id="todo-overdue-n" style="color:var(--red)">0</div><div class="metric-sub">超過 14 天未聯絡</div></div>
+      <div class="metric-card"><div class="metric-label">本週需聯絡</div><div class="metric-value" id="todo-week-n" style="color:var(--ylw)">0</div><div class="metric-sub">7 天內到期</div></div>
+      <div class="metric-card"><div class="metric-label">本月需聯絡</div><div class="metric-value" id="todo-month-n" style="color:var(--grn)">0</div><div class="metric-sub">30 天內到期</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="todo-card">
+        <div class="todo-card-title" style="color:var(--red)">
+          🔴 逾期未跟進
+          <span class="todo-badge red" id="todo-overdue-badge">0</span>
+        </div>
+        <div id="todo-overdue-list"></div>
+      </div>
+      <div>
+        <div class="todo-card" style="margin-bottom:10px">
+          <div class="todo-card-title" style="color:var(--ylw)">
+            🟡 本週需聯絡
+            <span class="todo-badge ylw" id="todo-week-badge">0</span>
+          </div>
+          <div id="todo-week-list"></div>
+        </div>
+        <div class="todo-card">
+          <div class="todo-card-title" style="color:var(--grn)">
+            🟢 本月需聯絡
+            <span class="todo-badge grn" id="todo-month-badge">0</span>
+          </div>
+          <div id="todo-month-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 總覽 ══ -->
+  <div class="cpanel" id="cp-dashboard">
+    <div class="dash-grid">
+      <div class="metric-card"><div class="metric-label">總客戶數</div><div class="metric-value" id="m-total" style="color:var(--ac)">0</div><div class="metric-sub">所有狀態</div></div>
+      <div class="metric-card"><div class="metric-label">有望客戶</div><div class="metric-value" id="m-prospect" style="color:var(--grn)">0</div><div class="metric-sub">6個月內</div></div>
+      <div class="metric-card"><div class="metric-label">整體轉換率</div><div class="metric-value" id="m-rate" style="color:var(--ylw)">0%</div><div class="metric-sub">有望→成交</div></div>
+      <div class="metric-card"><div class="metric-label">逾期跟進</div><div class="metric-value" id="m-followup" style="color:var(--red)">0</div><div class="metric-sub">超過14天</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div class="chart-card"><div class="chart-title">客戶狀態分佈</div><div id="status-chart"></div></div>
+      <div class="chart-card"><div class="chart-title">熱門設備 Top 5</div><div id="product-chart"></div></div>
+    </div>
+    <div class="chart-card"><div class="chart-title">流失原因分析</div><div id="loss-chart"></div></div>
+  </div>
+
+  <!-- ══ 客戶列表 ══ -->
+  <div class="cpanel" id="cp-list">
+    <div class="list-toolbar">
+      <input class="search-inp" id="search-inp" placeholder="🔍 搜尋客戶名稱、聯絡人、產品..." oninput="renderList()">
+      <select class="filter-sel" id="filter-status" onchange="renderList()">
+        <option value="">全部狀態</option>
+        <option value="contact">初次接觸</option>
+        <option value="evaluating">評估中</option>
+        <option value="prospect">有望</option>
+        <option value="closed">成交</option>
+        <option value="nope">暫時無望</option>
+        <option value="old">老客戶</option>
+      </select>
+      <select class="filter-sel" id="filter-hw" onchange="renderList()">
+        <option value="">全部設備</option>
+      </select>
+      <select class="filter-sel" id="filter-sw" onchange="renderList()">
+        <option value="">全部軟體</option>
+      </select>
+      <div class="list-toolbar-r">
+        <button class="btn g" onclick="syncEmailList()">📧 同步 Email</button>
+        <button class="btn" onclick="exportCSV()">📊 匯出 CSV</button>
+        <button class="btn p" onclick="openNewCustomer()">＋ 新增客戶</button>
+      </div>
+    </div>
+
+    <div class="list-hdr">
+      <div>#</div>
+      <div class="sort-col" id="sh-name" onclick="setSort('shortname',this)">客戶資訊</div>
+      <div class="sort-col" id="sh-industry" onclick="setSort('industry',this)">產業</div>
+      <div class="sort-col" id="sh-hw" onclick="setSort('hwProduct',this)">設備 / 軟體</div>
+      <div class="sort-col" id="sh-last" onclick="setSort('lastContact',this)">聯絡日期</div>
+      <div>狀態</div>
+      <div></div>
+    </div>
+
+    <div id="cust-list"></div>
+    <p id="list-count" style="font-size:11px;color:var(--t3);margin-top:8px;text-align:right"></p>
+  </div>
+
+  <!-- ══ 業務漏斗 ══ -->
+  <div class="cpanel" id="cp-pipeline">
+    <div class="srow" id="pipeline-stats"></div>
+    <div class="pipeline-cols" id="pipeline-cols"></div>
+  </div>
+
+  <!-- ══ 管理員設定 ══ -->
+  <div class="cpanel" id="cp-admin">
+    <div class="admin-grid">
+      <div class="admin-section">
+        <h3>📦 設備產品</h3>
+        <div class="opt-list" id="opt-hwProducts"></div>
+        <div class="add-opt-row"><input class="add-opt-inp" id="inp-hwProducts" placeholder="新增設備..."><button class="btn pu sm" onclick="addOpt('hwProducts')">+</button></div>
+      </div>
+      <div class="admin-section">
+        <h3>💾 軟體產品</h3>
+        <div class="opt-list" id="opt-swProducts"></div>
+        <div class="add-opt-row"><input class="add-opt-inp" id="inp-swProducts" placeholder="新增軟體..."><button class="btn pu sm" onclick="addOpt('swProducts')">+</button></div>
+      </div>
+      <div class="admin-section">
+        <h3>🏭 產業類別</h3>
+        <div class="opt-list" id="opt-industries"></div>
+        <div class="add-opt-row"><input class="add-opt-inp" id="inp-industries" placeholder="新增產業..."><button class="btn pu sm" onclick="addOpt('industries')">+</button></div>
+      </div>
+      <div class="admin-section">
+        <h3>⚔️ 競爭對手</h3>
+        <div class="opt-list" id="opt-competitors"></div>
+        <div class="add-opt-row"><input class="add-opt-inp" id="inp-competitors" placeholder="新增競爭對手..."><button class="btn pu sm" onclick="addOpt('competitors')">+</button></div>
+      </div>
+      <div class="admin-section">
+        <h3>📡 來源管道</h3>
+        <div class="opt-list" id="opt-sources"></div>
+        <div class="add-opt-row"><input class="add-opt-inp" id="inp-sources" placeholder="新增來源..."><button class="btn pu sm" onclick="addOpt('sources')">+</button></div>
+      </div>
+      <div class="admin-section">
+        <h3>🎯 需求類型</h3>
+        <div class="opt-list" id="opt-needs"></div>
+        <div class="add-opt-row"><input class="add-opt-inp" id="inp-needs" placeholder="新增需求類型..."><button class="btn pu sm" onclick="addOpt('needs')">+</button></div>
+      </div>
+      <div class="admin-section" style="grid-column:1/-1">
+        <h3>🔐 修改管理員密碼</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end">
+          <div class="fg"><div class="fl2">新密碼</div><input class="fi" type="password" id="new-pw1" placeholder="輸入新密碼"></div>
+          <div class="fg"><div class="fl2">確認密碼</div><input class="fi" type="password" id="new-pw2" placeholder="再輸入一次"></div>
+          <button class="btn pu" onclick="changePw()">更新密碼</button>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:12px">
+      <button class="btn g" onclick="saveConfig()">💾 儲存所有設定</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Modal: 新增/編輯客戶 ══ -->
+<div class="modal-ov" id="modal-customer">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">＋ 新增客戶</h3>
+      <button class="modal-x" onclick="closeModal('modal-customer')">✕</button>
+    </div>
+    <div class="mstep-bar">
+      <div class="mstep on" id="mstep1" onclick="goStep(1)">① 基本資料</div>
+      <div class="mstep" id="mstep2" onclick="goStep(2)">② 聯絡人</div>
+      <div class="mstep" id="mstep3" onclick="goStep(3)">③ 商機</div>
+    </div>
+    <div class="modal-body">
+      <div id="ms1">
+        <div class="fg2">
+          <div class="fg"><div class="fl2">客戶簡稱 *</div><input class="fi" id="c-shortname" placeholder="例：弘國精機"></div>
+          <div class="fg"><div class="fl2">客戶全名</div><input class="fi" id="c-fullname" placeholder="公司全名"></div>
+          <div class="fg"><div class="fl2">產業類別</div><select class="fs" id="c-industry"></select></div>
+          <div class="fg"><div class="fl2">公司地點</div><input class="fi" id="c-location" placeholder="台中市西屯區"></div>
+          <div class="fg"><div class="fl2">來源管道</div><select class="fs" id="c-source"></select></div>
+          <div class="fg"><div class="fl2">開發日期</div><input class="fi" type="date" id="c-startdate"></div>
+        </div>
+      </div>
+      <div id="ms2" style="display:none">
+        <div class="fg2">
+          <div class="fg"><div class="fl2">聯絡人姓名</div><input class="fi" id="c-contact" placeholder="王大明"></div>
+          <div class="fg"><div class="fl2">職稱 / 部門</div><input class="fi" id="c-ctitle" placeholder="品保課長"></div>
+          <div class="fg"><div class="fl2">公司電話</div><input class="fi" id="c-tel" placeholder="04-XXXX-XXXX"></div>
+          <div class="fg"><div class="fl2">手機</div><input class="fi" id="c-mobile" placeholder="09XX-XXX-XXX"></div>
+          <div class="fg"><div class="fl2">Email</div><input class="fi" type="email" id="c-email" placeholder="name@company.com"></div>
+          <div class="fg"><div class="fl2">LINE / 其他</div><input class="fi" id="c-line" placeholder="LINE ID"></div>
+          <div class="fg"><div class="fl2">決策者姓名</div><input class="fi" id="c-dname" placeholder="林協理"></div>
+          <div class="fg"><div class="fl2">決策者職稱</div><input class="fi" id="c-dtitle" placeholder="協理"></div>
+        </div>
+      </div>
+      <div id="ms3" style="display:none">
+        <div class="fg2">
+          <div class="fg">
+            <div class="fl2">客戶狀態</div>
+            <select class="fs" id="c-status">
+              <option value="contact">初次接觸</option>
+              <option value="evaluating">評估中</option>
+              <option value="prospect">有望（Demo/報價）</option>
+              <option value="closed">成交結案</option>
+              <option value="nope">暫時無望</option>
+              <option value="old">老客戶</option>
+            </select>
+          </div>
+          <div class="fg"><div class="fl2">推薦設備</div><select class="fs" id="c-hwProduct"></select></div>
+          <div class="fg"><div class="fl2">推薦軟體</div><select class="fs" id="c-swProduct"></select></div>
+          <div class="fg">
+            <div class="fl2">預估預算</div>
+            <select class="fs" id="c-budget">
+              <option value="">未知</option>
+              <option value="under50">50 萬以下</option>
+              <option value="50-100">50–100 萬</option>
+              <option value="100-200">100–200 萬</option>
+              <option value="over200">200 萬以上</option>
+            </select>
+          </div>
+          <div class="fg">
+            <div class="fl2">下次聯絡日</div>
+            <input class="fi" type="date" id="c-nextdate" style="margin-bottom:5px">
+            <div class="qbtns">
+              <button class="qb" onclick="setQDate(7,this)">1週後</button>
+              <button class="qb" onclick="setQDate(14,this)">2週後</button>
+              <button class="qb" onclick="setQDate(30,this)">1個月後</button>
+              <button class="qb" onclick="setQDate(60,this)">2個月後</button>
+            </div>
+          </div>
+          <div class="fg">
+            <div class="fl2">成交機率</div>
+            <div class="prob-row">
+              <input type="range" min="0" max="100" step="5" id="c-prob" value="25" oninput="document.getElementById('c-prob-val').textContent=this.value+'%'">
+              <span class="prob-val" id="c-prob-val">25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="fg" style="margin-top:4px">
+          <div class="fl2">需求類型（複選）</div>
+          <div class="tag-wrap" id="c-needs-tags"></div>
+        </div>
+        <div class="fg" style="margin-top:8px">
+          <div class="fl2">競爭對手（複選）</div>
+          <div class="tag-wrap" id="c-comp-tags"></div>
+        </div>
+        <div class="fg" style="margin-top:8px">
+          <div class="fl2">跟進備註</div>
+          <textarea class="fta" id="c-note" placeholder="記錄初次接觸狀況..."></textarea>
+        </div>
+        <div style="margin-top:8px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--t2)">
+            <input type="checkbox" id="c-sync" checked style="accent-color:var(--grn);width:14px;height:14px">
+            自動同步至 📧 Email 發送名單
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="btn-prev" style="display:none" onclick="goStep(CRM.step-1)">← 上一步</button>
+      <button class="btn" onclick="closeModal('modal-customer')">取消</button>
+      <button class="btn p" id="btn-next" onclick="goStep(CRM.step+1)">下一步 →</button>
+      <button class="btn g" id="btn-save" style="display:none" onclick="saveCustomer()">✅ 儲存客戶</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var CRM = {
+  customers: JSON.parse(localStorage.getItem('crm_customers') || '[]'),
+  config: JSON.parse(localStorage.getItem('crm_config') || 'null') || {
+    hwProducts: ['SIMSCAN 30','SIMSCAN 30 Gen2','NimbleTrack','NimbleTrack Gen2','Artec Spider','Artec Leo','MicroII 固定式','Mech-Eye 3D','UR 手臂','待確認'],
+    swProducts: ['Geomagic Design X','Geomagic Control X','Control X Essentials','Wrap 3','PolyWorks','—'],
+    industries: ['金屬加工','自行車零件','汽車零件','模具製造','醫療器材','航太國防','學術教育','鞋材紡織','塑膠射出','機械製造','電子製造','其他'],
+    sources: ['展覽/活動','電訪開發','老客戶轉介','官網詢問','合作夥伴','業務主動開發'],
+    competitors: ['安度','馬路科技','通業','基恩斯','海克斯康','品測科技','GOM','蔡思','宏典','無競爭對手'],
+    needs: ['逆向設計 RE','尺寸檢測','變形量比對','批量檢測','3D 列印','自動化整合','教育訓練','代工服務'],
+    adminPw: 'admin123'
+  },
+  isAdmin: false,
+  editingId: null,
+  step: 1,
+  sortKey: 'lastContact',
+  sortDir: 'desc'
+};
+
+// ── Init ──
+function init() {
+  renderTodo();
+  renderDashboard();
+  renderList();
+  renderPipeline();
+  updateChips();
+  populateFilterDropdowns();
+}
+
+// ── Theme / Admin ──
+function toggleTheme() {
+  document.body.classList.toggle('lm');
+  document.getElementById('themeBtn').textContent = document.body.classList.contains('lm') ? '🌑 暗色' : '🌙 暗色';
+}
+
+function toggleAdmin() {
+  if (CRM.isAdmin) {
+    CRM.isAdmin = false;
+    document.getElementById('admin-badge').style.display = 'none';
+    document.getElementById('admin-tab').style.display = 'none';
+    toast('已退出管理員模式');
+    swCP('todo', document.querySelector('.ctab'));
+  } else {
+    var pw = prompt('請輸入管理員密碼：');
+    if (pw === CRM.config.adminPw) {
+      CRM.isAdmin = true;
+      document.getElementById('admin-badge').style.display = 'inline-flex';
+      document.getElementById('admin-tab').style.display = '';
+      toast('✅ 管理員模式已開啟', 'ok');
+    } else if (pw !== null) {
+      toast('❌ 密碼錯誤', 'err');
+    }
+  }
+}
+
+// ── Tabs ──
+function swCP(name, btn) {
+  document.querySelectorAll('.ctab').forEach(function(b) { b.classList.remove('on'); });
+  document.querySelectorAll('.cpanel').forEach(function(p) { p.classList.remove('on'); });
+  if (btn) btn.classList.add('on');
+  var p = document.getElementById('cp-' + name);
+  if (p) p.classList.add('on');
+  if (name === 'todo') renderTodo();
+  if (name === 'dashboard') renderDashboard();
+  if (name === 'list') renderList();
+  if (name === 'pipeline') renderPipeline();
+  if (name === 'admin') renderAdminPanels();
+}
+
+// ── Todo / Alerts ──
+function renderTodo() {
+  var today = new Date(); today.setHours(0,0,0,0);
+  var week = new Date(today); week.setDate(today.getDate()+7);
+  var month = new Date(today); month.setDate(today.getDate()+30);
+
+  var overdue = CRM.customers.filter(function(c) {
+    if (!c.lastContact || c.status === 'closed') return false;
+    var d = new Date(c.lastContact); d.setHours(0,0,0,0);
+    return (today - d) / 86400000 > 14;
+  }).sort(function(a,b) { return new Date(a.lastContact)-new Date(b.lastContact); });
+
+  var weekList = CRM.customers.filter(function(c) {
+    if (!c.nextContact) return false;
+    var d = new Date(c.nextContact); d.setHours(0,0,0,0);
+    return d >= today && d <= week;
+  }).sort(function(a,b) { return new Date(a.nextContact)-new Date(b.nextContact); });
+
+  var monthList = CRM.customers.filter(function(c) {
+    if (!c.nextContact) return false;
+    var d = new Date(c.nextContact); d.setHours(0,0,0,0);
+    return d > week && d <= month;
+  }).sort(function(a,b) { return new Date(a.nextContact)-new Date(b.nextContact); });
+
+  document.getElementById('todo-overdue-n').textContent = overdue.length;
+  document.getElementById('todo-week-n').textContent = weekList.length;
+  document.getElementById('todo-month-n').textContent = monthList.length;
+  document.getElementById('todo-overdue-badge').textContent = overdue.length;
+  document.getElementById('todo-week-badge').textContent = weekList.length;
+  document.getElementById('todo-month-badge').textContent = monthList.length;
+
+  function alertHtml(c, accentColor, subText) {
+    var days = c.lastContact ? Math.floor((today - new Date(c.lastContact)) / 86400000) : null;
+    return '<div class="alert-item">'
+      + '<div class="alert-dot" style="background:' + accentColor + '"></div>'
+      + '<div class="alert-txt"><strong>' + esc(c.shortname) + '</strong>'
+      + (days !== null && days > 0 ? ' — ' + days + ' 天未聯絡' : '')
+      + '<div class="alert-sub">' + esc(c.hwProduct||'—') + (c.swProduct && c.swProduct !== '—' ? ' / ' + esc(c.swProduct) : '') + ' · ' + subText + '</div></div>'
+      + '<button class="btn sm" onclick="scrollToCustomer(\'' + c.id + '\')">查看</button></div>';
+  }
+
+  document.getElementById('todo-overdue-list').innerHTML = overdue.length
+    ? overdue.slice(0,8).map(function(c) { return alertHtml(c, '#f85149', '最後聯絡：'+(c.lastContact||'—')); }).join('')
+    : '<div class="empty-state" style="padding:16px;font-size:12px">✅ 目前無逾期客戶</div>';
+
+  document.getElementById('todo-week-list').innerHTML = weekList.length
+    ? weekList.slice(0,6).map(function(c) { return alertHtml(c, '#d29922', '預計：'+c.nextContact); }).join('')
+    : '<div style="font-size:12px;color:var(--t3);padding:10px 0">本週無預定聯絡</div>';
+
+  document.getElementById('todo-month-list').innerHTML = monthList.length
+    ? monthList.slice(0,6).map(function(c) { return alertHtml(c, '#3fb950', '預計：'+c.nextContact); }).join('')
+    : '<div style="font-size:12px;color:var(--t3);padding:10px 0">本月無預定聯絡</div>';
+}
+
+// ── Dashboard ──
+function renderDashboard() {
+  var c = CRM.customers;
+  var prospects = c.filter(function(x){return x.status==='prospect';}).length;
+  var closed = c.filter(function(x){return x.status==='closed';}).length;
+  var rate = (prospects+closed) ? Math.round(closed/(prospects+closed)*100) : 0;
+  var today = new Date(); today.setHours(0,0,0,0);
+  var overdue = c.filter(function(x){
+    if (!x.lastContact||x.status==='closed') return false;
+    var d=new Date(x.lastContact); d.setHours(0,0,0,0);
+    return (today-d)/86400000>14;
+  }).length;
+  document.getElementById('m-total').textContent = c.length;
+  document.getElementById('m-prospect').textContent = prospects;
+  document.getElementById('m-rate').textContent = rate+'%';
+  document.getElementById('m-followup').textContent = overdue;
+
+  var statusMap = {contact:'初次接觸',evaluating:'評估中',prospect:'有望',closed:'成交',nope:'無望',old:'老客戶'};
+  var statusColors = {contact:'#60a5fa',evaluating:'#d29922',prospect:'#3fb950',closed:'#1D9E75',nope:'#8b949e',old:'#a371f7'};
+  var counts = {};
+  c.forEach(function(x){ counts[x.status]=(counts[x.status]||0)+1; });
+  var maxC = Math.max.apply(null, Object.values(counts).concat([1]));
+  document.getElementById('status-chart').innerHTML = Object.keys(statusMap).map(function(k){
+    var n=counts[k]||0, pct=Math.round(n/maxC*100);
+    return '<div class="bar-row"><div class="bar-label">'+statusMap[k]+'</div><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;background:'+statusColors[k]+';color:#fff">'+n+'</div></div><div class="bar-pct">'+n+'</div></div>';
+  }).join('');
+
+  var hwCounts = {};
+  c.forEach(function(x){ if(x.hwProduct && x.hwProduct!=='—') hwCounts[x.hwProduct]=(hwCounts[x.hwProduct]||0)+1; });
+  var topHW = Object.entries(hwCounts).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+  var maxH = topHW.length ? topHW[0][1] : 1;
+  document.getElementById('product-chart').innerHTML = topHW.length
+    ? topHW.map(function(p){return '<div class="bar-row"><div class="bar-label">'+esc(p[0].substring(0,10))+'</div><div class="bar-track"><div class="bar-fill" style="width:'+Math.round(p[1]/maxH*100)+'%;background:var(--ac);color:#fff">'+p[1]+'</div></div><div class="bar-pct">'+p[1]+'</div></div>';}).join('')
+    : '<div class="empty-state" style="padding:16px">尚無資料</div>';
+
+  var lossKw = [['競爭對手',['安度','馬路','通業','基恩斯']],['預算不足',['預算','貴','費用']],['時機未到',['暫緩','時機','不急']],['需求不符',['不需要','沒需求']],['景氣影響',['景氣','觀望','關稅']]];
+  var nopes = c.filter(function(x){return x.status==='nope';});
+  var lossColors = ['#f85149','#d29922','#8b949e','#3fb950','#60a5fa'];
+  var lossData = lossKw.map(function(lw){
+    var n=nopes.filter(function(x){return lw[1].some(function(k){return (x.note||'').includes(k)||(x.logs||[]).some(function(l){return l.text.includes(k);});});}).length;
+    return [lw[0],n];
+  });
+  var maxL = Math.max.apply(null, lossData.map(function(x){return x[1];}).concat([1]));
+  document.getElementById('loss-chart').innerHTML = lossData.map(function(ld,i){
+    return '<div class="bar-row"><div class="bar-label">'+ld[0]+'</div><div class="bar-track"><div class="bar-fill" style="width:'+Math.round(ld[1]/maxL*100)+'%;background:'+lossColors[i]+';color:#fff">'+ld[1]+'</div></div><div class="bar-pct">'+ld[1]+'</div></div>';
+  }).join('');
+}
+
+// ── Customer List (Expandable) ──
+function setSort(key, el) {
+  if (CRM.sortKey === key) {
+    CRM.sortDir = CRM.sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    CRM.sortKey = key;
+    CRM.sortDir = 'asc';
+  }
+  document.querySelectorAll('.sort-col').forEach(function(c){ c.classList.remove('asc','desc'); });
+  if (el) el.classList.add(CRM.sortDir);
+  renderList();
+}
+
+function renderList() {
+  var search = (document.getElementById('search-inp').value||'').toLowerCase();
+  var fStatus = document.getElementById('filter-status').value;
+  var fHW = document.getElementById('filter-hw').value;
+  var fSW = document.getElementById('filter-sw').value;
+  var today = new Date(); today.setHours(0,0,0,0);
+
+  var list = CRM.customers.filter(function(c){
+    var ms = !search || [c.shortname,c.fullname,c.contact,c.hwProduct,c.swProduct,c.industry,c.note].join(' ').toLowerCase().includes(search);
+    var mst = !fStatus || c.status===fStatus;
+    var mhw = !fHW || c.hwProduct===fHW;
+    var msw = !fSW || c.swProduct===fSW;
+    return ms && mst && mhw && msw;
+  });
+
+  list.sort(function(a,b){
+    var av = a[CRM.sortKey]||'', bv = b[CRM.sortKey]||'';
+    if (CRM.sortKey === 'prob') { av=Number(a.prob||0); bv=Number(b.prob||0); return CRM.sortDir==='asc'?av-bv:bv-av; }
+    var r = av.localeCompare(bv);
+    return CRM.sortDir === 'asc' ? r : -r;
+  });
+
+  var statusLabel = {contact:'初次接觸',evaluating:'評估中',prospect:'有望',closed:'成交',nope:'暫時無望',old:'老客戶'};
+  var el = document.getElementById('cust-list');
+
+  if (!list.length) {
+    el.innerHTML = '<div class="empty-state"><div style="font-size:32px;margin-bottom:8px">👥</div><div style="font-size:13px;color:var(--t2)">尚無客戶資料</div><div style="font-size:11px;margin-top:5px">點「＋ 新增客戶」開始建立</div></div>';
+    document.getElementById('list-count').textContent = '';
+    return;
+  }
+
+  el.innerHTML = list.map(function(c, i) {
+    var lastD = c.lastContact ? new Date(c.lastContact) : null;
+    lastD && lastD.setHours(0,0,0,0);
+    var days = lastD ? Math.floor((today-lastD)/86400000) : null;
+    var isOD = days !== null && days > 14 && c.status !== 'closed';
+    var lastStr = c.lastContact ? (isOD ? c.lastContact+' <span style="font-size:9px">('+days+'天前)</span>' : c.lastContact) : '—';
+    var nextD = c.nextContact ? new Date(c.nextContact) : null;
+    nextD && nextD.setHours(0,0,0,0);
+    var status = days === null ? 'cold' : days < 30 ? 'active' : days < 90 ? 'warm' : 'cold';
+    var dotCls = status === 'active' ? 'sd-a' : status === 'warm' ? 'sd-w' : 'sd-c';
+
+    var logsHtml = '';
+    var logs = (c.logs||[]).slice().reverse();
+    if (logs.length) {
+      logsHtml = logs.map(function(l, li) {
+        var realIdx = c.logs.length - 1 - li;
+        return '<div class="tl-item">'
+          + '<div class="tl-dot"></div>'
+          + '<div class="tl-date">'+esc(l.date)+'</div>'
+          + '<div class="tl-txt">'+esc(l.text)+'</div>'
+          + '<div class="tl-del" onclick="delLog(\''+c.id+'\','+realIdx+')">✕</div>'
+          + '</div>';
+      }).join('');
+    } else {
+      logsHtml = '<div style="font-size:11px;color:var(--t3);padding:6px 0">尚無互動紀錄</div>';
+    }
+
+    return '<div class="crow" id="row-'+c.id+'">'
+      + '<div class="crow-hd" onclick="document.getElementById(\'row-'+c.id+'\').classList.toggle(\'open\')">'
+      + '<div class="cnum">'+String(i+1).padStart(2,'0')+'</div>'
+      + '<div class="cname-wrap"><div class="cname">'+esc(c.shortname||'—')+' <span style="font-size:11px;font-weight:400;color:var(--t2)">'+esc(c.fullname||'')+'</span></div>'
+      + (c.needs&&c.needs.length?'<div class="csub">'+esc(c.needs.join('・'))+'</div>':'<div class="csub">'+esc(c.industry||'')+'</div>')+'</div>'
+      + '<div><span class="ctag">'+esc(c.industry||'—')+'</span></div>'
+      + '<div><div class="cprod-hw">'+esc(c.hwProduct||'—')+'</div><div class="cprod-sw">'+esc(c.swProduct&&c.swProduct!=='—'?c.swProduct:'')+'</div></div>'
+      + '<div class="cdate'+(isOD?' overdue':'')+'">'+lastStr+'</div>'
+      + '<div><div class="sdot '+dotCls+'"></div></div>'
+      + '<div class="carr">▼</div>'
+      + '</div>'
+      + '<div class="cdetail">'
+      + '<div class="dgrid">'
+      // Left: basic info
+      + '<div class="dsec"><div class="dsec-title">基本資訊</div>'
+      + '<div class="fr"><div class="fl">公司全名</div><div class="fv">'+esc(c.fullname||'—')+'</div></div>'
+      + '<div class="fr"><div class="fl">產業</div><div class="fv">'+esc(c.industry||'—')+'</div></div>'
+      + '<div class="fr"><div class="fl">地點</div><div class="fv">'+esc(c.location||'—')+'</div></div>'
+      + '<div class="fr"><div class="fl">來源</div><div class="fv">'+esc(c.source||'—')+'</div></div>'
+      + '<div class="fr"><div class="fl">聯絡人</div><div class="fv">'+esc(c.contact||'—')+(c.contactTitle?' <span style="color:var(--t2)">('+esc(c.contactTitle)+')</span>':'')+'</div></div>'
+      + '<div class="fr"><div class="fl">電話</div><div class="fv">'+esc(c.tel||c.mobile||'—')+'</div></div>'
+      + '<div class="fr"><div class="fl">Email</div><div class="fv">'+esc(c.email||'—')+'</div></div>'
+      + '<div class="fr"><div class="fl">決策者</div><div class="fv">'+esc(c.decisionName||'—')+(c.decisionTitle?' <span style="color:var(--t2)">('+esc(c.decisionTitle)+')</span>':'')+'</div></div>'
+      + '<div class="fr"><div class="fl">競爭者</div><div class="fv">'+esc((c.competitors||[]).join('、')||'—')+'</div></div>'
+      + '</div>'
+      // Right: deal info + next contact
+      + '<div class="dsec"><div class="dsec-title">商機 &amp; 聯絡</div>'
+      + '<div class="fr"><div class="fl">狀態</div><div class="fv"><span class="badge '+c.status+'">'+(statusLabel[c.status]||c.status)+'</span></div></div>'
+      + '<div class="fr"><div class="fl">推薦產品</div><div class="fv"><div class="pgrid"><div class="pchip"><div class="pc-lbl">設備</div><div class="pc-hw">'+esc(c.hwProduct||'—')+'</div></div><div class="pchip"><div class="pc-lbl">軟體</div><div class="pc-sw">'+esc(c.swProduct||'—')+'</div></div></div></div></div>'
+      + '<div class="fr"><div class="fl">機率</div><div class="fv" style="font-weight:700;color:'+(c.prob>=70?'var(--grn)':c.prob>=40?'var(--ylw)':'var(--t2)')+'">'+esc(String(c.prob||0))+'%</div></div>'
+      + '<div class="fr"><div class="fl">需求</div><div class="fv">'+esc((c.needs||[]).join('、')||'—')+'</div></div>'
+      + '<div class="fr" style="margin-top:8px"><div class="fl">最後聯絡</div><div class="fv"><input type="date" value="'+(c.lastContact||'')+'" class="custom-date-inp" onchange="inlineUpdate(\''+c.id+'\',\'lastContact\',this.value)"></div></div>'
+      + '<div class="fr" style="margin-top:6px"><div class="fl">下次聯絡</div><div class="fv">'
+      + '<input type="date" value="'+(c.nextContact||'')+'" class="custom-date-inp" id="nd-'+c.id+'" onchange="inlineUpdate(\''+c.id+'\',\'nextContact\',this.value)">'
+      + '<div class="qbtns" style="margin-top:4px">'
+      + '<button class="qb" onclick="setReminderQ(\''+c.id+'\',7,this)">1週後</button>'
+      + '<button class="qb" onclick="setReminderQ(\''+c.id+'\',14,this)">2週後</button>'
+      + '<button class="qb" onclick="setReminderQ(\''+c.id+'\',30,this)">1個月後</button>'
+      + '<button class="qb" onclick="setReminderQ(\''+c.id+'\',60,this)">2個月後</button>'
+      + '</div></div></div>'
+      + '<div class="fr"><div class="fl">備註</div><div class="fv" style="font-size:11px;color:var(--t2)">'+esc(c.note||'—')+'</div></div>'
+      + '</div>'
+      + '</div>'
+      // Timeline
+      + '<div class="dsec" style="margin-bottom:10px"><div class="dsec-title">互動軌跡</div>'
+      + '<div id="tl-'+c.id+'">'+logsHtml+'</div>'
+      + '<div class="tl-add">'
+      + '<input type="date" class="tl-date-inp" id="tld-'+c.id+'" value="'+new Date().toISOString().slice(0,10)+'">'
+      + '<input class="tl-txt-inp" id="tlt-'+c.id+'" placeholder="輸入互動內容...">'
+      + '<button class="btn p sm" onclick="addLog(\''+c.id+'\')">記錄</button>'
+      + '</div></div>'
+      // Actions
+      + '<div style="display:flex;gap:6px">'
+      + '<button class="btn sm w" onclick="openEdit(\''+c.id+'\')">✏️ 編輯</button>'
+      + '<button class="btn sm r" onclick="deleteCust(\''+c.id+'\')">🗑 刪除</button>'
+      + '</div>'
+      + '</div></div>';
+  }).join('');
+
+  document.getElementById('list-count').textContent = '顯示 '+list.length+' / '+CRM.customers.length+' 筆';
+}
+
+function scrollToCustomer(id) {
+  swCP('list', document.querySelectorAll('.ctab')[2]);
+  setTimeout(function(){
+    var row = document.getElementById('row-'+id);
+    if (row) { row.classList.add('open'); row.scrollIntoView({behavior:'smooth',block:'center'}); }
+  }, 100);
+}
+
+function inlineUpdate(id, field, val) {
+  var c = CRM.customers.find(function(x){return x.id===id;});
+  if (!c) return;
+  c[field] = val;
+  save();
+  renderTodo();
+  toast('已更新 '+field, 'ok');
+}
+
+function setReminderQ(id, days, btn) {
+  var d = new Date(); d.setDate(d.getDate()+days);
+  var val = d.toISOString().slice(0,10);
+  inlineUpdate(id, 'nextContact', val);
+  var inp = document.getElementById('nd-'+id);
+  if (inp) inp.value = val;
+  btn.closest('.qbtns').querySelectorAll('.qb').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+}
+
+// ── Pipeline ──
+function renderPipeline() {
+  var stages = [
+    {key:'contact',label:'初次接觸',color:'#60a5fa'},
+    {key:'evaluating',label:'評估中',color:'#d29922'},
+    {key:'prospect',label:'有望',color:'#3fb950'},
+    {key:'closed',label:'成交',color:'#1D9E75'},
+    {key:'nope',label:'暫時無望',color:'#8b949e'}
+  ];
+  document.getElementById('pipeline-stats').innerHTML = stages.map(function(s){
+    var n = CRM.customers.filter(function(c){return c.status===s.key;}).length;
+    return '<div class="sc"><div class="sn" style="color:'+s.color+'">'+n+'</div><div class="sl">'+s.label+'</div></div>';
+  }).join('');
+  document.getElementById('pipeline-cols').innerHTML = stages.map(function(s){
+    var cards = CRM.customers.filter(function(c){return c.status===s.key;});
+    return '<div class="pl-col">'
+      + '<div class="pl-head" style="border-top:3px solid '+s.color+'">'+s.label
+      + '<span class="pl-count" style="color:'+s.color+'">'+cards.length+'</span></div>'
+      + '<div class="pl-body">'
+      + (cards.length ? cards.map(function(c){
+          return '<div class="pl-card" onclick="scrollToCustomer(\''+c.id+'\')">'
+            + '<div class="pl-card-name">'+esc(c.shortname||'—')+'</div>'
+            + '<div class="pl-card-sub">'+esc(c.hwProduct||'—')+' · '+(c.prob||0)+'%</div></div>';
+        }).join('') : '<div style="font-size:11px;color:var(--t3);padding:6px;text-align:center">無</div>')
+      + '</div></div>';
+  }).join('');
+}
+
+// ── Log ──
+function addLog(id) {
+  var txt = (document.getElementById('tlt-'+id)||{}).value;
+  if (!txt || !txt.trim()) { toast('⚠️ 請輸入內容'); return; }
+  var date = (document.getElementById('tld-'+id)||{}).value || new Date().toISOString().slice(0,10);
+  var c = CRM.customers.find(function(x){return x.id===id;});
+  if (!c) return;
+  if (!c.logs) c.logs = [];
+  c.logs.push({date:date, text:txt.trim()});
+  c.lastContact = date;
+  save();
+  document.getElementById('tlt-'+id).value = '';
+  renderList();
+  renderTodo();
+  setTimeout(function(){
+    var row = document.getElementById('row-'+id);
+    if (row) row.classList.add('open');
+  }, 50);
+  toast('✅ 記錄已新增', 'ok');
+}
+
+function delLog(id, idx) {
+  if (!confirm('確定刪除此互動紀錄？')) return;
+  var c = CRM.customers.find(function(x){return x.id===id;});
+  if (!c || !c.logs) return;
+  c.logs.splice(idx, 1);
+  if (c.logs.length) c.lastContact = c.logs[c.logs.length-1].date;
+  save();
+  renderList();
+  setTimeout(function(){
+    var row = document.getElementById('row-'+id);
+    if (row) row.classList.add('open');
+  }, 50);
+  toast('已刪除', 'ok');
+}
+
+// ── New / Edit ──
+function openNewCustomer() {
+  CRM.editingId = null;
+  clearForm();
+  document.getElementById('modal-title').textContent = '＋ 新增客戶';
+  document.getElementById('c-startdate').value = new Date().toISOString().slice(0,10);
+  populateSelects({});
+  goStep(1);
+  document.getElementById('modal-customer').classList.add('open');
+}
+
+function openEdit(id) {
+  CRM.editingId = id;
+  var c = CRM.customers.find(function(x){return x.id===id;});
+  if (!c) return;
+  clearForm();
+  document.getElementById('modal-title').textContent = '✏️ 編輯：'+esc(c.shortname||'');
+  document.getElementById('c-shortname').value = c.shortname||'';
+  document.getElementById('c-fullname').value = c.fullname||'';
+  document.getElementById('c-location').value = c.location||'';
+  document.getElementById('c-startdate').value = c.startdate||'';
+  document.getElementById('c-contact').value = c.contact||'';
+  document.getElementById('c-ctitle').value = c.contactTitle||'';
+  document.getElementById('c-tel').value = c.tel||'';
+  document.getElementById('c-mobile').value = c.mobile||'';
+  document.getElementById('c-email').value = c.email||'';
+  document.getElementById('c-line').value = c.line||'';
+  document.getElementById('c-dname').value = c.decisionName||'';
+  document.getElementById('c-dtitle').value = c.decisionTitle||'';
+  document.getElementById('c-budget').value = c.budget||'';
+  document.getElementById('c-nextdate').value = c.nextContact||'';
+  document.getElementById('c-prob').value = c.prob||25;
+  document.getElementById('c-prob-val').textContent = (c.prob||25)+'%';
+  populateSelects(c);
+  goStep(1);
+  document.getElementById('modal-customer').classList.add('open');
+}
+
+function clearForm() {
+  ['c-shortname','c-fullname','c-location','c-contact','c-ctitle','c-tel','c-mobile','c-email','c-line','c-dname','c-dtitle','c-note'].forEach(function(id){
+    var el = document.getElementById(id); if(el) el.value='';
+  });
+  document.getElementById('c-prob').value=25;
+  document.getElementById('c-prob-val').textContent='25%';
+  document.getElementById('c-budget').value='';
+  document.getElementById('c-nextdate').value='';
+  document.getElementById('c-sync').checked=true;
+}
+
+function populateSelects(c) {
+  var cv = c||{};
+  function fill(id, key, selected) {
+    var sel = document.getElementById(id);
+    if (!sel) return;
+    sel.innerHTML = '<option value="">-- 選擇 --</option>' + (CRM.config[key]||[]).map(function(v){
+      return '<option value="'+esc(v)+'"'+(selected===v?' selected':'')+'>'+esc(v)+'</option>';
+    }).join('');
+  }
+  fill('c-industry','industries',cv.industry);
+  fill('c-source','sources',cv.source);
+  fill('c-hwProduct','hwProducts',cv.hwProduct);
+  fill('c-swProduct','swProducts',cv.swProduct);
+  if (cv.status) document.getElementById('c-status').value = cv.status;
+
+  document.getElementById('c-needs-tags').innerHTML = CRM.config.needs.map(function(v){
+    var on=(cv.needs||[]).includes(v);
+    return '<span class="tag-chip'+(on?' on':'')+'" onclick="this.classList.toggle(\'on\')" data-val="'+esc(v)+'">'+esc(v)+'</span>';
+  }).join('');
+  document.getElementById('c-comp-tags').innerHTML = CRM.config.competitors.map(function(v){
+    var on=(cv.competitors||[]).includes(v);
+    return '<span class="tag-chip'+(on?' on':'')+'" onclick="this.classList.toggle(\'on\')" data-val="'+esc(v)+'">'+esc(v)+'</span>';
+  }).join('');
+}
+
+function goStep(n) {
+  if (n<1||n>3) return;
+  CRM.step=n;
+  ['ms1','ms2','ms3'].forEach(function(id,i){document.getElementById(id).style.display=i+1===n?'':'none';});
+  ['mstep1','mstep2','mstep3'].forEach(function(id,i){document.getElementById(id).classList.toggle('on',i+1===n);});
+  document.getElementById('btn-prev').style.display=n>1?'':'none';
+  document.getElementById('btn-next').style.display=n<3?'':'none';
+  document.getElementById('btn-save').style.display=n===3?'':'none';
+}
+
+function setQDate(days, btn) {
+  var d=new Date(); d.setDate(d.getDate()+days);
+  document.getElementById('c-nextdate').value=d.toISOString().slice(0,10);
+  btn.closest('.qbtns').querySelectorAll('.qb').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+}
+
+function getChips(id) {
+  return Array.from(document.querySelectorAll('#'+id+' .tag-chip.on')).map(function(el){return el.dataset.val;});
+}
+
+function saveCustomer() {
+  var sn = document.getElementById('c-shortname').value.trim();
+  if (!sn) { toast('⚠️ 請填寫客戶簡稱'); goStep(1); return; }
+  var noteVal = document.getElementById('c-note').value.trim();
+  var syncEmail = document.getElementById('c-sync').checked;
+  var now = new Date().toISOString().slice(0,10);
+  var data = {
+    id: CRM.editingId || String(Date.now()),
+    shortname: sn,
+    fullname: document.getElementById('c-fullname').value.trim(),
+    industry: document.getElementById('c-industry').value,
+    location: document.getElementById('c-location').value.trim(),
+    source: document.getElementById('c-source').value,
+    startdate: document.getElementById('c-startdate').value,
+    contact: document.getElementById('c-contact').value.trim(),
+    contactTitle: document.getElementById('c-ctitle').value.trim(),
+    tel: document.getElementById('c-tel').value.trim(),
+    mobile: document.getElementById('c-mobile').value.trim(),
+    email: document.getElementById('c-email').value.trim(),
+    line: document.getElementById('c-line').value.trim(),
+    decisionName: document.getElementById('c-dname').value.trim(),
+    decisionTitle: document.getElementById('c-dtitle').value.trim(),
+    status: document.getElementById('c-status').value,
+    hwProduct: document.getElementById('c-hwProduct').value,
+    swProduct: document.getElementById('c-swProduct').value,
+    budget: document.getElementById('c-budget').value,
+    prob: parseInt(document.getElementById('c-prob').value)||0,
+    needs: getChips('c-needs-tags'),
+    competitors: getChips('c-comp-tags'),
+    nextContact: document.getElementById('c-nextdate').value,
+    lastContact: now,
+    createdAt: new Date().toLocaleDateString('zh-TW'),
+    logs: []
+  };
+  if (CRM.editingId) {
+    var idx = CRM.customers.findIndex(function(x){return x.id===CRM.editingId;});
+    if (idx>=0) { data.logs=CRM.customers[idx].logs||[]; CRM.customers[idx]=data; }
+  } else {
+    if (noteVal) data.logs.push({date:new Date().toLocaleDateString('zh-TW'),text:noteVal});
+    CRM.customers.unshift(data);
+  }
+  if (syncEmail && data.email) {
+    var el2 = JSON.parse(localStorage.getItem('cus_list')||'[]');
+    if (!el2.find(function(x){return x.email===data.email;})) {
+      el2.unshift({id:Date.now()+Math.random(),name:data.contact||data.shortname,company:data.fullname||data.shortname,email:data.email,phone:data.tel||data.mobile,status:'unsent',createdAt:new Date().toLocaleDateString('zh-TW')});
+      localStorage.setItem('cus_list',JSON.stringify(el2));
+    }
+  }
+  save();
+  closeModal('modal-customer');
+  renderTodo(); renderDashboard(); renderList(); renderPipeline(); updateChips();
+  toast('✅ 客戶已儲存'+(syncEmail&&data.email?' · 已同步 Email':''), 'ok');
+}
+
+function deleteCust(id) {
+  if (!confirm('確定刪除此客戶？')) return;
+  CRM.customers = CRM.customers.filter(function(x){return x.id!==id;});
+  save(); renderTodo(); renderDashboard(); renderList(); renderPipeline(); updateChips();
+  toast('🗑 已刪除');
+}
+
+// ── Export / Sync ──
+function syncEmailList() {
+  var withEmail = CRM.customers.filter(function(c){return c.email;});
+  if (!withEmail.length) { toast('⚠️ 無有效 Email 的客戶'); return; }
+  var el = JSON.parse(localStorage.getItem('cus_list')||'[]');
+  var added=0;
+  withEmail.forEach(function(c){
+    if (!el.find(function(x){return x.email===c.email;})) {
+      el.unshift({id:Date.now()+Math.random(),name:c.contact||c.shortname,company:c.fullname||c.shortname,email:c.email,phone:c.tel||c.mobile,status:'unsent',createdAt:new Date().toLocaleDateString('zh-TW')});
+      added++;
+    }
+  });
+  localStorage.setItem('cus_list',JSON.stringify(el));
+  toast('✅ 已同步 '+added+' 筆至 Email 名單','ok');
+}
+
+function exportCSV() {
+  var h=['客戶簡稱','客戶全名','產業','地點','來源','聯絡人','職稱','電話','手機','Email','狀態','設備','軟體','預算','機率','下次聯絡','最後聯絡'];
+  var rows=CRM.customers.map(function(c){return [c.shortname,c.fullname,c.industry,c.location,c.source,c.contact,c.contactTitle,c.tel,c.mobile,c.email,c.status,c.hwProduct,c.swProduct,c.budget,c.prob,c.nextContact,c.lastContact];});
+  var bom='\uFEFF',csv=bom+[h].concat(rows).map(function(r){return r.map(function(v){return '"'+(String(v||'').replace(/"/g,'""'))+'"';}).join(',');}).join('\n');
+  var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})); a.download='CRM_'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
+  toast('✅ 已匯出','ok');
+}
+
+// ── Admin ──
+function renderAdminPanels() {
+  ['hwProducts','swProducts','industries','competitors','sources','needs'].forEach(function(key){
+    var el = document.getElementById('opt-'+key);
+    if (!el) return;
+    el.innerHTML = (CRM.config[key]||[]).map(function(v,i){
+      return '<div class="opt-item"><span>'+esc(v)+'</span><button class="btn sm r" onclick="removeOpt(\''+key+'\','+i+')">刪除</button></div>';
+    }).join('') || '<div style="font-size:11px;color:var(--t3);padding:4px">尚無項目</div>';
+  });
+}
+
+function addOpt(key) {
+  var val = document.getElementById('inp-'+key).value.trim();
+  if (!val) return;
+  if ((CRM.config[key]||[]).includes(val)) { toast('⚠️ 已存在'); return; }
+  if (!CRM.config[key]) CRM.config[key]=[];
+  CRM.config[key].push(val);
+  document.getElementById('inp-'+key).value='';
+  renderAdminPanels();
+  toast('✅ 已新增','ok');
+}
+
+function removeOpt(key,idx) {
+  if (!confirm('確定刪除？')) return;
+  CRM.config[key].splice(idx,1);
+  renderAdminPanels();
+}
+
+function saveConfig() {
+  localStorage.setItem('crm_config',JSON.stringify(CRM.config));
+  toast('✅ 設定已儲存','ok');
+}
+
+function changePw() {
+  var p1=document.getElementById('new-pw1').value;
+  var p2=document.getElementById('new-pw2').value;
+  if (!p1){toast('⚠️ 請輸入新密碼');return;}
+  if (p1!==p2){toast('❌ 兩次密碼不一致','err');return;}
+  CRM.config.adminPw=p1; saveConfig();
+  toast('✅ 密碼已更新','ok');
+  document.getElementById('new-pw1').value=''; document.getElementById('new-pw2').value='';
+}
+
+// ── Filter dropdowns ──
+function populateFilterDropdowns() {
+  function fill(id, key) {
+    var sel = document.getElementById(id);
+    if (!sel) return;
+    (CRM.config[key]||[]).forEach(function(v){
+      var o=document.createElement('option'); o.value=v; o.textContent=v; sel.appendChild(o);
+    });
+  }
+  fill('filter-hw','hwProducts');
+  fill('filter-sw','swProducts');
+}
+
+// ── Chips ──
+function updateChips() {
+  document.getElementById('chip-total').textContent = CRM.customers.length;
+  document.getElementById('chip-prospect').textContent = CRM.customers.filter(function(c){return c.status==='prospect';}).length;
+  document.getElementById('chip-closed').textContent = CRM.customers.filter(function(c){return c.status==='closed';}).length;
+}
+
+// ── Utils ──
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function save() { localStorage.setItem('crm_customers',JSON.stringify(CRM.customers)); }
+function toast(msg,type) {
+  var t=document.createElement('div'); t.className='toast'+(type?' '+type:''); t.textContent=msg;
+  document.getElementById('toasts').appendChild(t); setTimeout(function(){t.remove();},3000);
+}
+
+init();
+</script>
+</body>
+</html>
