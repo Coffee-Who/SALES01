@@ -1572,7 +1572,7 @@ function buildMapTable(){
   var html='<thead><tr><th style="width:150px">Excel 欄位</th><th style="width:130px">範例資料</th><th style="width:20px"></th><th>對應 CRM 欄位</th></tr></thead><tbody>';
   CRM.importMapping={};
   CRM.importHeaders.forEach(function(h,i){
-    var sample=(CRM.importData[0]&&CRM.importData[0][i])||'—';
+    var sample=(CRM.importData[0]&&CRM.importData[0][h]!=null)?String(CRM.importData[0][h]).substring(0,20):'—';
     var mapped=AUTO_MAP[h]||'跳過此欄位';
     CRM.importMapping[h]=mapped;
     var opts=CRM_FIELDS.map(function(f){return '<option value="'+f+'"'+(f===mapped?' selected':'')+'>'+f+'</option>';}).join('');
@@ -1619,10 +1619,10 @@ function doImport(){
   var overwrite=document.getElementById('imp-overwrite').checked;
   var syncEmail=document.getElementById('imp-sync-email').checked;
   var fieldMap={};
-  CRM.importHeaders.forEach(function(h,i){if(CRM.importMapping[h]!=='跳過此欄位')fieldMap[CRM.importMapping[h]]=i;});
+  CRM.importHeaders.forEach(function(h,i){if(CRM.importMapping[h]!=='跳過此欄位')fieldMap[CRM.importMapping[h]]=h;});
   var added=0,updated=0;
   CRM.importData.forEach(function(r){
-    var sn=fieldMap['客戶簡稱']!==undefined?r[fieldMap['客戶簡稱']].trim():'';
+    var sn=fieldMap['客戶簡稱']?String(r[fieldMap['客戶簡稱']]||'').trim():'';
     if(!sn)return;
     var existing=CRM.customers.find(function(c){return c.shortname===sn;});
     function getF(f){return fieldMap[f]!==undefined?(r[fieldMap[f]]||'').trim():'';}
