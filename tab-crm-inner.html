@@ -1625,7 +1625,7 @@ function doImport(){
     var sn=fieldMap['客戶簡稱']?String(r[fieldMap['客戶簡稱']]||'').trim():'';
     if(!sn)return;
     var existing=CRM.customers.find(function(c){return c.shortname===sn;});
-    function getF(f){return fieldMap[f]!==undefined?(r[fieldMap[f]]||'').trim():'';}
+    function getF(f){return fieldMap[f]?String(r[fieldMap[f]]||'').trim():''}
     var logsFromImport=[];
     var content=getF('聯繫內容（→互動軌跡）');
     if(content)logsFromImport.push({date:getF('最後聯絡日')||new Date().toISOString().slice(0,10),text:content,type:'note',typeLabel:'匯入記錄'});
