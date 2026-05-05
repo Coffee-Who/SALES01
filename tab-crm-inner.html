@@ -227,6 +227,7 @@ body{font-family:'Noto Sans TC',sans-serif;color:var(--t1);background:var(--bg0)
 @keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .empty-state{text-align:center;padding:36px 20px;color:var(--t3)}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body class="lm">
 <div id="toasts"></div>
@@ -1528,20 +1529,34 @@ function goImportStep(n){
 function handleFile(inp){
   var file=inp.files[0];
   if(!file)return;
+  var isCsv=file.name.toLowerCase().endsWith('.csv');
   var reader=new FileReader();
   reader.onload=function(e){
-    var text=e.target.result;
-    var lines=text.split('\n').filter(function(l){return l.trim();});
-    CRM.importHeaders=lines[0].split(',').map(function(h){return h.replace(/"/g,'').trim();});
-    CRM.importData=lines.slice(1).map(function(l){
-      return l.split(',').map(function(v){return v.replace(/"/g,'').trim();});
+    var wb;
+    if(isCsv){
+      var text=e.target.result;
+      wb=XLSX.read(text,{type:'string',codepage:65001});
+    } else {
+      wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
+    }
+    var ws=wb.Sheets[wb.SheetNames[0]];
+    var rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+    if(!rows.length)return;
+    CRM.importHeaders=rows[0].map(function(h){return String(h).trim();});
+    CRM.importData=rows.slice(1).filter(function(r){
+      return r.some(function(v){return String(v).trim();});
+    }).map(function(r){
+      var obj={};
+      CRM.importHeaders.forEach(function(h,i){obj[h]=String(r[i]||'').trim();});
+      return obj;
     });
     document.getElementById('imp-rows').textContent=CRM.importData.length;
     document.getElementById('imp-cols').textContent=CRM.importHeaders.length;
     buildMapTable();
     goImportStep(2);
   };
-  reader.readAsText(file,'UTF-8');
+  if(isCsv) reader.readAsText(file,'UTF-8');
+  else reader.readAsArrayBuffer(file);
 }
 
 function handleDrop(e){
