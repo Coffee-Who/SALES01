@@ -1714,5 +1714,18 @@ if (window !== window.top) {
   document.head.appendChild(style);
 }
 </script>
+
+<script>
+/* iframe 內嵌偵測：若被 tab-crm.html 嵌入，隱藏自身 topbar/navtab */
+(function(){
+  if(window.self !== window.top){
+    var s=document.createElement('style');
+    s.textContent='#topbar,#navtab{display:none!important}'+
+      '.sp{padding-top:12px}'+
+      'body{min-height:calc(100vh)}';
+    document.head.appendChild(s);
+  }
+})();
+</script>
 </body>
 </html>
