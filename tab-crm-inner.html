@@ -1626,16 +1626,29 @@ function doImport(){
     if(!sn)return;
     var existing=CRM.customers.find(function(c){return c.shortname===sn;});
     function getF(f){return fieldMap[f]?String(r[fieldMap[f]]||'').trim():''}
+    function toDate(v){
+      if(!v)return '';
+      // Excel 日期序號（數字）轉 YYYY-MM-DD
+      var n=Number(v);
+      if(!isNaN(n)&&n>40000&&n<60000){
+        var d=new Date(Math.round((n-25569)*86400000));
+        return d.toISOString().slice(0,10);
+      }
+      // 已是字串日期，嘗試格式化
+      var d=new Date(v);
+      if(!isNaN(d))return d.toISOString().slice(0,10);
+      return String(v);
+    }
     var logsFromImport=[];
     var content=getF('聯繫內容（→互動軌跡）');
-    if(content)logsFromImport.push({date:getF('最後聯絡日')||new Date().toISOString().slice(0,10),text:content,type:'note',typeLabel:'匯入記錄'});
+    if(content)logsFromImport.push({date:toDate(getF('最後聯絡日'))||new Date().toISOString().slice(0,10),text:content,type:'note',typeLabel:'匯入記錄'});
     var data={
       id:(existing&&existing.id)||String(Date.now()+Math.random()),
       shortname:sn,fullname:getF('客戶全名'),
       contact:getF('聯絡人姓名'),tel:getF('公司電話'),email:getF('Email'),
       industry:getF('產業類別'),city:getF('縣市'),town:getF('鄉鎮'),
       hwProduct:getF('推薦設備'),swProduct:getF('推薦軟體'),
-      lastContact:getF('最後聯絡日'),nextContact:getF('下次聯絡日'),
+      lastContact:toDate(getF('最後聯絡日')),nextContact:toDate(getF('下次聯絡日')),
       status:'contact',prob:0,logs:logsFromImport,
       createdAt:new Date().toLocaleDateString('zh-TW')
     };
