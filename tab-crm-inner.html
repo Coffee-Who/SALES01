@@ -1722,7 +1722,64 @@ function updateChips(){
 
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function save(){localStorage.setItem('crm_customers',JSON.stringify(CRM.customers));}
+
+/* ── GitHub 同步 ─────────────────────────────── */
+var GH_REPO='Coffee-Who/SALES01';
+var GH_FILE='crm_customers.json';
+var GH_API='https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE;
+var _ghSha=null; // 儲存最新 SHA
+
+function getGhToken(){return localStorage.getItem('crm_gh_token')||'';}
+
+function save(){
+  // 1. 立即寫 localStorage（本機即時）
+  localStorage.setItem('crm_customers',JSON.stringify(CRM.customers));
+  // 2. 異步同步到 GitHub
+  var tok=getGhToken();
+  if(!tok)return;
+  var body=JSON.stringify({
+    message:'crm: update customers',
+    content:btoa(unescape(encodeURIComponent(JSON.stringify(CRM.customers,null,2)))),
+    sha:_ghSha||undefined
+  });
+  fetch(GH_API,{
+    method:'PUT',
+    headers:{'Authorization':'token '+tok,'Content-Type':'application/json'},
+    body:body
+  }).then(function(r){return r.json();}).then(function(d){
+    if(d.content)_ghSha=d.content.sha;
+  }).catch(function(){});
+}
+
+function loadFromGitHub(cb){
+  var tok=getGhToken();
+  if(!tok){cb(false);return;}
+  fetch(GH_API,{headers:{'Authorization':'token '+tok}})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.content){
+        _ghSha=d.sha;
+        var raw=decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))));
+        var arr=JSON.parse(raw);
+        CRM.customers=arr;
+        localStorage.setItem('crm_customers',JSON.stringify(arr));
+        cb(true);
+      } else { cb(false); }
+    }).catch(function(){cb(false);});
+}
+
+function promptGhToken(){
+  var tok=prompt('請輸入 GitHub Personal Access Token（有 repo 權限）\n輸入後資料將在所有裝置同步：');
+  if(tok&&tok.trim()){
+    localStorage.setItem('crm_gh_token',tok.trim());
+    toast('✅ Token 已儲存，正在同步資料...','ok');
+    loadFromGitHub(function(ok){
+      if(ok){renderList();toast('✅ 已從 GitHub 載入最新資料','ok');}
+      else{toast('⚠️ Token 無效或尚無資料','warn');}
+    });
+  }
+}
+
 function toast(msg,type){
   var t=document.createElement('div');t.className='toast'+(type?' '+type:'');t.textContent=msg;
   document.getElementById('toasts').appendChild(t);setTimeout(function(){t.remove();},3000);
