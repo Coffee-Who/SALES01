@@ -107,18 +107,30 @@
     "id": "1778026328634.7852",
     "shortname": "油順精密",
     "fullname": "",
+    "industry": "機械製造",
+    "city": "台中",
+    "town": "南屯區",
+    "source": "合作夥伴",
+    "startdate": "2026-04-13",
     "contact": "賴先生",
+    "contactTitle": "",
     "tel": "",
+    "mobile": "",
     "email": "",
-    "industry": "",
-    "city": "",
-    "town": "",
-    "hwProduct": "",
-    "swProduct": "",
-    "lastContact": "2026-04-24",
-    "nextContact": "",
+    "line": "",
+    "decisionName": "",
+    "decisionTitle": "",
     "status": "contact",
-    "prob": 0,
+    "hwProduct": "",
+    "swProduct": "Geomagic Design X",
+    "dealTime": "",
+    "budget": "",
+    "prob": 25,
+    "needs": [],
+    "competitors": [],
+    "nextContact": "",
+    "lastContact": "2026-05-06",
+    "createdAt": "2026/5/6",
     "logs": [
       {
         "date": "2026-04-24",
@@ -126,8 +138,7 @@
         "type": "note",
         "typeLabel": "匯入記錄"
       }
-    ],
-    "createdAt": "2026/5/6"
+    ]
   },
   {
     "id": "1778026328634.5923",
