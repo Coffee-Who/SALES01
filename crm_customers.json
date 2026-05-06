@@ -3,18 +3,34 @@
     "id": "1778049818542.4966",
     "shortname": "久正",
     "fullname": "",
+    "industry": "電子製造",
+    "city": "台中",
+    "town": "西屯區",
+    "source": "電訪開發",
+    "startdate": "2026-03-09",
     "contact": "江燕明",
+    "contactTitle": "",
     "tel": "",
+    "mobile": "",
     "email": "",
-    "industry": "",
-    "city": "",
-    "town": "",
-    "hwProduct": "DX",
-    "swProduct": "",
-    "lastContact": "2026-05-05",
-    "nextContact": "",
-    "status": "contact",
-    "prob": 0,
+    "line": "",
+    "decisionName": "",
+    "decisionTitle": "",
+    "status": "prospect",
+    "hwProduct": "",
+    "swProduct": "Geomagic Design X",
+    "dealTime": "",
+    "budget": "",
+    "prob": 25,
+    "needs": [
+      "逆向設計 RE"
+    ],
+    "competitors": [
+      "無競爭對手"
+    ],
+    "nextContact": "2026-05-13",
+    "lastContact": "2026-05-06",
+    "createdAt": "2026/5/6",
     "logs": [
       {
         "date": "2026-05-05",
@@ -22,8 +38,7 @@
         "type": "note",
         "typeLabel": "匯入記錄"
       }
-    ],
-    "createdAt": "2026/5/6"
+    ]
   },
   {
     "id": "1778049818542.6116",
