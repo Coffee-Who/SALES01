@@ -1737,40 +1737,45 @@ var _ghSha=null; // 儲存最新 SHA
 function getGhToken(){return localStorage.getItem('crm_gh_token')||'';}
 
 function save(){
-  // 1. 立即寫 localStorage（本機即時）
   localStorage.setItem('crm_customers',JSON.stringify(CRM.customers));
-  // 2. 異步同步到 GitHub
   var tok=getGhToken();
   if(!tok)return;
-  var body=JSON.stringify({
-    message:'crm: update customers',
-    content:btoa(unescape(encodeURIComponent(JSON.stringify(CRM.customers,null,2)))),
-    sha:_ghSha||undefined
-  });
-  fetch(GH_API,{
-    method:'PUT',
-    headers:{'Authorization':'token '+tok,'Content-Type':'application/json'},
-    body:body
-  }).then(function(r){return r.json();}).then(function(d){
-    if(d.content)_ghSha=d.content.sha;
-  }).catch(function(){});
+  // 每次寫入前先取得最新 SHA，避免 422
+  fetch(GH_API,{headers:{'Authorization':'token '+tok}})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      _ghSha=d.sha||_ghSha;
+      return fetch(GH_API,{
+        method:'PUT',
+        headers:{'Authorization':'token '+tok,'Content-Type':'application/json'},
+        body:JSON.stringify({
+          message:'crm: update customers',
+          content:btoa(unescape(encodeURIComponent(JSON.stringify(CRM.customers,null,2)))),
+          sha:_ghSha
+        })
+      });
+    }).then(function(r){return r.json();})
+    .then(function(d){if(d.content)_ghSha=d.content.sha;})
+    .catch(function(){});
 }
 
 function loadFromGitHub(cb){
   var tok=getGhToken();
   if(!tok){cb(false);return;}
-  fetch(GH_API,{headers:{'Authorization':'token '+tok}})
+  fetch(GH_API,{headers:{'Authorization':'token '+tok,'Cache-Control':'no-cache'}})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.content){
+      if(d.content&&d.sha){
         _ghSha=d.sha;
-        var raw=decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))));
+        var raw=decodeURIComponent(escape(atob(d.content.replace(/[\r\n]/g,''))));
         var arr=JSON.parse(raw);
-        CRM.customers=arr;
-        localStorage.setItem('crm_customers',JSON.stringify(arr));
-        cb(true);
+        if(arr.length>0){
+          CRM.customers=arr;
+          localStorage.setItem('crm_customers',JSON.stringify(arr));
+          cb(true);
+        } else { cb(false); }
       } else { cb(false); }
-    }).catch(function(){cb(false);});
+    }).catch(function(e){console.warn('GH sync error',e);cb(false);});
 }
 
 function promptGhToken(){
