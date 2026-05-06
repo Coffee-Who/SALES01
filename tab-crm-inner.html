@@ -228,6 +228,11 @@ body{font-family:'Noto Sans TC',sans-serif;color:var(--t1);background:var(--bg0)
 .empty-state{text-align:center;padding:36px 20px;color:var(--t3)}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+#sync-btn{position:fixed;bottom:18px;right:18px;z-index:9999;background:#2d7aee;color:#fff;border:none;border-radius:50px;padding:10px 18px;font-size:13px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#sync-btn.ok{background:#27ae60;}
+#sync-btn.err{background:#e74c3c;}
+</style>
 </head>
 <body class="lm">
 <div id="toasts"></div>
@@ -1811,6 +1816,56 @@ if (window !== window.top) {
     document.head.appendChild(s);
   }
 })();
+</script>
+<button id="sync-btn" onclick="openSyncPanel()">☁️ 同步設定</button>
+<div id="sync-panel" style="display:none;position:fixed;bottom:70px;right:18px;z-index:9999;background:var(--card,#1e1e2e);border:1px solid var(--bd,#333);border-radius:12px;padding:20px;width:300px;box-shadow:0 4px 20px rgba(0,0,0,.4)">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:12px">☁️ GitHub 跨裝置同步</div>
+  <div style="font-size:12px;color:var(--t2,#aaa);margin-bottom:8px">輸入 GitHub Token（repo 權限）</div>
+  <input id="sync-token-inp" type="password" placeholder="ghp_xxxxxxxxxxxx" style="width:100%;box-sizing:border-box;padding:8px;border-radius:6px;border:1px solid var(--bd,#444);background:var(--bg2,#111);color:var(--t1,#fff);font-size:13px;margin-bottom:10px">
+  <div style="display:flex;gap:8px">
+    <button onclick="doSyncSave()" style="flex:1;padding:8px;background:#2d7aee;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">✅ 儲存</button>
+    <button onclick="doSyncNow()" style="flex:1;padding:8px;background:#27ae60;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">🔄 立即同步</button>
+    <button onclick="closeSyncPanel()" style="padding:8px 12px;background:var(--bd,#444);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">✕</button>
+  </div>
+  <div id="sync-status" style="font-size:11px;color:var(--t2,#aaa);margin-top:8px"></div>
+</div>
+<script>
+function openSyncPanel(){
+  document.getElementById('sync-panel').style.display='block';
+  var t=getGhToken();
+  if(t)document.getElementById('sync-token-inp').value=t;
+}
+function closeSyncPanel(){document.getElementById('sync-panel').style.display='none';}
+function doSyncSave(){
+  var t=document.getElementById('sync-token-inp').value.trim();
+  if(!t)return;
+  localStorage.setItem('crm_gh_token',t);
+  document.getElementById('sync-status').textContent='✅ Token 已儲存';
+  var btn=document.getElementById('sync-btn');
+  btn.textContent='☁️ 同步設定';
+  btn.className='ok';
+}
+function doSyncNow(){
+  var t=document.getElementById('sync-token-inp').value.trim();
+  if(t)localStorage.setItem('crm_gh_token',t);
+  document.getElementById('sync-status').textContent='🔄 同步中...';
+  loadFromGitHub(function(ok){
+    if(ok){
+      renderList();
+      document.getElementById('sync-status').textContent='✅ 同步完成！共 '+CRM.customers.length+' 筆';
+      document.getElementById('sync-btn').className='ok';
+    } else {
+      // 若無資料則上傳本機資料
+      save();
+      document.getElementById('sync-status').textContent='✅ 已上傳本機資料';
+    }
+  });
+}
+// 頁面載入時更新按鈕狀態
+setTimeout(function(){
+  var btn=document.getElementById('sync-btn');
+  if(getGhToken())btn.className='ok';
+},500);
 </script>
 </body>
 </html>
