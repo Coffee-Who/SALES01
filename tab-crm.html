@@ -1,96 +1,840 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>實威國際 CRM</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SALES CRM — 所有客戶</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden}
-body{font-family:'Noto Sans TC',sans-serif;background:#f4f5f8}
+/* ============================================================
+   Base Reset
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow: hidden; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+input, select, textarea { font: inherit; color: inherit; }
+img { display: block; max-width: 100%; }
+ul { list-style: none; }
+a { color: inherit; text-decoration: none; }
 
-#topbar{
-  background:#1a1a2e;height:52px;display:flex;align-items:center;
-  padding:0 20px;gap:10px;
+/* ============================================================
+   Direction A — Tech Minimal tokens
+   ============================================================ */
+.dir-a {
+  --bg:           #FAFAFA;
+  --surface:      #FFFFFF;
+  --surface-2:    #F5F5F5;
+  --border:       #E5E5E5;
+  --border-strong:#D4D4D4;
+  --text:         #0A0A0A;
+  --text-2:       #525252;
+  --text-3:       #A3A3A3;
+  --accent:       #6366F1;
+  --accent-soft:  #EEF0FF;
+  --green:        #10B981;
+  --amber:        #F59E0B;
+  --red:          #EF4444;
+  --blue:         #3B82F6;
+  --radius:       8px;
+  --radius-sm:    6px;
+  --shadow-sm:    0 1px 2px rgba(0,0,0,.04);
+  --shadow:       0 4px 16px rgba(0,0,0,.06);
+  font-family: 'Inter', 'Noto Sans TC', -apple-system, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  height: 100%;
 }
-.logo-box{width:28px;height:28px;background:#2563eb;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#fff}
-.logo-name{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:#fff}
-.logo-sep{width:1px;height:14px;background:rgba(255,255,255,.25);margin:0 4px}
-#page-subtitle{font-size:11px;color:rgba(255,255,255,.45)}
-.tr{margin-left:auto;display:flex;align-items:center;gap:8px}
-.v-tag{font-size:10px;color:rgba(255,255,255,.35);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:3px 8px;border-radius:4px}
 
-#navtab{
-  background:#fff;border-bottom:1px solid #d0d7de;
-  display:flex;padding:0 16px;
-}
-.ntab{
-  padding:12px 18px;font-size:13px;font-weight:500;color:#656d76;
-  cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s;
-}
-.ntab:hover{color:#1f2328}
-.ntab.on{color:#2563eb;border-bottom-color:#2563eb}
-
-/* iframe 容器：固定在 topbar+navtab 下方，撐滿剩餘空間 */
-#frame-wrap{
-  position:fixed;top:104px;left:0;right:0;bottom:0;overflow:hidden;
+/* Dark mode */
+.dir-a.dark {
+  --bg:           #0A0A0A;
+  --surface:      #111111;
+  --surface-2:    #181818;
+  --border:       #262626;
+  --border-strong:#404040;
+  --text:         #FAFAFA;
+  --text-2:       #A3A3A3;
+  --text-3:       #525252;
+  --accent:       #818CF8;
+  --accent-soft:  rgba(99,102,241,.12);
 }
 
-/* CRM iframe：同域，不需裁切 */
-#iframe-crm{
-  width:100%;height:100%;border:none;display:block;
+/* ============================================================
+   App Frame
+   ============================================================ */
+.frame {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-/* 客戶開發 iframe：跨域，用 margin-top 將內部 topbar+navtab 推出可視區 */
-/* 內部 topbar ≈ 52px, navtab ≈ 44px → 共約 96px，取整數 -96px */
-.email-clip{
-  position:absolute;inset:0;overflow:hidden;
+/* ============================================================
+   Top Bar
+   ============================================================ */
+.topbar {
+  height: 48px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 16px;
+  flex-shrink: 0;
+  z-index: 10;
 }
-#iframe-email{
-  width:100%;
-  height:calc(100% + 96px);  /* 補回被推上去的高度 */
-  margin-top:-96px;           /* 往上移，把內部 topbar+navtab 推出可視範圍 */
-  border:none;display:block;
+.logo {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 600; font-size: 13px;
+  white-space: nowrap;
 }
+.logo-mark {
+  width: 22px; height: 22px;
+  background: var(--text); color: var(--bg);
+  border-radius: 5px;
+  display: grid; place-items: center;
+  font-weight: 700; font-size: 11px;
+  letter-spacing: -0.04em;
+  flex-shrink: 0;
+}
+.breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  color: var(--text-3); font-size: 12px;
+}
+.breadcrumb .sep { opacity: .5; }
+.breadcrumb .crumb-current { color: var(--text); }
+.top-spacer { flex: 1; }
+.top-search {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  width: 220px;
+  color: var(--text-3);
+  font-size: 12px;
+  cursor: pointer;
+}
+.top-search kbd {
+  margin-left: auto;
+  font-size: 10px;
+  padding: 1px 5px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  font-family: inherit;
+  color: var(--text-3);
+}
+.top-icon {
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 5px;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.top-icon:hover { background: var(--surface-2); }
+.top-avatar {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366F1, #EC4899);
+  display: grid; place-items: center;
+  color: white; font-weight: 600; font-size: 11px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+/* Dark mode toggle button */
+.dark-toggle {
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 5px;
+  color: var(--text-2);
+  cursor: pointer;
+  font-size: 14px;
+}
+.dark-toggle:hover { background: var(--surface-2); }
+
+/* ============================================================
+   Layout: Sidebar + Main
+   ============================================================ */
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  overflow: hidden;
+}
+
+/* ============================================================
+   Sidebar
+   ============================================================ */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 14px 10px;
+  display: flex; flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+.nav-section {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-3);
+  padding: 12px 10px 6px;
+  font-weight: 500;
+}
+.nav-section:first-child { padding-top: 4px; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.nav-item:hover { background: var(--surface-2); color: var(--text); }
+.nav-item.active {
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 500;
+}
+.nav-item .nav-icon {
+  width: 14px; height: 14px;
+  display: grid; place-items: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.nav-item .nav-badge {
+  margin-left: auto;
+  font-size: 10px;
+  padding: 1px 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.nav-item.active .nav-badge {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ============================================================
+   Main Content
+   ============================================================ */
+.content {
+  overflow-y: auto;
+  display: flex; flex-direction: column;
+}
+
+/* Page Header */
+.page-head {
+  padding: 24px 32px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 16px;
+}
+.page-title-block { flex: 1; }
+.page-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.page-sub { color: var(--text-2); font-size: 13px; }
+.page-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn:hover { background: var(--surface-2); }
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.btn-primary:hover { opacity: .85; }
+.btn-ghost { background: transparent; border-color: transparent; color: var(--text-2); }
+.btn-ghost:hover { background: var(--surface-2); color: var(--text); }
+.btn-sm { padding: 3px 8px; font-size: 11px; }
+
+/* ============================================================
+   KPI Cards
+   ============================================================ */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.kpi-card {
+  background: var(--surface);
+  padding: 16px 20px;
+}
+.kpi-label {
+  font-size: 11px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 6px;
+}
+.kpi-value {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'tnum';
+}
+.kpi-value span { font-size: 14px; color: var(--text-3); margin-left: 6px; }
+.kpi-delta {
+  display: inline-flex; align-items: center; gap: 3px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--green);
+  font-weight: 500;
+}
+.kpi-delta.down { color: var(--red); }
+.kpi-spark {
+  margin-top: 8px;
+  height: 24px;
+  display: flex; align-items: flex-end; gap: 2px;
+}
+.kpi-spark span {
+  flex: 1;
+  background: var(--accent);
+  opacity: .8;
+  border-radius: 1px;
+  min-height: 2px;
+  display: block;
+}
+
+/* ============================================================
+   Filter Toolbar
+   ============================================================ */
+.toolbar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 32px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.filter-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--text-2);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.filter-pill.active {
+  border-style: solid;
+  border-color: var(--text);
+  color: var(--text);
+  background: var(--surface);
+}
+.filter-pill .x { color: var(--text-3); margin-left: 2px; cursor: pointer; }
+.toolbar-spacer { flex: 1; }
+
+/* ============================================================
+   Customer Table
+   ============================================================ */
+.table-wrap {
+  flex: 1;
+  overflow-y: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+thead th {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-3);
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky; top: 0;
+  white-space: nowrap;
+  z-index: 1;
+}
+tbody td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+tbody tr:hover td { background: var(--surface-2); cursor: pointer; }
+.row-check {
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.row-check.on {
+  background: var(--text);
+  border-color: var(--text);
+  position: relative;
+}
+.row-check.on::after {
+  content: '✓';
+  color: var(--bg);
+  font-size: 10px;
+  position: absolute;
+  top: -2px; left: 1px;
+}
+.cust-cell { display: flex; align-items: center; gap: 10px; }
+.cust-avatar {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: grid; place-items: center;
+  font-weight: 600; font-size: 11px;
+  color: white;
+  flex-shrink: 0;
+}
+.cust-name { font-weight: 500; }
+.cust-meta { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+
+/* Status Badges */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.badge .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.badge.contact    { color: #525252; background: var(--surface-2); border-color: var(--border); }
+.badge.evaluating { color: #B45309; background: #FEF3C7; border-color: #FDE68A; }
+.badge.prospect   { color: #1E40AF; background: #DBEAFE; border-color: #BFDBFE; }
+.badge.closed     { color: #065F46; background: #D1FAE5; border-color: #A7F3D0; }
+.badge.nope       { color: #525252; background: var(--surface-2); border-color: var(--border); }
+
+/* Dark mode badges */
+.dir-a.dark .badge.evaluating { color: #FCD34D; background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.3); }
+.dir-a.dark .badge.prospect   { color: #93C5FD; background: rgba(59,130,246,.12); border-color: rgba(59,130,246,.3); }
+.dir-a.dark .badge.closed     { color: #6EE7B7; background: rgba(16,185,129,.12); border-color: rgba(16,185,129,.3); }
+.dir-a.dark .badge.contact, .dir-a.dark .badge.nope { color: var(--text-2); }
+
+/* Probability Bar */
+.prob-cell { display: flex; align-items: center; gap: 8px; }
+.prob-track {
+  flex: 1; max-width: 60px;
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.prob-fill {
+  height: 100%;
+  background: var(--text);
+  border-radius: 999px;
+}
+.prob-num { font-size: 12px; font-weight: 500; font-feature-settings: 'tnum'; min-width: 30px; }
+
+/* Mono font for IDs, emails, dates */
+.mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+/* ============================================================
+   SVG Icons (inline)
+   ============================================================ */
+.icon-svg { display: inline-flex; align-items: center; }
 </style>
 </head>
+
 <body>
+<div class="dir-a" id="app">
+  <div class="frame">
 
-<div id="topbar">
-  <div class="logo-box">SW</div>
-  <span class="logo-name">實威國際</span>
-  <div class="logo-sep"></div>
-  <span id="page-subtitle">CRM 客戶管理</span>
-  <div class="tr"><span class="v-tag">v3.0</span></div>
-</div>
+    <!-- ===================== TOP BAR ===================== -->
+    <header class="topbar">
+      <div class="logo">
+        <div class="logo-mark">SW</div>
+        <span>SolidWill CRM</span>
+      </div>
+      <nav class="breadcrumb">
+        <span>工作區</span>
+        <span class="sep">/</span>
+        <span>客戶管理</span>
+        <span class="sep">/</span>
+        <span class="crumb-current">所有客戶</span>
+      </nav>
+      <div class="top-spacer"></div>
+      <!-- Search — wire to existing search/filter logic -->
+      <div class="top-search" onclick="document.getElementById('searchInput').focus()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <span>搜尋客戶、聯絡人...</span>
+        <kbd>⌘K</kbd>
+      </div>
+      <!-- Notification — keep existing onclick -->
+      <div class="top-icon" title="通知">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      </div>
+      <!-- Settings — keep existing onclick -->
+      <div class="top-icon" title="設定">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+      <!-- Dark mode toggle -->
+      <div class="dark-toggle" title="切換深色模式" onclick="document.getElementById('app').classList.toggle('dark')">🌓</div>
+      <!-- User avatar — keep existing user menu onclick -->
+      <div class="top-avatar">JC</div>
+    </header>
 
-<div id="navtab">
-  <div class="ntab on" id="tab-crm" onclick="switchTab('crm')">🧑‍💼 CRM</div>
-  <div class="ntab" id="tab-email" onclick="switchTab('email')">📧 客戶開發</div>
-</div>
+    <!-- ===================== LAYOUT ===================== -->
+    <div class="layout">
 
-<div id="frame-wrap">
-  <!-- CRM：同域 iframe，內部已用 JS 隱藏本身的 topbar/navtab -->
-  <iframe id="iframe-crm" src="tab-crm-inner.html" title="CRM"
-    style="width:100%;height:100%;border:none;display:block"></iframe>
+      <!-- =================== SIDEBAR =================== -->
+      <aside class="sidebar">
+        <div class="nav-section">總覽</div>
+        <div class="nav-item" onclick="/* 儀表板 */">
+          <span class="nav-icon">◫</span>
+          <span>儀表板</span>
+        </div>
+        <div class="nav-item" onclick="/* 待辦提醒 */">
+          <span class="nav-icon">≡</span>
+          <span>待辦提醒</span>
+          <span class="nav-badge" id="badgeTodo">7</span>
+        </div>
 
-  <!-- 客戶開發：跨域，用 clip+margin-top 裁掉上方 96px -->
-  <div class="email-clip" id="email-clip" style="display:none">
-    <iframe id="iframe-email"
-      src="https://coffee-who.github.io/SALES01/tab-customer-email.html"
-      title="客戶開發"></iframe>
-  </div>
-</div>
+        <div class="nav-section">客戶</div>
+        <div class="nav-item active" onclick="/* 所有客戶 */">
+          <span class="nav-icon">◉</span>
+          <span>所有客戶</span>
+          <span class="nav-badge" id="badgeTotal">247</span>
+        </div>
+        <div class="nav-item" onclick="/* 業務漏斗 */">
+          <span class="nav-icon">◐</span>
+          <span>業務漏斗</span>
+        </div>
+        <div class="nav-item" onclick="/* 我的最愛 */">
+          <span class="nav-icon">✦</span>
+          <span>我的最愛</span>
+          <span class="nav-badge">12</span>
+        </div>
+        <div class="nav-item" onclick="/* 已成交 */">
+          <span class="nav-icon">◬</span>
+          <span>已成交</span>
+          <span class="nav-badge" id="badgeClosed">19</span>
+        </div>
 
+        <div class="nav-section">開發</div>
+        <div class="nav-item" onclick="/* Email 行銷 */">
+          <span class="nav-icon">✉</span>
+          <span>Email 行銷</span>
+        </div>
+        <div class="nav-item" onclick="/* 爬蟲名單 */">
+          <span class="nav-icon">◇</span>
+          <span>爬蟲名單</span>
+          <span class="nav-badge">新</span>
+        </div>
+        <div class="nav-item" onclick="/* HTML 範本 */">
+          <span class="nav-icon">✎</span>
+          <span>HTML 範本</span>
+        </div>
+
+        <div class="nav-section">分析</div>
+        <div class="nav-item" onclick="/* 業績報表 */">
+          <span class="nav-icon">∿</span>
+          <span>業績報表</span>
+        </div>
+        <div class="nav-item" onclick="/* 活動成效 */">
+          <span class="nav-icon">⊟</span>
+          <span>活動成效</span>
+        </div>
+      </aside>
+
+      <!-- =================== MAIN CONTENT =================== -->
+      <main class="content">
+
+        <!-- Page Header -->
+        <div class="page-head">
+          <div class="page-title-block">
+            <h1 class="page-title">所有客戶</h1>
+            <!-- Update these counts dynamically from existing JS -->
+            <div class="page-sub" id="pageSubtitle">
+              <span id="totalCount">247</span> 筆
+              · 本週新增 <span id="weeklyCount">14</span> 筆
+              · <span id="overdueCount">6</span> 筆需要跟進
+            </div>
+          </div>
+          <div class="page-actions">
+            <!-- Keep existing onclick / form action handlers below -->
+            <button class="btn btn-ghost" onclick="/* 篩選邏輯 */">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              篩選
+            </button>
+            <button class="btn" onclick="/* 匯入 Excel */">匯入 Excel</button>
+            <button class="btn btn-primary" onclick="/* 新增客戶 */">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              新增客戶
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-label">本月新增</div>
+            <div class="kpi-value" id="kpiMonthly">41</div>
+            <div class="kpi-delta">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m18 15-6-6-6 6"/></svg>
+              +12% vs 上月
+            </div>
+            <div class="kpi-spark">
+              <span style="height:40%"></span><span style="height:55%"></span><span style="height:32%"></span>
+              <span style="height:68%"></span><span style="height:45%"></span><span style="height:72%"></span>
+              <span style="height:55%"></span><span style="height:80%"></span><span style="height:65%"></span>
+              <span style="height:90%"></span><span style="height:75%"></span><span style="height:88%"></span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">業務漏斗</div>
+            <div class="kpi-value" id="kpiProspect">38<span>有望</span></div>
+            <div class="kpi-delta">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m18 15-6-6-6 6"/></svg>
+              +5 本週
+            </div>
+            <div class="kpi-spark">
+              <span style="height:30%;opacity:.6"></span><span style="height:35%;opacity:.6"></span><span style="height:40%;opacity:.6"></span>
+              <span style="height:38%;opacity:.6"></span><span style="height:42%;opacity:.6"></span><span style="height:45%;opacity:.6"></span>
+              <span style="height:38%;opacity:.6"></span><span style="height:40%;opacity:.6"></span><span style="height:38%;opacity:.6"></span>
+              <span style="height:42%;opacity:.6"></span><span style="height:46%;opacity:.6"></span><span style="height:38%;opacity:.6"></span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">本月預期成交</div>
+            <div class="kpi-value" id="kpiRevenue">$8.4M</div>
+            <div class="kpi-delta">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m18 15-6-6-6 6"/></svg>
+              +24%
+            </div>
+            <div class="kpi-spark">
+              <span style="height:55%;opacity:.85"></span><span style="height:62%;opacity:.85"></span><span style="height:48%;opacity:.85"></span>
+              <span style="height:70%;opacity:.85"></span><span style="height:58%;opacity:.85"></span><span style="height:75%;opacity:.85"></span>
+              <span style="height:62%;opacity:.85"></span><span style="height:80%;opacity:.85"></span><span style="height:68%;opacity:.85"></span>
+              <span style="height:85%;opacity:.85"></span><span style="height:72%;opacity:.85"></span><span style="height:90%;opacity:.85"></span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">轉換率</div>
+            <div class="kpi-value" id="kpiRate">32%</div>
+            <div class="kpi-delta down">↓ -2.1pt</div>
+            <div class="kpi-spark">
+              <span style="height:60%;opacity:.5"></span><span style="height:65%;opacity:.5"></span><span style="height:58%;opacity:.5"></span>
+              <span style="height:70%;opacity:.5"></span><span style="height:62%;opacity:.5"></span><span style="height:55%;opacity:.5"></span>
+              <span style="height:58%;opacity:.5"></span><span style="height:52%;opacity:.5"></span><span style="height:48%;opacity:.5"></span>
+              <span style="height:52%;opacity:.5"></span><span style="height:45%;opacity:.5"></span><span style="height:42%;opacity:.5"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Toolbar -->
+        <div class="toolbar">
+          <!-- Active filters — generated by existing filter JS; add/remove .active class -->
+          <span class="filter-pill active" data-filter="status">
+            狀態：有望 Demo + 評估中
+            <span class="x" onclick="removeFilter(this, 'status')">×</span>
+          </span>
+          <span class="filter-pill active" data-filter="industry">
+            產業：金屬加工
+            <span class="x" onclick="removeFilter(this, 'industry')">×</span>
+          </span>
+          <span class="filter-pill" onclick="addFilter('city')">+ 縣市</span>
+          <span class="filter-pill" onclick="addFilter('budget')">+ 預算</span>
+          <span class="filter-pill" onclick="addFilter('nextContact')">+ 跟進日期</span>
+          <div class="toolbar-spacer"></div>
+          <button class="btn btn-ghost btn-sm" onclick="/* 儲存視圖 */">儲存視圖</button>
+          <button class="btn btn-sm" onclick="/* 匯出 */">匯出</button>
+        </div>
+
+        <!-- Customer Table -->
+        <div class="table-wrap">
+          <table id="customerTable">
+            <thead>
+              <tr>
+                <th style="width:32px">
+                  <div class="row-check" id="checkAll" onclick="toggleAll()" title="全選"></div>
+                </th>
+                <th>客戶</th>
+                <th>產業 / 區域</th>
+                <th>主要硬體</th>
+                <th>狀態</th>
+                <th>機會度</th>
+                <th>下次跟進</th>
+                <th>負責業務</th>
+              </tr>
+            </thead>
+            <tbody id="customerTbody">
+              <!-- Rows rendered by JS below; replace with server-side template or AJAX rendering -->
+            </tbody>
+          </table>
+        </div>
+
+      </main><!-- /content -->
+    </div><!-- /layout -->
+  </div><!-- /frame -->
+</div><!-- /dir-a -->
+
+<!-- Hidden search input for ⌘K shortcut binding -->
+<input type="text" id="searchInput" style="position:absolute;opacity:0;pointer-events:none" />
+
+<!-- ============================================================
+     Mock data (replace with your actual data source / API call)
+     ============================================================ -->
 <script>
-function switchTab(key){
-  var isCrm = key === 'crm';
-  document.getElementById('iframe-crm').style.display  = isCrm ? 'block' : 'none';
-  document.getElementById('email-clip').style.display  = isCrm ? 'none'  : 'block';
-  document.getElementById('tab-crm').classList.toggle('on',  isCrm);
-  document.getElementById('tab-email').classList.toggle('on', !isCrm);
-  document.getElementById('page-subtitle').textContent = isCrm ? 'CRM 客戶管理' : '客戶開發';
+// ---------------------------------------------------------------------------
+// Mock data — REPLACE with actual backend API response or server-side render
+// ---------------------------------------------------------------------------
+const CUSTOMERS = [
+  { id:1, short:'弘國精機', full:'弘國精機股份有限公司',     industry:'金屬加工', city:'台中', town:'大雅區', contact:'王大明', title:'品保課長',   hw:'SIMSCAN 30 Gen2', status:'prospect',   prob:75, nextContact:'2026-05-12', rep:'JC' },
+  { id:2, short:'日盛航太', full:'日盛航太工業股份有限公司', industry:'航太國防', city:'台中', town:'西屯區', contact:'林協理', title:'研發處協理', hw:'NimbleTrack Gen2', status:'evaluating', prob:45, nextContact:'2026-05-08', rep:'MY' },
+  { id:3, short:'正昇模具', full:'正昇精密模具有限公司',     industry:'模具製造', city:'彰化', town:'員林市', contact:'張總',   title:'總經理',     hw:'Artec Spider',    status:'closed',     prob:100,nextContact:'2026-06-15', rep:'RH' },
+  { id:4, short:'永盛工業', full:'永盛工業股份有限公司',     industry:'汽車零件', city:'台中', town:'神岡區', contact:'陳工程師',title:'品保工程師', hw:'SIMSCAN 30',      status:'contact',    prob:20, nextContact:'2026-05-05', rep:'SK' },
+  { id:5, short:'興盛車料', full:'興盛車料工業股份有限公司', industry:'自行車零件',city:'台中', town:'大里區', contact:'吳經理', title:'製造部經理', hw:'NimbleTrack',     status:'prospect',   prob:65, nextContact:'2026-05-10', rep:'PL' },
+  { id:6, short:'台一光電', full:'台一光電精密股份有限公司', industry:'電子製造', city:'苗栗', town:'頭份市', contact:'李廠長', title:'製造廠長',   hw:'MicroII 固定式',  status:'evaluating', prob:50, nextContact:'2026-05-02', rep:'WT' },
+  { id:7, short:'冠豪精密', full:'冠豪精密工業有限公司',     industry:'機械製造', city:'雲林', town:'虎尾鎮', contact:'黃副總', title:'副總經理',   hw:'Artec Leo',       status:'nope',       prob:10, nextContact:'2026-08-15', rep:'BT' },
+  { id:8, short:'世昌醫材', full:'世昌醫療器材股份有限公司', industry:'醫療器材', city:'南投', town:'南投市', contact:'蘇博士', title:'研發總監',   hw:'Artec Spider',    status:'prospect',   prob:70, nextContact:'2026-05-09', rep:'HK' },
+];
+
+const STATUS_LABEL = {
+  contact:'初次接觸', evaluating:'評估中', prospect:'有望 Demo', closed:'成交結案', nope:'暫緩 NoGo'
+};
+
+const AVATAR_COLORS = [
+  ['#6366F1','#4F46E5'],['#EC4899','#DB2777'],['#14B8A6','#0D9488'],
+  ['#F59E0B','#D97706'],['#3B82F6','#2563EB'],['#8B5CF6','#7C3AED'],
+  ['#EF4444','#DC2626'],['#10B981','#059669']
+];
+function avatarGrad(id) {
+  const c = AVATAR_COLORS[(id - 1) % AVATAR_COLORS.length];
+  return `linear-gradient(135deg,${c[0]},${c[1]})`;
 }
+
+// ---------------------------------------------------------------------------
+// Render table rows
+// Swap this function body for your existing row-rendering logic (jQuery .html(),
+// server-side template, DataTables, etc.). Keep the HTML class names below.
+// ---------------------------------------------------------------------------
+function renderTable(data) {
+  const tbody = document.getElementById('customerTbody');
+  tbody.innerHTML = data.map(c => `
+    <tr onclick="openCustomer(${c.id})" data-id="${c.id}">
+      <td>
+        <div class="row-check" onclick="toggleRow(event, ${c.id})"></div>
+      </td>
+      <td>
+        <div class="cust-cell">
+          <div class="cust-avatar" style="background:${avatarGrad(c.id)}">${c.short.slice(0,2)}</div>
+          <div>
+            <div class="cust-name">${c.full}</div>
+            <div class="cust-meta">${c.contact} · ${c.title}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div>${c.industry}</div>
+        <div class="cust-meta">${c.city} ${c.town}</div>
+      </td>
+      <td><span class="mono">${c.hw}</span></td>
+      <td>
+        <span class="badge ${c.status}">
+          <span class="dot"></span>
+          ${STATUS_LABEL[c.status]}
+        </span>
+      </td>
+      <td>
+        <div class="prob-cell">
+          <div class="prob-track">
+            <div class="prob-fill" style="width:${c.prob}%"></div>
+          </div>
+          <span class="prob-num">${c.prob}%</span>
+        </div>
+      </td>
+      <td><span class="mono">${c.nextContact}</span></td>
+      <td>
+        <div class="cust-cell">
+          <div class="cust-avatar" style="width:22px;height:22px;font-size:9px;background:${avatarGrad(c.id+3)}">${c.rep}</div>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ---------------------------------------------------------------------------
+// Interaction stubs — wire these to your existing logic
+// ---------------------------------------------------------------------------
+function openCustomer(id) {
+  // TODO: navigate to tab-crm-inner.html?id=<id> or open detail panel
+  console.log('open customer', id);
+}
+
+function toggleRow(e, id) {
+  e.stopPropagation();
+  const check = e.currentTarget;
+  check.classList.toggle('on');
+}
+
+function toggleAll() {
+  const all = document.getElementById('checkAll');
+  all.classList.toggle('on');
+  document.querySelectorAll('#customerTbody .row-check').forEach(c => {
+    all.classList.contains('on') ? c.classList.add('on') : c.classList.remove('on');
+  });
+}
+
+function removeFilter(el, key) {
+  el.closest('.filter-pill').remove();
+  // TODO: trigger your filter refresh
+}
+
+function addFilter(key) {
+  // TODO: open filter popover for key
+  console.log('add filter', key);
+}
+
+// ⌘K shortcut
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+    // TODO: open your global search
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Init — call renderTable with real data from your backend, e.g.:
+//   fetch('/api/customers').then(r=>r.json()).then(renderTable)
+// ---------------------------------------------------------------------------
+renderTable(CUSTOMERS);
 </script>
+
 </body>
 </html>
